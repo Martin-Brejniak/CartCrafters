@@ -14,23 +14,23 @@ import jakarta.ws.rs.core.Context;
 import jakarta.ws.rs.core.MediaType;
 import jakarta.ws.rs.core.Response;
 
-@Path("/students")
+@Path("/user")
 public class UserModule {
 	
-	private UserDAO studentDAO = new UserDAO();
+	private UserDAO userDAO = new UserDAO();
 	
-//	@GET
-//	@Produces(MediaType.APPLICATION_JSON)
-//	public List<Student> getAllStudents() {
-//		return studentDAO.readAll();
-//	}
-//	
-//	@POST
-//	@Consumes(MediaType.APPLICATION_JSON)
-//	@Produces(MediaType.APPLICATION_JSON)
-//	public void createStudent(Student student) {
-//		studentDAO.create(student);
-//	}
+	@GET
+	@Produces(MediaType.APPLICATION_JSON)
+	public List<User> getAllUser() {
+		return userDAO.readAll();
+	}
+	
+	@POST
+	@Consumes(MediaType.APPLICATION_JSON)
+	@Produces(MediaType.APPLICATION_JSON)
+	public void createStudent(User user) {
+		userDAO.create(user);
+	}
 //	
 //	@GET
 //	@Path("/{id}")

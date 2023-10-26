@@ -10,40 +10,62 @@ import java.util.List;
 
 public class UserDAO {
 	
-//	public List<Student> readAll() {
-//		String sql = "SELECT id, name, age, major FROM students";
-//		List<Student> students = new ArrayList<>();
-//		
-//		try (Connection conn = DatabaseConnection.connect();
-//		Statement stmt = conn.createStatement();
-//				
-//		ResultSet rs = stmt.executeQuery(sql)){
-//			while (rs.next()) {
-//				Student student = new Student();
-//				student.setId(rs.getInt("id"));
-//				student.setName(rs.getString("name"));
-//				student.setAge(rs.getInt("age"));
-//				student.setMajor(rs.getString("major"));
-//				students.add(student);
-//			}
-//		} catch (SQLException e) {
-//			System.out.println(e.getMessage());
-//		}
-//		return students;
-//	}
-//	
-//	public void create(Student student) {
-//		String sql = "INSERT INTO students(name, age, major) VALUES(?,?,?)";
-//		try (Connection conn = DatabaseConnection.connect();
-//		PreparedStatement pstmt = conn.prepareStatement(sql)) {
-//			pstmt.setString(1, student.getName());
-//			pstmt.setInt(2, student.getAge());
-//			pstmt.setString(3, student.getMajor());
-//			pstmt.executeUpdate();
-//		} catch (SQLException e) {
-//			System.out.println(e.getMessage());
-//		}
-//	}
+    /**
+    * Gets all users from the users database.
+    *
+    * @return         all users.
+    */
+	public List<User> readAll() {
+		String sql = "SELECT * FROM users";
+		List<User> users = new ArrayList<>();
+		
+		try (Connection conn = DatabaseConnection.connect();
+		Statement stmt = conn.createStatement();
+				
+		ResultSet rs = stmt.executeQuery(sql)){
+			while (rs.next()) {
+				User user = new User();
+				user.setfName(rs.getString("fName"));
+				user.setlName(rs.getString("lName"));
+				user.setAddress(rs.getString("address"));
+				user.setPostal(rs.getString("postal"));
+				user.setCity(rs.getString("city"));
+				user.setCountry(rs.getString("country"));
+				user.setProvince(rs.getString("province"));
+				user.setUsername(rs.getString("username"));
+				user.setPassword(rs.getString("password"));
+				
+				users.add(user);
+			}
+		} catch (SQLException e) {
+			System.out.println(e.getMessage());
+		}
+		return users;
+	}
+	
+    /**
+    * Add user to user database.
+    *
+    * @param  user   a user.
+    */
+	public void create(User user) {
+		String sql = "INSERT INTO users(fname, lname, address, postal, city, country, province, username, password) VALUES(?,?,?,?,?,?,?,?,?)";
+		try (Connection conn = DatabaseConnection.connect();
+		PreparedStatement pstmt = conn.prepareStatement(sql)) {
+			pstmt.setString(1, user.getfName());
+			pstmt.setString(2, user.getlName());
+			pstmt.setString(3, user.getAddress());
+			pstmt.setString(4, user.getPostal());
+			pstmt.setString(5, user.getCity());
+			pstmt.setString(6, user.getCountry());
+			pstmt.setString(7, user.getProvince());
+			pstmt.setString(8, user.getUsername());
+			pstmt.setString(9, user.getPassword());
+			pstmt.executeUpdate();
+		} catch (SQLException e) {
+			System.out.println(e.getMessage());
+		}
+	}
 //	
 //	public Student read(int id) {
 //		String sql = "SELECT name, age, major FROM students WHERE id = ?";
