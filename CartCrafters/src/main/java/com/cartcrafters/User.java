@@ -13,11 +13,12 @@ public class User {
 	private String province;
 	private String username;
 	private String password;
+	private int userID;
 	
     /**
     * Get the first name of user.
     *
-    * @return         the users first name
+    * @return         the user's first name
     */
 	public String getfName() {
 		return fName;
@@ -35,7 +36,7 @@ public class User {
     /**
     * Get the last name of user.
     *
-    * @return         the users last name
+    * @return         the user's last name
     */
 	public String getlName() {
 		return lName;
@@ -53,7 +54,7 @@ public class User {
     /**
     * Get the address of user.
     *
-    * @return         the users address
+    * @return         the user's address
     */
 	public String getAddress() {
 		return address;
@@ -71,7 +72,7 @@ public class User {
     /**
     * Get the postal code of user.
     *
-    * @return         the users postal code
+    * @return         the user's postal code
     */
 	public String getPostal() {
 		return postal;
@@ -89,7 +90,7 @@ public class User {
     /**
     * Get the city of user.
     *
-    * @return         the users city
+    * @return         the user's city
     */
 	public String getCity() {
 		return city;
@@ -107,7 +108,7 @@ public class User {
     /**
     * Get the country of user.
     *
-    * @return         the users country
+    * @return         the user's country
     */
 	public String getCountry() {
 		return country;
@@ -125,7 +126,7 @@ public class User {
     /**
     * Get the province of user.
     *
-    * @return         the users province
+    * @return         the user's province
     */
 	public String getProvince() {
 		return province;
@@ -143,7 +144,7 @@ public class User {
     /**
     * Get the username of user.
     *
-    * @return         the users username
+    * @return         the user's username
     */
 	public String getUsername() {
 		return username;
@@ -161,7 +162,7 @@ public class User {
     /**
     * Get the password of user.
     *
-    * @return         the users password
+    * @return         the user's password
     */
 	public String getPassword() {
 		return password;
@@ -174,6 +175,24 @@ public class User {
     */
 	public void setPassword(String password) {
 		this.password = password;
+	}
+	
+	/**
+	* Get the ID of user.
+	*
+	* @return         the user's ID
+	*/
+	public int getUserID() {
+		return userID;
+	}
+	
+	/**
+	* Set the ID of user.
+	*
+	* @param  userID   the user's ID.
+	*/
+	public void setUserID(int userID) {
+		this.userID = userID;
 	}
 	
 }

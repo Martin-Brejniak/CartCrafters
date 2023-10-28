@@ -25,33 +25,32 @@ public class UserModule {
 		return userDAO.readAll();
 	}
 	
+//	@GET
+//	@Path("/{authToken}")
+//	@Produces(MediaType.APPLICATION_JSON)
+//	public User getUserByID(@PathParam("authToken") int id) {
+//		return userDAO.readID(id);
+//	}
+	
+	@GET
+	@Path("/{authToken}")
+	@Produces(MediaType.APPLICATION_JSON)
+	public User getUserByUsername(@PathParam("authToken") String username) {
+		return userDAO.readName(username);
+	}
+	
 	@POST
 	@Consumes(MediaType.APPLICATION_JSON)
 	@Produces(MediaType.APPLICATION_JSON)
-	public void createStudent(User user) {
+	public void createUser(User user) {
 		userDAO.create(user);
 	}
-//	
-//	@GET
-//	@Path("/{id}")
-//	@Produces(MediaType.APPLICATION_JSON)
-//	public Student getStudent(@PathParam("id") int id) {
-//		return studentDAO.read(id);
-//	}
-//	
-//	@PUT
-//	@Path("/{id}")
-//	@Consumes(MediaType.APPLICATION_JSON)
-//	@Produces(MediaType.APPLICATION_JSON)
-//	public void updateStudent(@PathParam("id") int id, Student student) {
-//		studentDAO.update(id, student);
-//	}
-//	
-//	@DELETE
-//	@Path("/{id}")
-//	@Produces(MediaType.APPLICATION_JSON)
-//	public void deleteStudent(@PathParam("id") int id) {
-//		studentDAO.delete(id);
-//	}
 
+	@PUT
+	@Path("/{authToken}")
+	@Consumes(MediaType.APPLICATION_JSON)
+	@Produces(MediaType.APPLICATION_JSON)
+	public void updateUser(@PathParam("authToken") int id, User user) {
+		userDAO.update(id, user);
+	}
 }
