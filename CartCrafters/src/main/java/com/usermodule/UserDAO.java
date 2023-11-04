@@ -19,7 +19,7 @@ public class UserDAO {
 		String sql = "SELECT fname, lname, address, postal, city, country, province, username, userID FROM users";
 		List<User> users = new ArrayList<>();
 		
-		try (Connection conn = DatabaseConnection.connect();
+		try (Connection conn = UserDatabaseConnection.connect();
 		Statement stmt = conn.createStatement();
 				
 		ResultSet rs = stmt.executeQuery(sql)){
@@ -49,7 +49,7 @@ public class UserDAO {
     */
 	public void create(User user) {
 		String sql = "INSERT INTO users(fname, lname, address, postal, city, country, province, username, password) VALUES(?,?,?,?,?,?,?,?,?)";
-		try (Connection conn = DatabaseConnection.connect();
+		try (Connection conn = UserDatabaseConnection.connect();
 		PreparedStatement pstmt = conn.prepareStatement(sql)) {
 			pstmt.setString(1, user.getfName());
 			pstmt.setString(2, user.getlName());
@@ -69,7 +69,7 @@ public class UserDAO {
 	public User readID(int id) {
 		String sql = "SELECT fname, lname, address, postal, city, country, province, username FROM users WHERE userID = ?";
 		User user = null;
-		try (Connection conn = DatabaseConnection.connect();
+		try (Connection conn = UserDatabaseConnection.connect();
 		PreparedStatement pstmt = conn.prepareStatement(sql)) {
 			// Set the corresponding parameter
 			pstmt.setInt(1, id);
@@ -97,9 +97,9 @@ public class UserDAO {
 	}
 	
 	public User readName(String username) {
-		String sql = "SELECT fname, lname, address, postal, city, country, province, userID FROM users WHERE username = ?";
+		String sql = "SELECT fname, lname, address, postal, city, country, province, password, userID FROM users WHERE username = ?";
 		User user = null;
-		try (Connection conn = DatabaseConnection.connect();
+		try (Connection conn = UserDatabaseConnection.connect();
 		PreparedStatement pstmt = conn.prepareStatement(sql)) {
 			// Set the corresponding parameter
 			pstmt.setString(1, username);
@@ -117,6 +117,7 @@ public class UserDAO {
 					user.setCountry(rs.getString("country"));
 					user.setProvince(rs.getString("province"));
 					user.setUsername(username);
+					user.setPassword(rs.getString("password"));
 					user.setUserID(rs.getInt("userID"));
 				}
 			}
@@ -125,11 +126,35 @@ public class UserDAO {
 		}
 		return user;
 	}
+	
+	
+	public boolean authenticateUser(String username, String password) {
+		String sql = "SELECT password FROM users WHERE username = ?";
+		String passwordDB = null;
+		try (Connection conn = UserDatabaseConnection.connect();
+		PreparedStatement pstmt = conn.prepareStatement(sql)) {
+			// Set the corresponding parameter
+			pstmt.setString(1, username);
+			// Execute the query and get the result set
+			try (ResultSet rs = pstmt.executeQuery()) {
+				// Check if a result was returned
+				if (rs.next()) {
+					passwordDB = (rs.getString("password"));
+				}
+			}
+		} catch (SQLException e) {
+			System.out.println(e.getMessage());
+		}
+
+		System.out.println(passwordDB);
+		
+		return true;
+	}
 		
 	public void update(int id, User user) {
 		//use prepared statements
 		String sql = "UPDATE users SET fname = ?, lname = ?, address = ?, postal = ?, city = ?, country = ?, province = ?, username = ?, password = ? WHERE userID =?";
-		try (Connection conn = DatabaseConnection.connect();
+		try (Connection conn = UserDatabaseConnection.connect();
 		PreparedStatement pstmt = conn.prepareStatement(sql)) {
 			// Set the corresponding parameters
 			pstmt.setString(1, user.getfName());
@@ -149,17 +174,4 @@ public class UserDAO {
 		}
 	}
 		
-//	public void delete(int id) {
-//		String sql = "DELETE FROM students WHERE id = ?";
-//		try (Connection conn = DatabaseConnection.connect();
-//		PreparedStatement pstmt = conn.prepareStatement(sql)) {
-//			// Set the corresponding parameter
-//			pstmt.setInt(1, id);
-//			// Delete the student record
-//			pstmt.executeUpdate();
-//		} catch (SQLException e) {
-//			System.out.println(e.getMessage());
-//		}
-//	}
-
 }

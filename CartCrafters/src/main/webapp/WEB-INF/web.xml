@@ -6,7 +6,7 @@
 	<!-- Jersey Servlet configurations -->
 
 	<servlet>
-		<servlet-name>Jersey REST Service</servlet-name>
+		<servlet-name>UserModule</servlet-name>
 		<servlet-class>org.glassfish.jersey.servlet.ServletContainer</servlet-class>
 		<init-param>
 		<param-name>jersey.config.server.provider.packages</param-name>
@@ -16,8 +16,23 @@
 	</servlet>
 
 	<servlet-mapping>
-		<servlet-name>Jersey REST Service</servlet-name>
-		<url-pattern>/api/*</url-pattern>
+		<servlet-name>UserModule</servlet-name>
+		<url-pattern>/um/api/*</url-pattern>
+	</servlet-mapping>
+	
+	<servlet>
+		<servlet-name>CatalogueModule</servlet-name>
+		<servlet-class>org.glassfish.jersey.servlet.ServletContainer</servlet-class>
+		<init-param>
+		<param-name>jersey.config.server.provider.packages</param-name>
+		<param-value>com.cataloguemodule</param-value>
+		</init-param>
+		<load-on-startup>1</load-on-startup>
+	</servlet>
+
+	<servlet-mapping>
+		<servlet-name>CatalogueModule</servlet-name>
+		<url-pattern>/cm/api/*</url-pattern>
 	</servlet-mapping>
 	
 	<servlet>

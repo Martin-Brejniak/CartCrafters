@@ -10,6 +10,7 @@ import jakarta.ws.rs.PUT;
 import jakarta.ws.rs.Path;
 import jakarta.ws.rs.PathParam;
 import jakarta.ws.rs.Produces;
+import jakarta.ws.rs.QueryParam;
 import jakarta.ws.rs.core.Context;
 import jakarta.ws.rs.core.MediaType;
 import jakarta.ws.rs.core.Response;
@@ -32,11 +33,18 @@ public class UserController {
 //		return userDAO.readID(id);
 //	}
 	
+//	@GET
+//	@Path("/{authToken}")
+//	@Produces(MediaType.APPLICATION_JSON)
+//	public User getUserByUsername(@PathParam("authToken") String username) {
+//		return userDAO.readName(username);
+//	}
+	
 	@GET
-	@Path("/{authToken}")
+	@Path("/authenticate")
 	@Produces(MediaType.APPLICATION_JSON)
-	public User getUserByUsername(@PathParam("authToken") String username) {
-		return userDAO.readName(username);
+	public boolean authenticateUser(@QueryParam("username") String username, @QueryParam("password") String password) {
+		return userDAO.authenticateUser(username, password);
 	}
 	
 	@POST
