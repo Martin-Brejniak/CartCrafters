@@ -42,29 +42,7 @@ public class UserDAO {
 		return users;
 	}
 	
-    /**
-    * Add user to user database.
-    *
-    * @param  user   a user.
-    */
-	public void create(User user) {
-		String sql = "INSERT INTO users(fname, lname, address, postal, city, country, province, username, password) VALUES(?,?,?,?,?,?,?,?,?)";
-		try (Connection conn = UserDatabaseConnection.connect();
-		PreparedStatement pstmt = conn.prepareStatement(sql)) {
-			pstmt.setString(1, user.getfName());
-			pstmt.setString(2, user.getlName());
-			pstmt.setString(3, user.getAddress());
-			pstmt.setString(4, user.getPostal());
-			pstmt.setString(5, user.getCity());
-			pstmt.setString(6, user.getCountry());
-			pstmt.setString(7, user.getProvince());
-			pstmt.setString(8, user.getUsername());
-			pstmt.setString(9, user.getPassword());
-			pstmt.executeUpdate();
-		} catch (SQLException e) {
-			System.out.println(e.getMessage());
-		}
-	}
+
 	
 	public User readID(int id) {
 		String sql = "SELECT fname, lname, address, postal, city, country, province, username FROM users WHERE userID = ?";
@@ -149,6 +127,30 @@ public class UserDAO {
 		System.out.println(passwordDB);
 		
 		return true;
+	}
+	
+    /**
+    * Add user to user database.
+    *
+    * @param  user   a user.
+    */
+	public void create(User user) {
+		String sql = "INSERT INTO users(fname, lname, address, postal, city, country, province, username, password) VALUES(?,?,?,?,?,?,?,?,?)";
+		try (Connection conn = UserDatabaseConnection.connect();
+		PreparedStatement pstmt = conn.prepareStatement(sql)) {
+			pstmt.setString(1, user.getfName());
+			pstmt.setString(2, user.getlName());
+			pstmt.setString(3, user.getAddress());
+			pstmt.setString(4, user.getPostal());
+			pstmt.setString(5, user.getCity());
+			pstmt.setString(6, user.getCountry());
+			pstmt.setString(7, user.getProvince());
+			pstmt.setString(8, user.getUsername());
+			pstmt.setString(9, user.getPassword());
+			pstmt.executeUpdate();
+		} catch (SQLException e) {
+			System.out.println(e.getMessage());
+		}
 	}
 		
 	public void update(int id, User user) {
