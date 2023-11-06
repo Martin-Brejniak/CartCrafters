@@ -67,6 +67,96 @@
 					"response": []
 				},
 				{
+					"name": "Authenticate (Success)",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/CartCrafters/um/api/user/authenticate?username=MartanisIV&password=1234",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"CartCrafters",
+								"um",
+								"api",
+								"user",
+								"authenticate"
+							],
+							"query": [
+								{
+									"key": "username",
+									"value": "MartanisIV"
+								},
+								{
+									"key": "password",
+									"value": "1234"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Authenticate (Faliure)",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/CartCrafters/um/api/user/authenticate?username=MartanisIV&password=4321",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"CartCrafters",
+								"um",
+								"api",
+								"user",
+								"authenticate"
+							],
+							"query": [
+								{
+									"key": "username",
+									"value": "MartanisIV"
+								},
+								{
+									"key": "password",
+									"value": "4321"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
 					"name": "Create User 1",
 					"request": {
 						"method": "POST",
