@@ -65,7 +65,15 @@
 		<url-pattern>/signup</url-pattern>
 	</servlet-mapping>
 	
+	<servlet>
+		<servlet-name>Search</servlet-name>
+		<jsp-file>/Search.html</jsp-file>
+	</servlet>
 
+	<servlet-mapping>
+		<servlet-name>Search</servlet-name>
+		<url-pattern>/search</url-pattern>
+	</servlet-mapping>
 	
 
 </web-app>

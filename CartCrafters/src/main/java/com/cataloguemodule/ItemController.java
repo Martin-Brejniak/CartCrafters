@@ -12,6 +12,7 @@ import jakarta.ws.rs.PUT;
 import jakarta.ws.rs.Path;
 import jakarta.ws.rs.PathParam;
 import jakarta.ws.rs.Produces;
+import jakarta.ws.rs.QueryParam;
 import jakarta.ws.rs.core.MediaType;
 
 @Path("/item")
@@ -30,6 +31,13 @@ public class ItemController {
 	@Produces(MediaType.APPLICATION_JSON)
 	public Item getProductById(@PathParam("authToken") int id) {
 		return itemDAO.readID(id);
+	}
+	
+	@GET
+	@Path("/search")
+	@Produces(MediaType.APPLICATION_JSON)
+	public List<Item> searchProduct(@QueryParam("term") String term) {
+		return itemDAO.search(term);
 	}
 	
 	@POST

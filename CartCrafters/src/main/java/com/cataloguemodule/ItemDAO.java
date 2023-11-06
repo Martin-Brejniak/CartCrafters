@@ -13,7 +13,7 @@ import com.usermodule.UserDatabaseConnection;
 
 public class ItemDAO {
 	
-	/**
+		/**
 	    * Gets all items from the items database.
 	    *
 	    * @return         all items.
@@ -67,6 +67,31 @@ public class ItemDAO {
 				System.out.println(e.getMessage());
 			}
 			return item;
+		}
+		
+		public List<Item> search(String term) {
+			String sql = "SELECT name, price, type, endTime, winner, itemID FROM items WHERE name LIKE '%" + term + "%'";
+			
+			List<Item> items = new ArrayList<>();
+			
+			try (Connection conn = ItemDatabaseConnection.connect();
+			Statement stmt = conn.createStatement();
+					
+			ResultSet rs = stmt.executeQuery(sql)){
+				while (rs.next()) {
+					Item item = new Item();
+					item.setName(rs.getString("name"));
+					item.setPrice(rs.getDouble("price"));
+					item.setType(rs.getString("type"));
+					item.setEndTime(rs.getString("endTime"));
+					item.setWinner(rs.getString("winner"));
+					item.setItemID(rs.getInt("itemID"));
+					items.add(item);
+				}
+			} catch (SQLException e) {
+				System.out.println(e.getMessage());
+			}
+			return items;
 		}
 		
 		public void create(Item item) {
