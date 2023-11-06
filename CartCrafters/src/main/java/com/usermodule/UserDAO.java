@@ -107,8 +107,10 @@ public class UserDAO {
 	
 	
 	public boolean authenticateUser(String username, String password) {
+		
 		String sql = "SELECT password FROM users WHERE username = ?";
 		String passwordDB = null;
+		boolean correct = false;
 		try (Connection conn = UserDatabaseConnection.connect();
 		PreparedStatement pstmt = conn.prepareStatement(sql)) {
 			// Set the corresponding parameter
@@ -123,10 +125,12 @@ public class UserDAO {
 		} catch (SQLException e) {
 			System.out.println(e.getMessage());
 		}
-
-		System.out.println(passwordDB);
 		
-		return true;
+		if (password.equals(passwordDB) ) {
+			correct = true;
+		}
+		
+		return correct;
 	}
 	
     /**

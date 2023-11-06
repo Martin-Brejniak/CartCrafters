@@ -3,7 +3,7 @@
 <head>
 	<meta charset="UTF-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
-	<title>Sign Up</title>
+	<title>Sign In</title>
 	<link rel="stylesheet" href="styles.css">
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 </head>
@@ -12,7 +12,7 @@
 		<h1>CartCrafters</h1>
 	</header>
 	
-	<form id="addUserForm">
+	<form id="loginUserForm">
 		<label for="username">Username:</label>
 		<input type="text" id="username" name="username" required><br>
 		<label for="password">Password:</label>
@@ -22,26 +22,18 @@
 	<p id="confirmationMessage"></p>
 	
 	<script>
-	$("#addUserForm").submit(function(e){
+	$("#loginUserForm").submit(function(e){
 		e.preventDefault();
 		var userData = {
-		fName: $("#fName").val(),
-		lName: $("#lName").val(),
-		address: $("#address").val(),
-		postal: $("#postal").val(),
-		city: $("#city").val(),
-		country: $("#country").val(),
-		province: $("#province").val(),
 		username: $("#username").val(),
 		password: $("#password").val()
 		};
 		$.ajax({
-			url: "http://localhost:8080/CartCrafters/api/user",
-			type: 'POST',
-			contentType: 'application/json',
-			data: JSON.stringify(userData),
+			url: "http://localhost:8080/CartCrafters/um/api/user/authenticate",
+			type: 'GET',
+			data: userData,
 			success: function(result){
-				$("#confirmationMessage").text("User added successfully!");
+				$("#confirmationMessage").text("Successful Login");
 			}, error: function(error){
 				console.log(error);
 			}
@@ -49,8 +41,5 @@
 	});
 	</script>
 	
-	<footer>
-		<p>© 2023 CartCrafters</p>
-	</footer>
 </body>
 </html>
