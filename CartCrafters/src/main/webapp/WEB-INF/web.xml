@@ -75,5 +75,15 @@
 		<url-pattern>/search</url-pattern>
 	</servlet-mapping>
 	
+	<servlet>
+		<servlet-name>Sell</servlet-name>
+		<jsp-file>/Sell.html</jsp-file>
+	</servlet>
+
+	<servlet-mapping>
+		<servlet-name>Sell</servlet-name>
+		<url-pattern>/sell</url-pattern>
+	</servlet-mapping>
+	
 
 </web-app>

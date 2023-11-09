@@ -18,7 +18,7 @@ public class User {
     /**
     * Get the first name of user.
     *
-    * @return         the user's first name
+    * @return         the user's first name.
     */
 	public String getfName() {
 		return fName;
@@ -36,7 +36,7 @@ public class User {
     /**
     * Get the last name of user.
     *
-    * @return         the user's last name
+    * @return         the user's last name.
     */
 	public String getlName() {
 		return lName;
@@ -54,7 +54,7 @@ public class User {
     /**
     * Get the address of user.
     *
-    * @return         the user's address
+    * @return         the user's address.
     */
 	public String getAddress() {
 		return address;
@@ -72,7 +72,7 @@ public class User {
     /**
     * Get the postal code of user.
     *
-    * @return         the user's postal code
+    * @return         the user's postal code.
     */
 	public String getPostal() {
 		return postal;
@@ -90,7 +90,7 @@ public class User {
     /**
     * Get the city of user.
     *
-    * @return         the user's city
+    * @return         the user's city.
     */
 	public String getCity() {
 		return city;
@@ -108,7 +108,7 @@ public class User {
     /**
     * Get the country of user.
     *
-    * @return         the user's country
+    * @return         the user's country.
     */
 	public String getCountry() {
 		return country;
@@ -126,7 +126,7 @@ public class User {
     /**
     * Get the province of user.
     *
-    * @return         the user's province
+    * @return         the user's province.
     */
 	public String getProvince() {
 		return province;
@@ -144,7 +144,7 @@ public class User {
     /**
     * Get the username of user.
     *
-    * @return         the user's username
+    * @return         the user's username.
     */
 	public String getUsername() {
 		return username;
@@ -162,7 +162,7 @@ public class User {
     /**
     * Get the password of user.
     *
-    * @return         the user's password
+    * @return         the user's password.
     */
 	public String getPassword() {
 		return password;
@@ -180,7 +180,7 @@ public class User {
 	/**
 	* Get the ID of user.
 	*
-	* @return         the user's ID
+	* @return         the user's ID.
 	*/
 	public int getUserID() {
 		return userID;

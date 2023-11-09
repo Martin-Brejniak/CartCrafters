@@ -42,6 +42,12 @@ public class ItemDAO {
 			return items;
 		}
 		
+		/**
+		* Gets item with a matching ID from the items database.
+		*
+		* @param  id   a number.
+		* @return         item.
+		*/
 		public Item readID(int id) {
 			String sql = "SELECT name, price, type, endTime, winner FROM items WHERE itemID = ?";
 			Item item = null;
@@ -69,6 +75,12 @@ public class ItemDAO {
 			return item;
 		}
 		
+		/**
+		* Gets items from the items database that match with the keyword typed in by the user.
+		*
+		* @param  term   a search term.
+		* @return         a list of items.
+		*/
 		public List<Item> search(String term) {
 			String sql = "SELECT name, price, type, endTime, winner, itemID FROM items WHERE name LIKE '%" + term + "%'";
 			
@@ -94,6 +106,11 @@ public class ItemDAO {
 			return items;
 		}
 		
+		/**
+		* Add item to item database.
+		*
+		* @param  item   an item.
+		*/
 		public void create(Item item) {
 			String sql = "INSERT INTO items(name, price, type, endTime) VALUES(?,?,?,?)";
 			try (Connection conn = ItemDatabaseConnection.connect();
@@ -108,6 +125,12 @@ public class ItemDAO {
 			}
 		}
 		
+		/**
+		* Updates item in item database.
+		*
+	    * @param  id   a number.
+		* @param  item  an item.
+		*/
 		public void update(int id, Item item) {
 			//use prepared statements
 			String sql = "UPDATE items SET name = ?, price = ?, type = ?, endTime = ? WHERE itemID = ?";
@@ -126,6 +149,11 @@ public class ItemDAO {
 			}
 		}
 		
+		/**
+		* Deletes item in item database.
+		*
+	    * @param  id   a number.
+		*/
 		public void delete(int id) {
 			String sql = "DELETE FROM items WHERE itemID = ?";
 			try (Connection conn = ItemDatabaseConnection.connect();

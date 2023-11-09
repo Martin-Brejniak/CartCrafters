@@ -43,7 +43,12 @@ public class UserDAO {
 	}
 	
 
-	
+	/**
+	* Gets user with a matching ID from the users database.
+	*
+	* @param  id   a number.
+	* @return         user.
+	*/
 	public User readID(int id) {
 		String sql = "SELECT fname, lname, address, postal, city, country, province, username FROM users WHERE userID = ?";
 		User user = null;
@@ -74,6 +79,12 @@ public class UserDAO {
 		return user;
 	}
 	
+	/**
+	* Gets user with a matching username from the users database.
+	*
+	* @param  id   a username.
+	* @return         user.
+	*/
 	public User readName(String username) {
 		String sql = "SELECT fname, lname, address, postal, city, country, province, password, userID FROM users WHERE username = ?";
 		User user = null;
@@ -105,9 +116,14 @@ public class UserDAO {
 		return user;
 	}
 	
-	
+	/**
+	* Checks to see if the username and password the user typed in, matches with what's in the database.
+	*
+	* @param  username   a username.
+	* @param  password   a password.
+	* @return         true if username and password are correct. False if not.
+	*/
 	public boolean authenticateUser(String username, String password) {
-		
 		String sql = "SELECT password FROM users WHERE username = ?";
 		String passwordDB = null;
 		boolean correct = false;
@@ -156,7 +172,13 @@ public class UserDAO {
 			System.out.println(e.getMessage());
 		}
 	}
-		
+	
+	/**
+	* Updates user in user database.
+	*
+    * @param  id   a number.
+	* @param  user   a user.
+	*/
 	public void update(int id, User user) {
 		//use prepared statements
 		String sql = "UPDATE users SET fname = ?, lname = ?, address = ?, postal = ?, city = ?, country = ?, province = ?, username = ?, password = ? WHERE userID =?";
