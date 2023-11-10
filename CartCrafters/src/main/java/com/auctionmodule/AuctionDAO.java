@@ -35,7 +35,7 @@ public class AuctionDAO {
         }
     }
 
-    // Update an existing auction record
+   
     public void updateAuction(Auction auction) {
         String sql = "UPDATE auctions SET itemId = ?, auctionType = ?, initialPrice = ?, " +
                      "currentPrice = ?, startTimeOfAuction = ?, endTimeOfAuction = ?, " +
@@ -128,4 +128,35 @@ public class AuctionDAO {
 
         return auctions;
     }
+    
+    public List<Auction> getAuctionsByType(String auctionType) {
+        String sql = "SELECT * FROM auctions WHERE auctionType = ?";
+        List<Auction> auctions = new ArrayList<>();
+
+        try (Connection conn = DatabaseConnection.connect();
+             PreparedStatement pstmt = conn.prepareStatement(sql)) {
+            pstmt.setString(1, auctionType);
+
+            try (ResultSet rs = pstmt.executeQuery()) {
+                while (rs.next()) {
+                    Auction auction = new Auction();
+                    auction.setAuctionId(rs.getInt("auctionId"));
+                    auction.setItemId(rs.getInt("itemId"));
+                    auction.setAuctionType(rs.getString("auctionType"));
+                    auction.setInitialPrice(rs.getDouble("initialPrice"));
+                    auction.setCurrentPrice(rs.getDouble("currentPrice"));
+                    auction.setStartTimeOfAuction(rs.getTimestamp("startTimeOfAuction"));
+                    auction.setEndTimeOfAuction(rs.getTimestamp("endTimeOfAuction"));
+                    auction.setAuctionEnded(rs.getBoolean("auctionEnded"));
+                    auction.setSoldToUserId(rs.getInt("soldToUserId"));
+                    auctions.add(auction);
+                }
+            }
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+        }
+
+        return auctions;
+    }
+
 }

@@ -95,7 +95,7 @@ public class Auction {
         return soldToUserId;
     }
 
-    public void setSoldToUserId(int soldToUserId) {
-        this.soldToUserId = soldToUserId;
+    public void setSoldToUserId(int id) {
+        this.soldToUserId = id;
     }
 }
