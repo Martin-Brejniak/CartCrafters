@@ -7,7 +7,7 @@ CartCrafters is a RESTFUL auction website, akin to auctioning websites like eBay
 3. In your IDE, import an existing Maven project, and select the project.
 4. Search through ***src*** folder, and find ***context.xml*** file within the **META-INF** folder.
 5. Open the context.xml file with a text editor.
-6. Change the ***url*** variables to match where you are storing the project. Ensure you use the following format:
+6. Change the ***url*** variables to match the path to the project. Ensure you use the following format:
 ```
 jdbc:sqlite:<project-path>\CartCrafters\src\main\resources\<database-name>.db
 ```
