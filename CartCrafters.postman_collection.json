@@ -72,6 +72,37 @@
 					"response": []
 				},
 				{
+					"name": "Create User 2 (Error Case)",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\"fName\": \"Chadwick\", \"lName\": \"Pennywise\", \"address\": \"69 Beaverball Rd\", \"postal\": \"L582R4\", \"city\": \"Vaughan\", \"country\": \"Canada\", \"province\": \"Ontario\",\r\n\"username\": \"Chad\"}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/CartCrafters/um/api/user",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"CartCrafters",
+								"um",
+								"api",
+								"user"
+							]
+						}
+					},
+					"response": []
+				},
+				{
 					"name": "Get All Users",
 					"request": {
 						"method": "GET",
@@ -94,7 +125,7 @@
 					"response": []
 				},
 				{
-					"name": "Get User By Username",
+					"name": "Get User By Username 1",
 					"protocolProfileBehavior": {
 						"disableBodyPruning": true
 					},
@@ -111,7 +142,7 @@
 							}
 						},
 						"url": {
-							"raw": "http://localhost:8080/CartCrafters/um/api/user/MartanisIV",
+							"raw": "http://localhost:8080/CartCrafters/um/api/user/lookup/MartanisIV",
 							"protocol": "http",
 							"host": [
 								"localhost"
@@ -122,7 +153,44 @@
 								"um",
 								"api",
 								"user",
+								"lookup",
 								"MartanisIV"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get User By Username 2",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/CartCrafters/um/api/user/lookup/Chad",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"CartCrafters",
+								"um",
+								"api",
+								"user",
+								"lookup",
+								"Chad"
 							]
 						}
 					},
