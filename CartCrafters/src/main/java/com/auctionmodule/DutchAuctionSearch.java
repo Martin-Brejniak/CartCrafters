@@ -3,6 +3,9 @@ package com.auctionmodule;
 import java.util.List;
 import java.util.NoSuchElementException;
 
+import org.jvnet.hk2.annotations.Service;
+
+@Service
 public class DutchAuctionSearch {
 
     private AuctionDAO auctionDAO;

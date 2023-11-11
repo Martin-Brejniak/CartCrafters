@@ -3,8 +3,12 @@ package com.auctionmodule;
 import java.nio.file.AccessDeniedException;
 import java.util.List;
 
+import org.jvnet.hk2.annotations.Service;
+
+@Service
 public class DutchAuctionUpdate {
 
+	
     private static AuctionDAO auctionDAO;
 
     public DutchAuctionUpdate(AuctionDAO auctionDAO) {
