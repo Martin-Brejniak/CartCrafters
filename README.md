@@ -6,7 +6,7 @@ CartCrafters is a RESTFUL auction website, akin to auctioning websites like eBay
 2. Download the project zip file, and extract it.
 3. In your IDE, import an existing Maven project, and select the project.
 4. Right click the main project folder in your IDE, click ***Maven***, and then ***Update Project***.
-5. Search through src folder, and find ***context.xml*** file within the **META-INF** folder.
+5. Search through ***src*** folder, and find ***context.xml*** file within the **META-INF** folder.
 6. Open the context.xml file with a text editor.
 7. Change the ***url*** variables to match where you are storing the project. Ensure you use the following format:
 ```
