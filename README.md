@@ -13,15 +13,15 @@ jdbc:sqlite:<project-path>\CartCrafters\src\main\resources\<database-name>.db
 ```
 7. Run the project.
 
-# Requirements Document
-Can be found [here](https://docs.google.com/document/d/1ZWlmvLkMUWDauz06uMcv-5dzCzevhOUv9Qs2rIAS454/edit?usp=sharing).
-
 # Debugging
 Should you run into any issues, try these methods:
 - Right click the main project folder in your IDE, click ***Maven***, and then ***Update Project***.
 - Right click the main project folder in your IDE, click ***Run As***, and then ***Maven Install***.
 
 If these methods fail, do not hesistant to reach out to us. We'd be happy to help!
+
+# Requirements Document
+Can be found [here](https://docs.google.com/document/d/1ZWlmvLkMUWDauz06uMcv-5dzCzevhOUv9Qs2rIAS454/edit?usp=sharing).
 
 # Authors
 - Martin Brejniak (martin.brejniak@bell.net)
