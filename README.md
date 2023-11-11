@@ -5,10 +5,10 @@ CartCrafters is a RESTFUL auction website, akin to auctioning websites like eBay
 1. Ensure you have Apache Tomcat version 10.1 installed on your computer. If you don’t, you can get it from [here](https://tomcat.apache.org/download-90.cgi).
 2. Download the project zip file, and extract it.
 3. In your IDE, import an existing Maven project, and select the project.
-4. Right click the main project folder in your IDE, click Maven, and then Update Project.
-5. Search through src folder, and find context.xml file within the META-INF folder.
+4. Right click the main project folder in your IDE, click ***Maven***, and then ***Update Project***.
+5. Search through src folder, and find ***context.xml*** file within the **META-INF** folder.
 6. Open the context.xml file with a text editor.
-7. Change the url variables to match where you are storing the project. Ensure you use the following format:
+7. Change the ***url*** variables to match where you are storing the project. Ensure you use the following format:
 ```
 jdbc:sqlite:<project-path>\CartCrafters\src\main\resources\<database-name>.db
 ```
