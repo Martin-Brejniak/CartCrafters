@@ -5,7 +5,7 @@ import java.util.List;
 
 public class DutchAuctionUpdate {
 
-    private AuctionDAO auctionDAO;
+    private static AuctionDAO auctionDAO;
 
     public DutchAuctionUpdate(AuctionDAO auctionDAO) {
         this.auctionDAO = auctionDAO;

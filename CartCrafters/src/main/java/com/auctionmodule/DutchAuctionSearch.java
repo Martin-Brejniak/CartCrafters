@@ -12,6 +12,9 @@ public class DutchAuctionSearch {
     }
 
     public List<Auction> getAllDutchAuctions() {
+        if (auctionDAO == null) {
+            throw new IllegalStateException("AuctionDAO has not been set");
+        }
         return auctionDAO.getAuctionsByType("Dutch");
     }
 
@@ -22,16 +25,19 @@ public class DutchAuctionSearch {
     }
 
     public Auction getDutchAuctionDetails(int auctionId) {
+        if (auctionDAO == null) {
+            throw new IllegalStateException("AuctionDAO has not been set");
+        }
         return auctionDAO.getAuctionById(auctionId);
     }
 
     public boolean isUserWinner(int auctionId, int userId) {
-        Auction auction = auctionDAO.getAuctionById(auctionId);
+        Auction auction = getDutchAuctionDetails(auctionId);
         return auction != null && auction.isAuctionEnded() && auction.getSoldToUserId() == userId;
     }
 
     public List<Auction> searchDutchAuctionsByItems(List<String> itemIds) throws NoSuchElementException {
-        List<Auction> auctions = auctionDAO.getAuctionsByType("Dutch");
+        List<Auction> auctions = getAllDutchAuctions();
         auctions.removeIf(auction -> !auction.isAuctionEnded() || !itemIds.contains(String.valueOf(auction.getItemId())));
         if (auctions.isEmpty()) {
             throw new NoSuchElementException("No Dutch auctions found for the specified items.");

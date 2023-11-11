@@ -7,7 +7,7 @@ public class Bid {
     private double bidAmount;
 
     public Bid() {
-        // Default constructor
+       
     }
 
     public Bid(int auctionId, int userId, double bidAmount) {
