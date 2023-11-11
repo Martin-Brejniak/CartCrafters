@@ -5,19 +5,19 @@
 	<Resource name="jdbc/EECS"
 	factory="org.apache.tomcat.jdbc.pool.DataSourceFactory"
 	type="javax.sql.DataSource" driverClassName="org.sqlite.JDBC"
-	url="jdbc:sqlite:\Users\marti\eclipse-workspace\CartCrafters\src\main\resources\users.db"/>
+	url="jdbc:sqlite:src/resources/users.db"/>
 	<ResourceLink global="jdbc/EECS" name="jdbc/EECS" type="javax.sql.DataSource" />
 	
 	<Resource name="jdbc/EECS-2"
 	factory="org.apache.tomcat.jdbc.pool.DataSourceFactory"
 	type="javax.sql.DataSource" driverClassName="org.sqlite.JDBC"
-	url="jdbc:sqlite:\Users\marti\eclipse-workspace\CartCrafters\src\main\resources\items.db"/>
+	url="/src/resources/items.db"/>
 	<ResourceLink global="jdbc/EECS-2" name="jdbc/EECS-2" type="javax.sql.DataSource" />
 	
 	<Resource name="jdbc/EECS-3"
 	factory="org.apache.tomcat.jdbc.pool.DataSourceFactory"
 	type="javax.sql.DataSource" driverClassName="org.sqlite.JDBC"
-	 url="jdbc:sqlite:/WEB-INF/resources/auction.db"/>
+	url="jdbc:sqlite:src/resources//auction.db"/>
 	<ResourceLink global="jdbc/EECS-3" name="jdbc/EECS-3" type="javax.sql.DataSource" />
 </Context>
 
