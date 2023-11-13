@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Sign In</title>
+	<link rel="stylesheet" href="styles.css">
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+</head>
+<body>
+	<header>
+		<h1>CartCrafters</h1>
+	</header>
+	
+	<form id="loginUserForm">
+		<label for="username">Username:</label>
+		<input type="text" id="username" name="username" required><br>
+		<label for="password">Password:</label>
+		<input type="text" id="password" name="password" required><br>
+		<input type="submit" value="Sign In">
+	</form>
+	<p id="confirmationMessage"></p>
+	
+	<script>
+	$("#loginUserForm").submit(function(e){
+		e.preventDefault();
+		var userData = {
+		username: $("#username").val(),
+		password: $("#password").val()
+		};
+		$.ajax({
+			url: "http://localhost:8080/CartCrafters/um/api/user/authenticate",
+			type: 'GET',
+			data: userData,
+			success: function(result){
+				$("#confirmationMessage").text("Successful Login");
+			}, error: function(error){
+				console.log(error);
+			}
+		});
+	});
+	</script>
+	
+</body>
+</html>
