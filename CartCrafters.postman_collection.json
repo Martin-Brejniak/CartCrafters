@@ -16,7 +16,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\"fName\": \"Martin\", \"lName\": \"Brejniak\", \"address\": \"162 Novaview Cr\", \"postal\": \"L4L9L8\", \"city\": \"Woodbridge\", \"country\": \"Canada\", \"province\": \"Ontario\",\r\n\"username\": \"MartanisIV\", \"password\": \"1234\"}",
+							"raw": "{\"fName\": \"John\", \"lName\": \"Brejniak\", \"address\": \"123 Novaview Cr\", \"postal\": \"L5L9E8\", \"city\": \"Woodbridge\", \"country\": \"Canada\", \"province\": \"Ontario\",\r\n\"username\": \"Superepic\", \"password\": \"1234\"}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -72,7 +72,7 @@
 					"response": []
 				},
 				{
-					"name": "Create User 2 (Error Case)",
+					"name": "Create User 2 (Faliure)",
 					"request": {
 						"method": "POST",
 						"header": [],
@@ -197,7 +197,7 @@
 					"response": []
 				},
 				{
-					"name": "Authenticate (Success)",
+					"name": "Authenticate",
 					"protocolProfileBehavior": {
 						"disableBodyPruning": true
 					},
@@ -293,7 +293,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\"fName\": \"Martin\", \"lName\": \"Brejniak\", \"address\": \"261 Novaview Cr\", \"postal\": \"L4L9L8\", \"city\": \"Woodbridge\", \"country\": \"Canada\", \"province\": \"Ontario\",\r\n\"username\": \"MartanisIV\", \"password\": \"1234\"}",
+							"raw": "{\"fName\": \"Martin\", \"lName\": \"Brejniak\", \"address\": \"175 Covaview Lane\", \"postal\": \"F4F9F8\", \"city\": \"Woodbridge\", \"country\": \"Canada\", \"province\": \"Ontario\",\r\n\"username\": \"MartanisIV\", \"password\": \"1234\"}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -301,7 +301,7 @@
 							}
 						},
 						"url": {
-							"raw": "http://localhost:8080/CartCrafters/um/api/user/1",
+							"raw": "http://localhost:8080/CartCrafters/um/api/user/4",
 							"protocol": "http",
 							"host": [
 								"localhost"
@@ -312,7 +312,7 @@
 								"um",
 								"api",
 								"user",
-								"1"
+								"4"
 							]
 						}
 					},
@@ -330,7 +330,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\"name\": \"Mario Kart Wii\", \"price\": 60.50, \"type\": \"dutch\", \"endTime\": \"2023-29-11 23:50:55\"}",
+							"raw": "{\"name\": \"Mario Kart 8\", \"price\": 60.50, \"type\": \"dutch\", \"endTime\": \"2023-29-11 23:50:55\"}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -526,7 +526,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\"name\": \"Mario Kart 8\", \"price\": 60.50, \"type\": \"dutch\", \"endTime\": \"2023-29-11 23:50:55\"}",
+							"raw": "{\"name\": \"Mario Kart DS\", \"price\": 80.50, \"type\": \"dutch\", \"endTime\": \"2023-29-11 23:50:55\"}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -534,7 +534,7 @@
 							}
 						},
 						"url": {
-							"raw": "http://localhost:8080/CartCrafters/cm/api/item/4",
+							"raw": "http://localhost:8080/CartCrafters/cm/api/item/12",
 							"protocol": "http",
 							"host": [
 								"localhost"
@@ -545,7 +545,37 @@
 								"cm",
 								"api",
 								"item",
-								"4"
+								"12"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update Item Winner",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/CartCrafters/cm/api/item/winner/12?winner=Hamston",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"CartCrafters",
+								"cm",
+								"api",
+								"item",
+								"winner",
+								"12"
+							],
+							"query": [
+								{
+									"key": "winner",
+									"value": "Hamston"
+								}
 							]
 						}
 					},
@@ -557,7 +587,7 @@
 						"method": "DELETE",
 						"header": [],
 						"url": {
-							"raw": "http://localhost:8080/CartCrafters/cm/api/item/6",
+							"raw": "http://localhost:8080/CartCrafters/cm/api/item/12",
 							"protocol": "http",
 							"host": [
 								"localhost"
@@ -568,7 +598,7 @@
 								"cm",
 								"api",
 								"item",
-								"6"
+								"12"
 							]
 						}
 					},
