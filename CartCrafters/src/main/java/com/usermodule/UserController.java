@@ -33,12 +33,12 @@ public class UserController {
 //		return userDAO.readID(id);
 //	}
 	
-//	@GET
-//	@Path("/{authToken}")
-//	@Produces(MediaType.APPLICATION_JSON)
-//	public User getUserByUsername(@PathParam("authToken") String username) {
-//		return userDAO.readName(username);
-//	}
+	@GET
+	@Path("/lookup/{authToken}")
+	@Produces(MediaType.APPLICATION_JSON)
+	public User getUserByUsername(@PathParam("authToken") String username) {
+		return userDAO.readName(username);
+	}
 	
 	@GET
 	@Path("/authenticate")

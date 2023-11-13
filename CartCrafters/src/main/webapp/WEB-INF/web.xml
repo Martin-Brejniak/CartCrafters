@@ -35,7 +35,7 @@
 		<url-pattern>/cm/api/*</url-pattern>
 	</servlet-mapping>
 	
-		<servlet>
+	<servlet>
 		<servlet-name>CheckOutModule</servlet-name>
 		<servlet-class>org.glassfish.jersey.servlet.ServletContainer</servlet-class>
 		<init-param>
@@ -100,7 +100,7 @@
 		<url-pattern>/sell</url-pattern>
 	</servlet-mapping>
 	
-		<servlet>
+	<servlet>
 		<servlet-name>CheckOut</servlet-name>
 		<jsp-file>/CheckOut.html</jsp-file>
 	</servlet>
@@ -109,6 +109,5 @@
 		<servlet-name>CheckOut</servlet-name>
 		<url-pattern>/checkout</url-pattern>
 	</servlet-mapping>
-	
 
 </web-app>

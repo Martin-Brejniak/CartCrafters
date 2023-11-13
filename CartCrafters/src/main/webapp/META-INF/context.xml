@@ -14,3 +14,4 @@
 	url="jdbc:sqlite:\Users\marti\eclipse-workspace\CartCrafters\src\main\resources\items.db"/>
 	<ResourceLink global="jdbc/EECS-2" name="jdbc/EECS-2" type="javax.sql.DataSource" />
 </Context>
+

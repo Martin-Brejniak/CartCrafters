@@ -1,4 +1,4 @@
-package com.cataloguemodule;
+package com.checkoutmodule;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -8,17 +8,21 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.usermodule.User;
-import com.usermodule.UserDatabaseConnection;
+import com.cataloguemodule.Item;
+import com.cataloguemodule.ItemDatabaseConnection;
+//import com.usermodule.User;
+//import com.usermodule.UserDatabaseConnection;
 
-public class ItemDAO {
-	
+public class CheckOutDAO {
 		/**
 	    * Gets all items from the items database.
 	    *
 	    * @return         all items.
 	    */
 		public List<Item> readAll() {
+			
+			
+			
 			String sql = "SELECT name, price, type, endTime, winner, itemID FROM items";
 			List<Item> items = new ArrayList<>();
 			
@@ -150,27 +154,6 @@ public class ItemDAO {
 		}
 		
 		/**
-		* Updates the winner of an item in item database.
-		*
-	    * @param  id   a number.
-		* @param  winner  the winner.
-		*/
-		public void updateWinner(int id, String winner) {
-			//use prepared statements
-			String sql = "UPDATE items SET winner = ? WHERE itemID = ?";
-			try (Connection conn = ItemDatabaseConnection.connect();
-			PreparedStatement pstmt = conn.prepareStatement(sql)) {
-				// Set the corresponding parameters
-				pstmt.setString(1, winner);
-				pstmt.setInt(2, id);
-				// Update the student record
-				pstmt.executeUpdate();
-			} catch (SQLException e) {
-				System.out.println(e.getMessage());
-			}
-		}
-		
-		/**
 		* Deletes item in item database.
 		*
 	    * @param  id   a number.
@@ -189,3 +172,4 @@ public class ItemDAO {
 		}
 
 }
+
