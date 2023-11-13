@@ -6,12 +6,19 @@ import java.util.List;
 import java.util.NoSuchElementException;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import com.example.auctionserver.entity.Auction;
+import com.example.auctionserver.entity.DutchAuction;
 import com.example.auctionserver.entity.DutchBuy;
+import com.example.auctionserver.exceptions.AuctionEndedException;
+import com.example.auctionserver.exceptions.AuctionNotFoundException;
+import com.example.auctionserver.exceptions.InvalidAuctionTypeException;
 import com.example.auctionserver.service.DutchAuctionSearch;
 import com.example.auctionserver.service.DutchAuctionUpdate;
+import com.example.auctionserver.service.ResultMessage;
 
 
 @RestController
@@ -32,11 +39,7 @@ public class DutchAuctionController {
     public List<Auction> getAllDutchAuctions() {
         return dutchAuctionSearch.getAllDutchAuctions();
     }
-    
-    @GetMapping("/hello")
-    public String sayHello() {
-        return "Hello, World!";
-    }
+   
 
     @GetMapping("/get-all-open")
     public List<Auction> getAllOpenDutchAuctions() {
@@ -49,35 +52,51 @@ public class DutchAuctionController {
     }
 
     @GetMapping("/user/winner")
-    public boolean isUserWinner(@RequestParam("auctionId") int auctionId, @RequestParam("userId") int userId) {
+    public ResultMessage isUserWinner(@RequestParam("auctionId") int auctionId, @RequestParam("userId") int userId) {
         return dutchAuctionSearch.isUserWinner(auctionId, userId);
     }
 
-    @PostMapping("/search/items")
-    public List<Auction> searchDutchAuctionsByItems(@RequestBody List<String> itemIds) throws Exception {
-        try {
-            return dutchAuctionSearch.searchDutchAuctionsByItems(itemIds);
-        } catch (NoSuchElementException e) {
-            throw new Exception(e.getMessage());
-        }
-    }
+	/*
+	 * @PostMapping("/search/items") public List<Auction>
+	 * searchDutchAuctionsByItems(@RequestBody List<String> itemIds) throws
+	 * Exception { try { return
+	 * dutchAuctionSearch.searchDutchAuctionsByItems(itemIds); } catch
+	 * (NoSuchElementException e) { throw new Exception(e.getMessage()); } }
+	 */
 
     @PostMapping("/decrement")
-    public Auction decrementPrice(@RequestParam("auctionId") int auctionId) {
-        return dutchAuctionUpdate.decrementPrice(auctionId);
-    }
-
-    @PostMapping("/close")
-    public Auction closeAuction(@RequestParam("auctionId") int auctionId) {
-        return dutchAuctionUpdate.closeAuction(auctionId);
-    }
-
-    @PostMapping("/buy")
-    public Auction buyAuction(@RequestBody DutchBuy buy) throws Exception {
+    public ResponseEntity<?> decrementPrice(@RequestParam("auctionId") int auctionId) {
         try {
-            return dutchAuctionUpdate.buyAuction(buy.getAuctionId(), buy.getUserId());
-        } catch (AccessDeniedException e) {
-            throw new Exception("Could not buy the auction.");
+            DutchAuction result = dutchAuctionUpdate.decrementPrice(auctionId);
+            return ResponseEntity.ok(result);
+        } catch (AuctionNotFoundException e) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getMessage());
+        } catch (InvalidAuctionTypeException e) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage());
+        } catch (AuctionEndedException e) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage());
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("An unexpected error occurred.");
         }
     }
+
+	/*
+	 * @PostMapping("/close") public Auction closeAuction(@RequestParam("auctionId")
+	 * int auctionId) { return dutchAuctionUpdate.closeAuction(auctionId); }
+	 */
+
+    @PostMapping("/buy")
+    public ResponseEntity<Object> buyAuction(@RequestBody DutchBuy buy) {
+        try {
+            Auction result = dutchAuctionUpdate.buyAuction(buy.getAuctionId(), buy.getUserId());
+            return ResponseEntity.ok(result);
+        } catch (AuctionNotFoundException e) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Auction not found with ID: " + buy.getAuctionId());
+        } catch (AuctionEndedException e) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Auction has already ended.");
+        } catch (AccessDeniedException e) {
+            return ResponseEntity.status(HttpStatus.FORBIDDEN).body("Could not buy the auction.");
+        }
+    }
+
 }

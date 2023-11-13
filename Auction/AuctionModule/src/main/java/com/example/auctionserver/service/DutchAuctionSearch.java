@@ -39,10 +39,24 @@ public class DutchAuctionSearch {
         return auctionDAO.getAuctionById(auctionId);
     }
 
-    public boolean isUserWinner(int auctionId, int userId) {
+    public ResultMessage isUserWinner(int auctionId, int userId) {
         Auction auction = getDutchAuctionDetails(auctionId);
-        return auction != null && auction.isAuctionEnded() && auction.getSoldToUserId() == userId;
+
+        if (auction == null) {
+            return new ResultMessage(false, "Auction not found with ID: " + auctionId);
+        }
+
+        if (!auction.isAuctionEnded()) {
+            return new ResultMessage(false, "Auction has not ended yet.");
+        }
+
+        if (auction.getSoldToUserId() == userId) {
+            return new ResultMessage(true, "User is the winner!");
+        } else {
+            return new ResultMessage(false, "User is not the winner.");
+        }
     }
+
 
     public List<Auction> searchDutchAuctionsByItems(List<String> itemIds) throws NoSuchElementException {
         List<Auction> auctions = getAllDutchAuctions();

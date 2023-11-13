@@ -41,9 +41,22 @@ public class ForwardAuctionSearch {
         return bidDAO.getBidsByAuctionId(auctionId);
     }
 
-    public boolean isUserWinner(int auctionId, int userId) {
-        Auction auction = auctionDAO.getAuctionById(auctionId);
-        return auction != null && auction.isAuctionEnded() && auction.getSoldToUserId() == userId;
+    public ResultMessage isUserWinner(int auctionId, int userId) {
+        Auction auction = getForwardAuctionDetails(auctionId);
+
+        if (auction == null) {
+            return new ResultMessage(false, "Auction not found with ID: " + auctionId);
+        }
+
+        if (!auction.isAuctionEnded()) {
+            return new ResultMessage(false, "Auction has not ended yet.");
+        }
+
+        if (auction.getSoldToUserId() == userId) {
+            return new ResultMessage(true, "User is the winner!");
+        } else {
+            return new ResultMessage(false, "User is not the winner.");
+        }
     }
     
     public List<Auction> getAllForwardAuctions() {
