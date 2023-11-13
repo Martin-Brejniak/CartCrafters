@@ -1,9 +1,13 @@
 package com.example.catalogueserver.service;
 
 import com.example.catalogueserver.entity.Auction;
+import com.example.catalogueserver.entity.Bid;
 import com.example.catalogueserver.entity.ForwardAuction;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import java.sql.Timestamp;
+import java.util.List;
 
 @Service
 public class ForwardAuctionUpdate {
@@ -20,7 +24,7 @@ public class ForwardAuctionUpdate {
 
         if (auction != null && !auction.isAuctionEnded() && auction instanceof ForwardAuction) {
             ForwardAuction forwardAuction = (ForwardAuction) auction;
-            
+
             if (bidAmount > forwardAuction.getCurrentPrice()) {
                 forwardAuction.setCurrentPrice(bidAmount);
                 forwardAuction.setHighestBidderUserId(userId);
@@ -45,5 +49,49 @@ public class ForwardAuctionUpdate {
 
         return null;
     }
+
+    public ForwardAuction updateAuctionBid(Bid bid) {
+        try {
+            ForwardAuction auction = (ForwardAuction) auctionDAO.getAuctionById(bid.getAuctionId());
+            if (auction.getHighestBid() >= bid.getBidAmount() || auction.isAuctionEnded()) {
+                throw new IllegalArgumentException("Error with auction");
+            }
+
+            auction.setHighestBid(bid.getBidAmount());
+            auction.setCurrentPrice(bid.getBidAmount());
+            auction.setHighestBidderUserId(bid.getUserId());
+
+            auctionDAO.updateAuction(auction);
+
+            return auction;
+        } catch (Exception e) {
+            throw new IllegalArgumentException("Invalid auction");
+        }
+    }
+    
+    public void resetAuction(int time) {
+        List<Auction> auctionList = auctionDAO.getAllAuctions();
+
+        for (Auction auction : auctionList) {
+            if (auction instanceof ForwardAuction) {
+                ForwardAuction forwardAuction = (ForwardAuction) auction;
+                // Resetting various fields for Forward auctions
+                forwardAuction.setCurrentPrice(forwardAuction.getInitialPrice());
+                forwardAuction.setHighestBid(forwardAuction.getInitialPrice());
+                forwardAuction.setSoldToUserId(0); // Assuming 0 represents no buyer
+                forwardAuction.setHighestBidderUserId(0); // Assuming 0 represents no bidder
+                forwardAuction.setAuctionEnded(false);
+
+                
+                Timestamp now = new Timestamp(System.currentTimeMillis());
+                forwardAuction.setStartTimeOfAuction(now);
+                forwardAuction.setEndTimeOfAuction(new Timestamp(now.getTime() + (time * 60000))); // Assuming time is in minutes
+
+                auctionDAO.updateAuction(forwardAuction);
+            }
+        }
+    }
     
 }
+    
+    

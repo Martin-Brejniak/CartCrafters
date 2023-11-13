@@ -71,4 +71,6 @@ public class DutchAuctionUpdate {
             throw new AccessDeniedException("Could not buy the auction.");
         }
     }
+
+	
 }
