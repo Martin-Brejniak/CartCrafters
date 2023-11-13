@@ -11,8 +11,8 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@CrossOrigin(origins = "*")
-@RequestMapping("/api/auction/forward")
+@CrossOrigin
+@RequestMapping("/auction/forward")
 public class ForwardAuctionController {
 
     private final ForwardAuctionSearch forwardAuctionSearch;
