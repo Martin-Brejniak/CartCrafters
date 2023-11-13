@@ -33,7 +33,12 @@
 			type: 'GET',
 			data: userData,
 			success: function(result){
-				$("#confirmationMessage").text("Successful Login");
+				if (result == true) {
+					$("#confirmationMessage").text("Successful Login");
+				} else {
+					$("#confirmationMessage").text("Unsuccessful Login");
+				}
+				
 			}, error: function(error){
 				console.log(error);
 			}
