@@ -28,7 +28,7 @@
     });
 
     function loadAuctionDetails() {
-        var auctionId = 1;
+        var auctionId = 4;
 
         $.get("/auction/forward/details?auctionId=" + auctionId, function(auction) {
             $('#itemIdSpan').text(auction.itemId);
@@ -39,7 +39,7 @@
 
     function placeBid() {
         var bidAmount = $('#bid-amount').val();
-        var auctionId = 2; 
+        var auctionId = 4; 
         var userId = 123;
 
         $.ajax({
