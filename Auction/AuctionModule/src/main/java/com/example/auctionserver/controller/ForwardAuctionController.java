@@ -4,6 +4,7 @@ import com.example.auctionserver.entity.Auction;
 import com.example.auctionserver.entity.ForwardAuction;
 import com.example.auctionserver.exceptions.AuctionEndedException;
 import com.example.auctionserver.exceptions.AuctionNotFoundException;
+import com.example.auctionserver.exceptions.InvalidAuctionTypeException;
 import com.example.auctionserver.exceptions.InvalidBidException;
 import com.example.auctionserver.service.ForwardAuctionUpdate;
 import com.example.auctionserver.service.ResultMessage;
@@ -45,8 +46,17 @@ public class ForwardAuctionController {
     }
 
     @GetMapping("/details")
-    public Auction getForwardAuctionDetails(@RequestParam("auctionId") int auctionId) {
-        return forwardAuctionSearch.getForwardAuctionDetails(auctionId);
+    public ResponseEntity<?> getForwardAuctionDetails(@RequestParam("auctionId") int auctionId) {
+        try {
+            Auction auction = forwardAuctionSearch.getForwardAuctionDetails(auctionId);
+            return ResponseEntity.ok(auction);
+        } catch (AuctionNotFoundException e) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getMessage());
+        } catch (InvalidAuctionTypeException e) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage());
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("An error occurred.");
+        }
     }
 
     @GetMapping("/user/winner")
@@ -72,14 +82,21 @@ public class ForwardAuctionController {
         }
     }
 
-
-
-
-
-
-
     @PostMapping("/close")
-    public Auction closeAuction(@RequestParam("auctionId") int auctionId) {
-        return forwardAuctionUpdate.closeAuction(auctionId);
+    public ResponseEntity<Object> closeAuction(@RequestParam("auctionId") int auctionId) {
+        try {
+            Auction closedAuction = forwardAuctionUpdate.closeAuction(auctionId);
+            return ResponseEntity.ok(closedAuction);
+        } catch (AuctionEndedException e) {
+            // Handle the case where the auction has already ended
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage());
+        } catch (AuctionNotFoundException e) {
+            // Handle the case where the auction is not found
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getMessage());
+        } catch (Exception e) {
+            // Handle other exceptions
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("An error occurred.");
+        }
     }
+
 }

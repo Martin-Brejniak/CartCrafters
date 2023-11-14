@@ -2,6 +2,9 @@ package com.example.auctionserver.service;
 
 import com.example.auctionserver.entity.Auction;
 import com.example.auctionserver.entity.Bid;
+import com.example.auctionserver.exceptions.AuctionNotFoundException;
+import com.example.auctionserver.exceptions.InvalidAuctionTypeException;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -68,11 +71,17 @@ public class ForwardAuctionSearch {
 
     public Auction getForwardAuctionDetails(int auctionId) {
         Auction auction = auctionDAO.getAuctionById(auctionId);
-        if(auction != null && "forward".equalsIgnoreCase(auction.getAuctionType())) {
-            return auction;
+
+        if (auction == null) {
+            throw new AuctionNotFoundException("Auction not found with ID: " + auctionId);
         }
-        return null; 
-        
+
+        if (!"forward".equalsIgnoreCase(auction.getAuctionType())) {
+            throw new InvalidAuctionTypeException("Invalid auction type for ID: " + auctionId);
+        }
+
+        return auction;
     }
+
 
 }

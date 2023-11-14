@@ -58,19 +58,26 @@ public class ForwardAuctionUpdate {
 	}
 
 	public Auction closeAuction(int auctionId) {
-		ForwardAuction forwardAuction = forwardAuctionDAO.getAuctionById(auctionId);
+	    ForwardAuction forwardAuction = forwardAuctionDAO.getAuctionById(auctionId);
 
-		if(forwardAuction != null && forwardAuction.getAuctionType().equalsIgnoreCase("forward")) {		      System.out.println("Before closing auction: " + forwardAuction);
-		        forwardAuction.setAuctionEnded(true);
-		        forwardAuction.setEndTimeOfAuction(new Date());
-		        
-		        forwardAuctionDAO.updateAuction(forwardAuction);
-		        System.out.println("After closing auction: " + forwardAuction);
-		        return forwardAuction;
-		}
+	    if (forwardAuction != null && forwardAuction.getAuctionType().equalsIgnoreCase("forward")) {
+	        System.out.println("Before closing auction: " + forwardAuction);
 
-		return null;
+	        if (forwardAuction.isAuctionEnded()) {
+	            throw new AuctionEndedException("Auction with ID: " + auctionId + " has already ended.");
+	        }
+
+	        forwardAuction.setAuctionEnded(true);
+	        forwardAuction.setEndTimeOfAuction(new Date());
+
+	        forwardAuctionDAO.updateAuction(forwardAuction);
+	        System.out.println("After closing auction: " + forwardAuction);
+	        return forwardAuction;
+	    }
+
+	    return null;
 	}
+
 
 	public ForwardAuction updateAuctionBid(Bid bid) {
 		try {
