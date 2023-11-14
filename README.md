@@ -19,22 +19,22 @@ The Auction server is a separate Maven project with its own pom.xml file. It use
 1. Extract the zip file. Go to eclipse -> Import -> Import Existing Maven project. 
 2. Root Directory: [your-installation-directory]\CartCrafters\Auction\AuctionModule
 3.	Go to the package com.example.auctionserver.controller -> CraftCraftersApplication.java.
-4.	Right Click –> Run as -> Java Application. The spring application should start in port 8080
+4.	Right Click –> Run as -> Java Application. The spring application should start in port 8080.
    
-# SQL Database for Auction db
+# SQL Database for Auction Module
 1. The path to the database is specified in the application.properties file in:
  [your-installation-directory]\CartCrafters\Auction\AuctionModule\src\main\resources
 2. We have already put the auction.db database in the root directory of the Auction server (in the same path that Auction servers pom.xml is located)
 
-# Troubleshooting for Auction Module
-If for some reason, the auction.db cannot be located, then we have provided the SQL scripts to create a auction table in the auction.db and populate with about 20 rows. Once you have created the db, you can put it in the same directory as the pom.xml of the auction server and double check with the specified path in the application.properties file mentioned above. 
-
-# Debugging
+# Troubleshooting
 Should you run into any issues, try these methods:
 - Right click the main project folder in your IDE, click ***Maven***, and then ***Update Project***.
 - Right click the main project folder in your IDE, click ***Run As***, and then ***Maven Install***.
 
 If these methods fail, do not hesistant to reach out to us. We'd be happy to help!
+
+# Troubleshooting (Auction Module)
+If for some reason, the auction.db cannot be located, then we have provided the SQL scripts to create a auction table in the auction.db and populate with about 20 rows. Once you have created the db, you can put it in the same directory as the pom.xml of the auction server and double check with the specified path in the application.properties file mentioned above. 
 
 # Requirements Document
 Can be found [here](https://docs.google.com/document/d/1ZWlmvLkMUWDauz06uMcv-5dzCzevhOUv9Qs2rIAS454/edit?usp=sharing).
