@@ -17,14 +17,21 @@ jdbc:sqlite:<project-path>\CartCrafters\src\main\resources\<database-name>.db
 
 The Auction server is a separate Maven project with its own pom.xml file. It uses springboot framework. To run the application:
 1. Extract the zip file. Go to eclipse -> Import -> Import Existing Maven project. 
-2. Root Directory: [your-installation-directory]\CartCrafters\Auction\AuctionModule
-3.	Go to the package com.example.auctionserver.controller -> CraftCraftersApplication.java.
-4.	Right Click –> Run as -> Java Application. The spring application should start in port 8080.
+2. Root Directory:
+```
+   [your-installation-directory]\CartCrafters\Auction\AuctionModule
+```
+
+4.	Go to the package com.example.auctionserver.controller -> CraftCraftersApplication.java.
+5.	Right Click –> Run as -> Java Application. The spring application should start in port 8080.
    
 # SQL Database for Auction Module
 1. The path to the database is specified in the application.properties file in
+
+```
  [your-installation-directory]\CartCrafters\Auction\AuctionModule\src\main\resources
-2. We have already put the auction.db database in the root directory of the Auction server (in the same path that Auction servers pom.xml is located). This line is already added in the application.properties folder ***spring.datasource.url=jdbc:sqlite:./auction.db***. You **do not** have to change anything here.
+```
+3. We have already put the auction.db database in the root directory of the Auction server (in the same path that Auction servers pom.xml is located). This line is already added in the application.properties folder ***spring.datasource.url=jdbc:sqlite:./auction.db***. You **do not** have to change anything here.
 # Troubleshooting
 Should you run into any issues, try these methods:
 - Right click the main project folder in your IDE, click ***Maven***, and then ***Update Project***.
