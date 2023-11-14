@@ -22,10 +22,9 @@ The Auction server is a separate Maven project with its own pom.xml file. It use
 4.	Right Click –> Run as -> Java Application. The spring application should start in port 8080.
    
 # SQL Database for Auction Module
-1. The path to the database is specified in the application.properties file in:
+1. The path to the database is specified in the application.properties file in
  [your-installation-directory]\CartCrafters\Auction\AuctionModule\src\main\resources
-2. We have already put the auction.db database in the root directory of the Auction server (in the same path that Auction servers pom.xml is located)
-
+2. We have already put the auction.db database in the root directory of the Auction server (in the same path that Auction servers pom.xml is located). This line is already added in the application.properties folder ***spring.datasource.url=jdbc:sqlite:./auction.db***. You **do not** have to change anything here.
 # Troubleshooting
 Should you run into any issues, try these methods:
 - Right click the main project folder in your IDE, click ***Maven***, and then ***Update Project***.
