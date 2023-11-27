@@ -321,7 +321,7 @@
 			]
 		},
 		{
-			"name": "Catalogue Module",
+			"name": "Item Module",
 			"item": [
 				{
 					"name": "Create Item 1",
@@ -330,7 +330,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\"name\": \"Mario Kart 8\", \"price\": 60.50, \"type\": \"dutch\", \"endTime\": \"2023-29-11 23:50:55\"}",
+							"raw": "{\"name\": \"Mario Kart 8\", \"price\": 60.50, \"type\": \"dutch\", \"endTime\": \"2023-29-11 23:50:00\"}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -338,16 +338,13 @@
 							}
 						},
 						"url": {
-							"raw": "http://localhost:8080/CartCrafters/cm/api/item",
+							"raw": "http://localhost:8080/item",
 							"protocol": "http",
 							"host": [
 								"localhost"
 							],
 							"port": "8080",
 							"path": [
-								"CartCrafters",
-								"cm",
-								"api",
 								"item"
 							]
 						}
@@ -369,16 +366,13 @@
 							}
 						},
 						"url": {
-							"raw": "http://localhost:8080/CartCrafters/cm/api/item",
+							"raw": "http://localhost:8080/item",
 							"protocol": "http",
 							"host": [
 								"localhost"
 							],
 							"port": "8080",
 							"path": [
-								"CartCrafters",
-								"cm",
-								"api",
 								"item"
 							]
 						}
@@ -400,16 +394,13 @@
 							}
 						},
 						"url": {
-							"raw": "http://localhost:8080/CartCrafters/cm/api/item",
+							"raw": "http://localhost:8080/item",
 							"protocol": "http",
 							"host": [
 								"localhost"
 							],
 							"port": "8080",
 							"path": [
-								"CartCrafters",
-								"cm",
-								"api",
 								"item"
 							]
 						}
@@ -422,17 +413,15 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "http://localhost:8080/CartCrafters/cm/api/item",
+							"raw": "http://localhost:8080/item/get-all",
 							"protocol": "http",
 							"host": [
 								"localhost"
 							],
 							"port": "8080",
 							"path": [
-								"CartCrafters",
-								"cm",
-								"api",
-								"item"
+								"item",
+								"get-all"
 							]
 						}
 					},
@@ -444,18 +433,21 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "http://localhost:8080/CartCrafters/cm/api/item/1",
+							"raw": "http://localhost:8080/item/get-id?itemID=12",
 							"protocol": "http",
 							"host": [
 								"localhost"
 							],
 							"port": "8080",
 							"path": [
-								"CartCrafters",
-								"cm",
-								"api",
 								"item",
-								"1"
+								"get-id"
+							],
+							"query": [
+								{
+									"key": "itemID",
+									"value": "12"
+								}
 							]
 						}
 					},
@@ -467,16 +459,13 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "http://localhost:8080/CartCrafters/cm/api/item/search?term=Mario",
+							"raw": "http://localhost:8080/item/search?term=Mario",
 							"protocol": "http",
 							"host": [
 								"localhost"
 							],
 							"port": "8080",
 							"path": [
-								"CartCrafters",
-								"cm",
-								"api",
 								"item",
 								"search"
 							],
@@ -496,16 +485,13 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "http://localhost:8080/CartCrafters/cm/api/item/search?term=Tack",
+							"raw": "http://localhost:8080/item/search?term=Tack",
 							"protocol": "http",
 							"host": [
 								"localhost"
 							],
 							"port": "8080",
 							"path": [
-								"CartCrafters",
-								"cm",
-								"api",
 								"item",
 								"search"
 							],
@@ -534,18 +520,21 @@
 							}
 						},
 						"url": {
-							"raw": "http://localhost:8080/CartCrafters/cm/api/item/12",
+							"raw": "http://localhost:8080/item/update-all?itemID=13",
 							"protocol": "http",
 							"host": [
 								"localhost"
 							],
 							"port": "8080",
 							"path": [
-								"CartCrafters",
-								"cm",
-								"api",
 								"item",
-								"12"
+								"update-all"
+							],
+							"query": [
+								{
+									"key": "itemID",
+									"value": "13"
+								}
 							]
 						}
 					},
@@ -557,24 +546,24 @@
 						"method": "PUT",
 						"header": [],
 						"url": {
-							"raw": "http://localhost:8080/CartCrafters/cm/api/item/winner/12?winner=Hamston",
+							"raw": "http://localhost:8080/item/update-winner?winner=Hamston&itemID=13",
 							"protocol": "http",
 							"host": [
 								"localhost"
 							],
 							"port": "8080",
 							"path": [
-								"CartCrafters",
-								"cm",
-								"api",
 								"item",
-								"winner",
-								"12"
+								"update-winner"
 							],
 							"query": [
 								{
 									"key": "winner",
 									"value": "Hamston"
+								},
+								{
+									"key": "itemID",
+									"value": "13"
 								}
 							]
 						}
@@ -587,18 +576,20 @@
 						"method": "DELETE",
 						"header": [],
 						"url": {
-							"raw": "http://localhost:8080/CartCrafters/cm/api/item/12",
+							"raw": "http://localhost:8080/item?itemID=12",
 							"protocol": "http",
 							"host": [
 								"localhost"
 							],
 							"port": "8080",
 							"path": [
-								"CartCrafters",
-								"cm",
-								"api",
-								"item",
-								"12"
+								"item"
+							],
+							"query": [
+								{
+									"key": "itemID",
+									"value": "12"
+								}
 							]
 						}
 					},
