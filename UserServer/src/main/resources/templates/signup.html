@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Sign Up</title>
+	<link rel="stylesheet" href="style.css">
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+</head>
+<body>
+	<header>
+		<h1>CartCrafters</h1>
+	</header>
+	
+	<form id="addUserForm">
+		<label for="fName">First Name:</label>
+		<input type="text" id="fName" name="fName" required><br>
+		<label for="lName">Last Name:</label>
+		<input type="text" id="lName" name="lName" required><br>
+		<label for="address">Address:</label>
+		<input type="text" id="address" name="address" required><br>
+		<label for="postal">Postal Code:</label>
+		<input type="text" id="postal" name="postal" required><br>
+		<label for="city">City:</label>
+		<input type="text" id="city" name="city" required><br>
+		<label for="country">Country:</label>
+		<input type="text" id="country" name="country" required><br>
+		<label for="province">Province/State:</label>
+		<input type="text" id="province" name="province" required><br>
+		<label for="username">Username:</label>
+		<input type="text" id="username" name="username" required><br>
+		<label for="password">Password:</label>
+		<input type="text" id="password" name="password" required><br>
+		<input type="submit" value="Sign Up">
+	</form>
+	<p id="confirmationMessage"></p>
+	
+	<script>
+	$("#addUserForm").submit(function(e){
+		e.preventDefault();
+		var userData = {
+		fName: $("#fName").val(),
+		lName: $("#lName").val(),
+		address: $("#address").val(),
+		postal: $("#postal").val(),
+		city: $("#city").val(),
+		country: $("#country").val(),
+		province: $("#province").val(),
+		username: $("#username").val(),
+		password: $("#password").val()
+		};
+		$.ajax({
+			url: "http://localhost:8080/user",
+			type: 'POST',
+			contentType: 'application/json',
+			data: JSON.stringify(userData),
+			success: function(result){
+				$("#confirmationMessage").text("User added successfully!");
+			}, error: function(error){
+				console.log(error);
+			}
+		});
+	});
+	</script>
+	
+</body>
+</html>
