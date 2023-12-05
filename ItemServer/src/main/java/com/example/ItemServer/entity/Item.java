@@ -7,6 +7,7 @@ public class Item {
 	private String endTime;
 	private int itemID;
 	private String winner;
+	private String auctionType;
 	
 	/**
 	* Get the name of item.
@@ -49,9 +50,14 @@ public class Item {
 	*
 	* @return         the item's auction type.
 	*/
-	public String getType() {
-		return type;
-	}
+	// Getter and Setter for auctionType
+    public String getAuctionType() {
+        return auctionType;
+    }
+
+    public void setAuctionType(String auctionType) {
+        this.auctionType = auctionType;
+    }
 	
 	/**
 	* Set the auction type of item.

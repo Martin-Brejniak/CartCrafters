@@ -7,6 +7,8 @@ import java.sql.SQLException;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataAccessException;
+import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.stereotype.Repository;
@@ -82,18 +84,25 @@ public class UserDAO {
 	* @return         true if username and password are correct. False if not.
 	*/
 	public boolean authenticateUser(String username, String password) {
-		String sql = "SELECT password FROM users WHERE username = '" + username +"'";
-		String passwordDB = null;
-		boolean correct = false;
-		
-		passwordDB = jdbcTemplate.query(sql, passwordRowMapper).get(0);
-		
-		if (password.equals(passwordDB) ) {
-			correct = true;
-		}
-		return correct;
+	    String sql = "SELECT password FROM users WHERE LOWER(username) = LOWER(?)";
+	    
+	    try {
+	        String passwordDB = jdbcTemplate.queryForObject(sql, String.class, username);
+	        
+	        if (passwordDB != null && passwordDB.trim().equals(password.trim())) {
+	            return true;
+	        }
+
+	    } catch (EmptyResultDataAccessException e) {
+	        // No user with the given username found
+	        // Handle this case as needed (e.g., log or return false)
+	    } catch (DataAccessException e) {
+	        // Handle other database-related exceptions (e.g., log or rethrow)
+	    }
+	    
+	    return false; // Authentication failed
 	}
-	
+
     /**
     * Add user to user database.
     *
