@@ -76,7 +76,8 @@ public class UserDAO {
 	
 	/**
 	* Checks to see if the username and password the user typed in, matches with what's in the database.
-	*
+	* If so, a session token is added to the database to keep the user logged in.
+	* 
 	* @param  username   a username.
 	* @param  password   a password.
 	* @return         true if username and password are correct. False if not.
@@ -90,9 +91,49 @@ public class UserDAO {
 		
 		if (password.equals(passwordDB) ) {
 			correct = true;
+			String predefinedToken = "session_token";
+            updateUserToken(username, predefinedToken);
+            System.out.println("User authenticated!");
 		}
 		return correct;
 	}
+	
+	/**
+	 * Retrieves the user token to validate a user's session, assuming one exists. 
+	 * If one doesn't exist, null is returned.
+	 * 
+	 * @param username			The user's username
+	 * @return userToken 		The user's session token
+	 */
+    public String getUserToken(String username) {
+        String sql = "SELECT userToken FROM users WHERE username = '" + username + "'";
+        List<String> userTokens = jdbcTemplate.queryForList(sql, String.class);
+        if (!userTokens.isEmpty()) {
+        	System.out.println("User session token exists.");
+            return userTokens.get(0);
+        }
+        return null;
+    }
+    
+    /**
+     * A token is added to the database.
+     * 
+     */
+    public void updateUserToken(String username, String newToken) {
+        String updateSql = "UPDATE users SET userToken = ? WHERE username = ?";
+        jdbcTemplate.update(updateSql, newToken, username);
+        System.out.println("User session token updated.");
+    }
+    
+    /**
+     * A token is removed from the database.
+     * 
+     */
+    public void removeUserToken(String username) {
+        String updateSql = "UPDATE users SET userToken = NULL, tokenExpiration = NULL WHERE username = ?";
+        jdbcTemplate.update(updateSql, username);
+        System.out.println("User session token removed.");
+    }
 	
     /**
     * Add user to user database.
