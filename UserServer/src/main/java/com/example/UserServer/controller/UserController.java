@@ -48,6 +48,11 @@ private final UserDAO userDAO;
 		return userDAO.authenticateUser(username, password);
     }
 	
+	@GetMapping("/token-check")
+    public String getUserToken(@RequestParam("username") String username) {
+		return userDAO.getUserToken(username);
+    }
+	
 	@PostMapping
     public void createUser(@RequestBody User user) {
 		userDAO.createUser(user);
@@ -56,6 +61,11 @@ private final UserDAO userDAO;
 	@PutMapping
     public void updateUser(@RequestBody User user, @RequestParam("userID") int userID) {
 		userDAO.updateUser(userID, user);
+    }
+	
+	@PutMapping("/token-update")
+    public void updateUserToken(@RequestParam String username, @RequestParam("token") String token) {
+		userDAO.updateUserToken(username, token);
     }
 	
 	@DeleteMapping
