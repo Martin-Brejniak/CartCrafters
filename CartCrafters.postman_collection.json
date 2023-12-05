@@ -350,6 +350,32 @@
 					"response": []
 				},
 				{
+					"name": "Get User Token",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/user/token-check?username=MartanisIV",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"user",
+								"token-check"
+							],
+							"query": [
+								{
+									"key": "username",
+									"value": "MartanisIV"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
 					"name": "Update User",
 					"request": {
 						"method": "PUT",
@@ -377,6 +403,36 @@
 								{
 									"key": "userID",
 									"value": "4"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update User Token",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/user/token-update?username=MartanisIV&token=false",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"user",
+								"token-update"
+							],
+							"query": [
+								{
+									"key": "username",
+									"value": "MartanisIV"
+								},
+								{
+									"key": "token",
+									"value": "false"
 								}
 							]
 						}
