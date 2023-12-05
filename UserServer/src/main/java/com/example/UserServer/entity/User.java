@@ -11,6 +11,8 @@ public class User {
 	private String username;
 	private String password;
 	private int userID;
+	private String userToken;
+	private int tokenExpiration;
 	
     /**
     * Get the first name of user.
@@ -191,4 +193,21 @@ public class User {
 	public void setUserID(int userID) {
 		this.userID = userID;
 	}
+	
+	public String getUserToken() {
+		return userToken;
+	}
+	
+	public void setUserToken(String userToken) {
+		this.userToken = userToken;
+	}
+	
+	public int getTokenExpiration() {
+		return tokenExpiration;
+	}
+	
+	public void setTokenExpiration(int tokenExpiration) {
+		this.tokenExpiration = tokenExpiration;
+	}	
+	
 }

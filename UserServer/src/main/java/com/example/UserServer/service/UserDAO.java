@@ -42,6 +42,11 @@ public class UserDAO {
 		return password;
 	};
 	
+	private RowMapper<String> tokenRowMapper = (rs, rowNum) -> {
+		String userToken = rs.getString("userToken");
+		return userToken;
+	};
+	
 	/**
 	* Gets all items from the items database.
 	*
@@ -98,22 +103,10 @@ public class UserDAO {
 		return correct;
 	}
 	
-	/**
-	 * Retrieves the user token to validate a user's session, assuming one exists. 
-	 * If one doesn't exist, null is returned.
-	 * 
-	 * @param username			The user's username
-	 * @return userToken 		The user's session token
-	 */
-    public String getUserToken(String username) {
-        String sql = "SELECT userToken FROM users WHERE username = '" + username + "'";
-        List<String> userTokens = jdbcTemplate.queryForList(sql, String.class);
-        if (!userTokens.isEmpty()) {
-        	System.out.println("User session token exists.");
-            return userTokens.get(0);
-        }
-        return null;
-    }
+	public String getUserToken(String username) {
+		String sql = "SELECT userToken FROM users WHERE username = '" + username +"'";
+		return jdbcTemplate.query(sql, tokenRowMapper).get(0);
+	}	
     
     /**
      * A token is added to the database.
@@ -154,6 +147,12 @@ public class UserDAO {
 	public void updateUser(int id, User user) {
 		//use prepared statements
 		String sql = "UPDATE users SET fname = '"+user.getfName()+"', lname = '"+user.getlName()+"', address = '"+user.getAddress()+"', postal = '"+user.getPostal()+"', city = '"+user.getCity()+"', country = '"+user.getCountry()+"', province = '"+user.getProvince()+"', username = '"+user.getUsername()+"', password = '"+user.getPassword()+"' WHERE userID = "+id;
+		jdbcTemplate.update(sql);
+	}
+	
+	public void updateUserToken(String username, String token) {
+		//use prepared statements
+		String sql = "UPDATE users SET userToken = '"+token+"' WHERE username = '"+username+"'";
 		jdbcTemplate.update(sql);
 	}
 	
