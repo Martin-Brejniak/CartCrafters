@@ -1,86 +1,39 @@
-import React from "react";
-import Button from "@mui/material/Button";
-import Grid from "@mui/material/Grid";
-import Box from "@mui/material/Box";
-import { getPaymentPage } from "../Services/paymentservice";
-import { useNavigate } from "react-router-dom";
-import { dutchBuy } from "../Services/auctionservice";
+// DutchComponent.js
+import React, { useState } from 'react';
+import { decrementPrice, buyAuction } from '../Services/dutchauctionservice';
 
-// Placeholder components
-const AuctionDetails = ({ auctionInfo }) => (
-  <div>
-    <strong>Auction Details:</strong> {auctionInfo.auctionId}
-  </div>
-);
+const DutchComponent = ({ auctionInfo }) => {
+    const [error, setError] = useState('');
 
-const ItemDetails = ({ itemInfo }) => (
-  <div>
-    <strong>Item Details:</strong> {itemInfo.itemId}
-  </div>
-);
+    const handleDecrement = async () => {
+        try {
+            await decrementPrice(auctionInfo.auctionId);
+        } catch (e) {
+            setError(e.message);
+        }
+    };
 
+    const handleBuy = async () => {
+        try {
+            const buy = {
+                auctionId: auctionInfo.auctionId,
+                userId: 1, // replace with actual user ID
+            };
+            await buyAuction(buy);
+        } catch (e) {
+            setError(e.message);
+        }
+    };
 
-const DutchComponent = (info) => {
-  const navigate = useNavigate();
-
-  const handlePayNow = async (event) => {
-    try {
-      const result1 = await dutchBuy(info.auctionInfo.auctionId);
-      console.log(result1);
-      const result = await getPaymentPage(info.auctionInfo.auctionId);
-      console.log(result);
-      if (result.userInfo.username === result.auctionInfo.soldToUserId) {
-        navigate("/payment", {
-          state: {
-            result,
-          },
-        });
-      } else {
-        navigate("/home");
-      }
-    } catch (e) {}
-  };
-
-  return (
-    <div>
-      <Grid container spacing={2}>
-        <Grid item xs={6} sm={6}>
-          <AuctionDetails auctionInfo={info.auctionInfo} />
-        </Grid>
-        <Grid item xs={6} sm={6}>
-          <ItemDetails itemInfo={info.itemInfo} />
-        </Grid>
-      </Grid>
-      <div>
-        <Box
-          display="flex"
-          justifyContent="center"
-          alignItems="center"
-          sx={{ height: "100vh", marginTop: 10 }}
-        >
-          <Button
-            type="submit"
-            variant="contained"
-            onClick={handlePayNow}
-            sx={{
-              mt: 3,
-              mb: 120,
-              fontSize: "24px",
-              fontFamily: "poppins",
-              fontWeight: "bold",
-              padding: "20px 40px",
-              height: "60px",
-              backgroundColor: "pink",
-              color: "#ffffff",
-              width: "30%",
-            }}
-          >
-            Pay Now!
-          </Button>
-        </Box>
-      </div>
-    </div>
-  );
+    return (
+        <div>
+            <h2>{auctionInfo.title}</h2>
+            <p>Current Price: ${auctionInfo.currentPrice}</p>
+            <button onClick={handleDecrement}>DECREMENT</button>
+            <button onClick={handleBuy}>BUY</button>
+            {error && <p style={{ color: 'red' }}>{error}</p>}
+        </div>
+    );
 };
 
 export default DutchComponent;
