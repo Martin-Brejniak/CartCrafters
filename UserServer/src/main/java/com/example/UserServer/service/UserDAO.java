@@ -81,7 +81,8 @@ public class UserDAO {
 	
 	/**
 	* Checks to see if the username and password the user typed in, matches with what's in the database.
-	*
+	* If so, a session token is added to the database to keep the user logged in.
+	* 
 	* @param  username   a username.
 	* @param  password   a password.
 	* @return         true if username and password are correct. False if not.
@@ -95,6 +96,9 @@ public class UserDAO {
 		
 		if (password.equals(passwordDB) ) {
 			correct = true;
+			String predefinedToken = "session_token";
+            updateUserToken(username, predefinedToken);
+            System.out.println("User authenticated!");
 		}
 		return correct;
 	}
@@ -103,6 +107,26 @@ public class UserDAO {
 		String sql = "SELECT userToken FROM users WHERE username = '" + username +"'";
 		return jdbcTemplate.query(sql, tokenRowMapper).get(0);
 	}	
+    
+    /**
+     * A token is added to the database.
+     * 
+     */
+    public void updateUserToken(String username, String newToken) {
+        String updateSql = "UPDATE users SET userToken = ? WHERE username = ?";
+        jdbcTemplate.update(updateSql, newToken, username);
+        System.out.println("User session token updated.");
+    }
+    
+    /**
+     * A token is removed from the database.
+     * 
+     */
+    public void removeUserToken(String username) {
+        String updateSql = "UPDATE users SET userToken = NULL, tokenExpiration = NULL WHERE username = ?";
+        jdbcTemplate.update(updateSql, username);
+        System.out.println("User session token removed.");
+    }
 	
     /**
     * Add user to user database.

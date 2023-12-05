@@ -45,6 +45,11 @@ private final UserDAO userDAO;
 	
 	@GetMapping("/authenticate")
     public boolean authenticateUser(@RequestParam("username") String username, @RequestParam("password") String password) {
+		boolean isAuthenticated = userDAO.authenticateUser(username, password);
+		if (isAuthenticated) {
+			//if authentication is successful, the token is returned
+			String userToken = userDAO.getUserToken(username);
+		}
 		return userDAO.authenticateUser(username, password);
     }
 	
