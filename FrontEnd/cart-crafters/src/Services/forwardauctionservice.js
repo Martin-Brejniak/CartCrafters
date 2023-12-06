@@ -72,3 +72,13 @@ export const closeAuction = async (auctionId) => {
         throw error;
     }
 };
+
+export const highestBid = async (auctionId) => {
+    try {
+        const response = await axios.get(`${BASE_URL}/details?auctionId=${auctionId}`);
+        return response.data.currentPrice;
+    } catch (error) {
+        console.error('Error fetching highest bid for auction:', error);
+        throw error;
+    }
+}

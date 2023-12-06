@@ -1,19 +1,27 @@
-// DutchPage.js
 import React, { useEffect, useState } from 'react';
 import { getAllOpenDutchAuctions } from '../Services/dutchauctionservice';
 import DutchComponent from '../Components/dutchcomponent';
+
+const POLL_INTERVAL = 2000;
 
 const DutchPage = () => {
     const [auctions, setAuctions] = useState([]);
 
     useEffect(() => {
         const fetchAuctions = async () => {
-            const openAuctions = await getAllOpenDutchAuctions();
-            setAuctions(openAuctions);
+            try {
+                const openAuctions = await getAllOpenDutchAuctions();
+                setAuctions(openAuctions);
+            } catch (error) {
+                console.error('Error fetching auctions:', error);
+            }
         };
 
         fetchAuctions();
-        // Set up a timer or WebSocket connection to update auctions in real-time
+
+        const intervalId = setInterval(fetchAuctions, POLL_INTERVAL);
+
+        return () => clearInterval(intervalId);
     }, []);
 
     return (
