@@ -1,9 +1,33 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { placeBid } from '../Services/forwardauctionservice';
 
 const ForwardComponent = ({ auctionInfo }) => {
     const [bidAmount, setBidAmount] = useState('');
     const [error, setError] = useState('');
+
+    const [timeRemaining, setTimeRemaining] = useState('');
+
+    useEffect(() => {
+        const calculateTimeRemaining = () => {
+            const endTime = new Date(auctionInfo.endTimeOfAuction);
+            const currentTime = new Date();
+            const difference = endTime - currentTime;
+
+            if (difference > 0) {
+                const hours = Math.floor((difference / (1000 * 60 * 60)) % 24);
+                const minutes = Math.floor((difference / 1000 / 60) % 60);
+                const seconds = Math.floor((difference / 1000) % 60);
+                setTimeRemaining(`${hours.toString().padStart(2, '0')}:${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`);
+            } else {
+                setTimeRemaining("00:00:00");
+            }
+        };
+
+        calculateTimeRemaining();
+        const intervalId = setInterval(calculateTimeRemaining, 1000);
+
+        return () => clearInterval(intervalId);
+    }, [auctionInfo.endTimeOfAuction]);
 
     const handleBid = async () => {
         if (parseInt(bidAmount) <= auctionInfo.highestBid) {
@@ -25,6 +49,7 @@ const ForwardComponent = ({ auctionInfo }) => {
     return (
         <div>
             <h2>{auctionInfo.title}</h2>
+            <p>Time Remaining: {timeRemaining}</p>
             <p>Current Highest Bid: ${auctionInfo.highestBid}</p>
             <p>Highest Bidder: {auctionInfo.highestBidderUserId !== 0 ? auctionInfo.highestBidderUserId : 'No current bidder'}</p>
             <input
