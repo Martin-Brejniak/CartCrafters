@@ -1,38 +1,45 @@
 import React, { useState, useEffect } from 'react';
-import { placeBid, getForwardAuctionDetails } from '../Services/forwardauctionservice';
+import { placeBid } from '../Services/forwardauctionservice';
 
 const ForwardComponent = ({ auctionInfo }) => {
     const [bidAmount, setBidAmount] = useState('');
-    const [highestBidAmount, setHighestBidAmount] = useState(0);
-    const [highestBidderUserId, setHighestBidderUserId] = useState(0);
     const [error, setError] = useState('');
 
+    const [timeRemaining, setTimeRemaining] = useState('');
+
     useEffect(() => {
-        const fetchAuctionDetails = async () => {
-            try {
-                const details = await getForwardAuctionDetails(auctionInfo.auctionId);
-                setHighestBidAmount(details.currentPrice); // Assuming this is the highest bid
-                setHighestBidderUserId(details.highestBidderUserId);
-            } catch (error) {
-                console.error('Error fetching auction details:', error);
-                setError('Could not fetch auction details');
+        const calculateTimeRemaining = () => {
+            const endTime = new Date(auctionInfo.endTimeOfAuction);
+            const currentTime = new Date();
+            const difference = endTime - currentTime;
+
+            if (difference > 0) {
+                const hours = Math.floor((difference / (1000 * 60 * 60)) % 24);
+                const minutes = Math.floor((difference / 1000 / 60) % 60);
+                const seconds = Math.floor((difference / 1000) % 60);
+                setTimeRemaining(`${hours.toString().padStart(2, '0')}:${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`);
+            } else {
+                setTimeRemaining("00:00:00");
             }
         };
 
-        fetchAuctionDetails();
-    }, [auctionInfo.auctionId]);
+        calculateTimeRemaining();
+        const intervalId = setInterval(calculateTimeRemaining, 1000);
+
+        return () => clearInterval(intervalId);
+    }, [auctionInfo.endTimeOfAuction]);
 
     const handleBid = async () => {
-        if (parseInt(bidAmount) <= highestBidAmount) {
+        if (parseInt(bidAmount) <= auctionInfo.highestBid) {
             setError('Bid must be higher than the current highest bid.');
             return;
         }
 
         try {
-            await placeBid(auctionInfo.auctionId, 1, parseInt(bidAmount));
+            await placeBid(auctionInfo.auctionId, 1, parseInt(bidAmount)); // Replace '1' with the actual user ID
             setBidAmount('');
-            setHighestBidAmount(parseInt(bidAmount)); // Update highest bid
-            setHighestBidderUserId(1); // Update highest bidder user ID
+            // After bidding, you might want to fetch the latest auction details
+            // to update the highest bid and bidder user ID
             setError('');
         } catch (e) {
             setError(e.message);
@@ -42,8 +49,9 @@ const ForwardComponent = ({ auctionInfo }) => {
     return (
         <div>
             <h2>{auctionInfo.title}</h2>
-            <p>Current Highest Bid: ${highestBidAmount}</p>
-            <p>Highest Bidder: {highestBidderUserId !== 0 ? highestBidderUserId : 'No current bidder'}</p>
+            <p>Time Remaining: {timeRemaining}</p>
+            <p>Current Highest Bid: ${auctionInfo.highestBid}</p>
+            <p>Highest Bidder: {auctionInfo.highestBidderUserId !== 0 ? auctionInfo.highestBidderUserId : 'No current bidder'}</p>
             <input
                 type="number"
                 value={bidAmount}
