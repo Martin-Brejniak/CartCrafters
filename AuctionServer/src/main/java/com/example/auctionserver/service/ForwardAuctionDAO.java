@@ -13,6 +13,7 @@ import java.sql.Timestamp;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 @Repository
 public class ForwardAuctionDAO extends AuctionDAO {
@@ -28,6 +29,8 @@ public class ForwardAuctionDAO extends AuctionDAO {
 		auction.setEndTimeOfAuction(new Date(rs.getTimestamp("endTimeOfAuction").getTime()));
 		auction.setAuctionEnded(rs.getBoolean("auctionEnded"));
 		auction.setSoldToUserId(rs.getInt("soldToUserId"));
+		auction.setHighestBidderUserId(rs.getInt("highestBidderUserId"));
+		auction.setHighestBid(rs.getDouble("highestBid"));
 		return auction;
 	};
 
@@ -96,4 +99,12 @@ public class ForwardAuctionDAO extends AuctionDAO {
 
         return forwardAuction;
     }
+    
+    
+    public List<ForwardAuction> getAllForwardAuctions(){
+//    	SELECT * FROM AUCTIONS WHERE LOWER(auctionType) = 'forward';
+    	String sql = "SELECT * FROM AUCTIONS WHERE LOWER(auctionType) = 'forward'";
+		return jdbcTemplate.query(sql, forwardauctionRowMapper);
+    
+    	}
 }
