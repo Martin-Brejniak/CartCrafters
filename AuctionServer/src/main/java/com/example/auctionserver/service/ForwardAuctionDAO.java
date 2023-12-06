@@ -4,7 +4,9 @@ import com.example.auctionserver.entity.Auction;
 import com.example.auctionserver.entity.ForwardAuction;
 import com.example.auctionserver.entity.ForwardAuction;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.jdbc.core.RowMapper;
 import org.springframework.stereotype.Repository;
 
 import java.sql.Timestamp;
@@ -14,6 +16,20 @@ import java.util.Map;
 
 @Repository
 public class ForwardAuctionDAO extends AuctionDAO {
+	
+	private RowMapper<ForwardAuction> forwardauctionRowMapper = (rs, rowNum) -> {
+		ForwardAuction auction = new ForwardAuction();
+		auction.setAuctionId(rs.getInt("auctionId"));
+		auction.setItemId(rs.getInt("itemId"));
+		auction.setAuctionType(rs.getString("auctionType"));
+		auction.setInitialPrice(rs.getDouble("initialPrice"));
+		auction.setCurrentPrice(rs.getDouble("currentPrice"));
+		auction.setStartTimeOfAuction(new Date(rs.getTimestamp("startTimeOfAuction").getTime()));
+		auction.setEndTimeOfAuction(new Date(rs.getTimestamp("endTimeOfAuction").getTime()));
+		auction.setAuctionEnded(rs.getBoolean("auctionEnded"));
+		auction.setSoldToUserId(rs.getInt("soldToUserId"));
+		return auction;
+	};
 
     @Autowired
     public ForwardAuctionDAO(JdbcTemplate jdbcTemplate) {

@@ -2,6 +2,7 @@ package com.example.auctionserver.service;
 
 import com.example.auctionserver.entity.Auction;
 import com.example.auctionserver.entity.Bid;
+import com.example.auctionserver.entity.ForwardAuction;
 import com.example.auctionserver.exceptions.AuctionNotFoundException;
 import com.example.auctionserver.exceptions.InvalidAuctionTypeException;
 
@@ -15,11 +16,11 @@ import java.util.stream.Collectors;
 @Service
 public class ForwardAuctionSearch {
 
-    private final AuctionDAO auctionDAO;
+    private final ForwardAuctionDAO auctionDAO;
     private final BidDAO bidDAO;
 
     @Autowired
-    public ForwardAuctionSearch(AuctionDAO auctionDAO, BidDAO bidDAO) {
+    public ForwardAuctionSearch(ForwardAuctionDAO auctionDAO, BidDAO bidDAO) {
         this.auctionDAO = auctionDAO;
         this.bidDAO = bidDAO;
     }
@@ -37,7 +38,6 @@ public class ForwardAuctionSearch {
         
         return forwardAuctions;
     }
-
 
     public List<Bid> getAllBidsForForwardAuction(int auctionId) {
         // Assuming that BidDAO has a method getBidsByAuctionId
@@ -67,10 +67,9 @@ public class ForwardAuctionSearch {
                 .filter(auction -> "forward".equalsIgnoreCase(auction.getAuctionType()))
                 .collect(Collectors.toList());
     }
-    
 
-    public Auction getForwardAuctionDetails(int auctionId) {
-        Auction auction = auctionDAO.getAuctionById(auctionId);
+    public ForwardAuction getForwardAuctionDetails(int auctionId) {
+        ForwardAuction auction = auctionDAO.getAuctionById(auctionId);
 
         if (auction == null) {
             throw new AuctionNotFoundException("Auction not found with ID: " + auctionId);
@@ -83,5 +82,9 @@ public class ForwardAuctionSearch {
         return auction;
     }
 
-
+    public List<Auction> getAllOpenForwardAuctions() {
+        return auctionDAO.getAllAuctions().stream()
+                .filter(auction -> "forward".equalsIgnoreCase(auction.getAuctionType()) && !auction.isAuctionEnded())
+                .collect(Collectors.toList());
+    }
 }

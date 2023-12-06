@@ -36,13 +36,9 @@ public class ForwardAuctionController {
         return forwardAuctionSearch.getAllForwardAuctions();
     }
 
-	/*
-	 * @GetMapping("/hello") public String sayHello() { return "Hello, World!"; }
-	 */
-
     @GetMapping("/get-all-open")
     public List<Auction> getAllOpenForwardAuctions() {
-        return forwardAuctionSearch.getAllForwardAuctions();
+        return forwardAuctionSearch.getAllOpenForwardAuctions();
     }
 
     @GetMapping("/details")
@@ -63,8 +59,6 @@ public class ForwardAuctionController {
     public ResultMessage isUserWinner(@RequestParam("auctionId") int auctionId, @RequestParam("userId") int userId) {
         return forwardAuctionSearch.isUserWinner(auctionId, userId);
     }
-
-
 
     @PostMapping("/bid")
     public ResponseEntity<?> placeBid(@RequestBody Bid bid) {
@@ -98,5 +92,4 @@ public class ForwardAuctionController {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("An error occurred.");
         }
     }
-
 }
