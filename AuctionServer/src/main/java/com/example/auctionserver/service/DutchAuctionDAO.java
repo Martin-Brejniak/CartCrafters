@@ -25,8 +25,12 @@ public class DutchAuctionDAO extends AuctionDAO {
 
         if (auction instanceof DutchAuction) {
             DutchAuction dutchAuction = (DutchAuction) auction;
-            String sql = "UPDATE auctions SET minimumPrice = ?, decrement = ? WHERE auctionId = ?";
-            jdbcTemplate.update(sql, dutchAuction.getMinimumPrice(), dutchAuction.getDecrement(), auction.getAuctionId());
+            String sql = "INSERT INTO auctions (auctionId, minimumPrice, decrement, minimumPriceReachedTime) VALUES (?, ?, ?, ?)";
+            jdbcTemplate.update(sql, 
+                auction.getAuctionId(), 
+                dutchAuction.getMinimumPrice(), 
+                dutchAuction.getDecrement(),
+                dutchAuction.getMinimumPriceReachedTime() != null ? new Timestamp(dutchAuction.getMinimumPriceReachedTime().getTime()) : null);
         }
     }
 
@@ -36,8 +40,12 @@ public class DutchAuctionDAO extends AuctionDAO {
 
         if (auction instanceof DutchAuction) {
             DutchAuction dutchAuction = (DutchAuction) auction;
-            String sql = "UPDATE auctions SET minimumPrice = ?, decrement = ? WHERE auctionId = ?";
-            jdbcTemplate.update(sql, dutchAuction.getMinimumPrice(), dutchAuction.getDecrement(), auction.getAuctionId());
+            String sql = "UPDATE auctions SET minimumPrice = ?, decrement = ?, minimumPriceReachedTime = ? WHERE auctionId = ?";
+            jdbcTemplate.update(sql, 
+                dutchAuction.getMinimumPrice(), 
+                dutchAuction.getDecrement(),
+                dutchAuction.getMinimumPriceReachedTime() != null ? new Timestamp(dutchAuction.getMinimumPriceReachedTime().getTime()) : null,
+                dutchAuction.getAuctionId());
         }
     }
 
@@ -48,6 +56,7 @@ public class DutchAuctionDAO extends AuctionDAO {
 
         if (auction != null) {
             dutchAuction = new DutchAuction();
+            // Set properties from the parent class
             dutchAuction.setAuctionId(auction.getAuctionId());
             dutchAuction.setItemId(auction.getItemId());
             dutchAuction.setAuctionType(auction.getAuctionType());
@@ -59,20 +68,16 @@ public class DutchAuctionDAO extends AuctionDAO {
             dutchAuction.setSoldToUserId(auction.getSoldToUserId());
 
             // Retrieve additional properties for DutchAuction
-            String sql = "SELECT minimumPrice, decrement FROM auctions WHERE auctionId = ?";
+            String sql = "SELECT minimumPrice, decrement, minimumPriceReachedTime FROM auctions WHERE auctionId = ?";
             Object[] params = new Object[]{auctionId};
-            List<Map<String, Object>> rows = jdbcTemplate.queryForList(sql, params);
+            Map<String, Object> row = jdbcTemplate.queryForMap(sql, params);
 
-            if (!rows.isEmpty()) {
-                Map<String, Object> row = rows.get(0);
+            if (row != null) {
+                dutchAuction.setMinimumPrice((Double) row.get("minimumPrice"));
+                dutchAuction.setDecrement((Integer) row.get("decrement"));
 
-                // Check for null values before accessing them
-                if (row.get("minimumPrice") != null) {
-                    dutchAuction.setMinimumPrice((Double) row.get("minimumPrice"));
-                }
-
-                if (row.get("decrement") != null) {
-                    dutchAuction.setDecrement((Integer) row.get("decrement"));
+                if (row.get("minimumPriceReachedTime") != null) {
+                    dutchAuction.setMinimumPriceReachedTime(new Date(((Timestamp) row.get("minimumPriceReachedTime")).getTime()));
                 }
             }
         }
@@ -80,7 +85,7 @@ public class DutchAuctionDAO extends AuctionDAO {
         return dutchAuction;
     }
     
- // DECREMENT
+    // DECREMENT
     public DutchAuction decrementPrice(int auctionId) {
         DutchAuction auction = getAuctionById(auctionId);
 
@@ -91,7 +96,10 @@ public class DutchAuctionDAO extends AuctionDAO {
         double newPrice = auction.getCurrentPrice() - auction.getDecrement();
         if (newPrice <= auction.getMinimumPrice()) {
             newPrice = auction.getMinimumPrice();
-            // End the auction if no buyer
+            // Set the time when minimum price is first reached
+            if(auction.getMinimumPriceReachedTime() == null){
+                auction.setMinimumPriceReachedTime(new Date());
+            }
             auction.setAuctionEnded(true);
         }
 
@@ -99,6 +107,4 @@ public class DutchAuctionDAO extends AuctionDAO {
         updateAuction(auction);
         return auction;
     }
-
-
 }

@@ -6,7 +6,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 
-import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 
@@ -15,71 +14,47 @@ public class DutchAuctionWatch {
 
     private final AuctionDAO auctionDAO;
     private final DutchAuctionUpdate dutchAuctionUpdate;
-	private final DutchAuctionSearch dutchAuctionSearch;
-    
-    
+    private final DutchAuctionSearch dutchAuctionSearch;
 
     @Autowired
-    public DutchAuctionWatch (AuctionDAO auctionDAO, DutchAuctionUpdate dutchAuctionUpdate, DutchAuctionSearch dutchAuctionSearch) {
+    public DutchAuctionWatch(AuctionDAO auctionDAO, DutchAuctionUpdate dutchAuctionUpdate, DutchAuctionSearch dutchAuctionSearch) {
         this.auctionDAO = auctionDAO;
         this.dutchAuctionUpdate = dutchAuctionUpdate;
         this.dutchAuctionSearch = dutchAuctionSearch;
     }
 
-    @Scheduled(fixedRate = 10000)
+    // This method will decrement the price of each Dutch auction every 3 minutes
+    @Scheduled(fixedRate = 60000) // 180000 milliseconds = 3 minutes
     public void monitorDecrement() {
-        try {
-            List<Auction> allAuctions = dutchAuctionSearch.getAllDutchAuctions();
-            for (Auction auction : allAuctions) {
-            	dutchAuctionUpdate.decrementPrice(auction.getAuctionId());
-            }
-        } catch (Exception e) {
-            System.out.println("Unable to decrement auction");
-        }
-    }
-
-    @Scheduled(cron = "0 * * * * *")
-    public void monitorClosure() {
-        try {
-            List<Auction> allAuctions = dutchAuctionSearch.getAllDutchAuctions();
-            Date timeNow;
-            for (Auction auction : allAuctions) {
-                timeNow = new Date();
-
-                SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd-HH:mm");
-                String formattedDate = formatter.format(timeNow);
-
-                timeNow = formatter.parse(formattedDate);
-                Date endDate = auction.getEndTimeOfAuction();
-
-                if (timeNow.getTime() >= endDate.getTime()) {
-                    System.out.println(timeNow);
-                    System.out.println(endDate);
-                    dutchAuctionUpdate.closeAuction(auction.getAuctionId());
-                }
-            }
-        } catch (Exception e) {
-            System.out.println("Unable to end auction");
-        }
-    }
-    
-    @Scheduled(fixedRate = 10000) // Adjust the rate as needed
-    public void monitorAuctions() {
         List<Auction> allAuctions = dutchAuctionSearch.getAllOpenDutchAuctions();
         for (Auction auction : allAuctions) {
-            // Decrement price logic
-            dutchAuctionUpdate.decrementPrice(auction.getAuctionId());
-            
-            // Check and remove item logic
-            if (shouldRemoveAuction(auction)) {
-                dutchAuctionUpdate.closeAuction(auction.getAuctionId());
+            if (auction instanceof DutchAuction) {
+                DutchAuction dutchAuction = (DutchAuction) auction;
+                if (!dutchAuction.isAuctionEnded()) {
+                    dutchAuctionUpdate.decrementPrice(dutchAuction.getAuctionId());
+                }
             }
         }
     }
-    
-    private boolean shouldRemoveAuction(Auction auction) {
-        // Implement logic to check if the auction should be removed
-        // based on time elapsed since the price reached the minimum price
-        // Return true if the auction should be removed, false otherwise
+
+    // This method will check every minute if 30 minutes have passed since the auction reached its minimum price
+    @Scheduled(cron = "0 */1 * * * *") // Every 1 minute
+    public void checkAndEndAuctions() {
+        List<Auction> allAuctions = dutchAuctionSearch.getAllOpenDutchAuctions();
+        Date currentTime = new Date();
+        for (Auction auction : allAuctions) {
+            if (auction instanceof DutchAuction) {
+                DutchAuction dutchAuction = (DutchAuction) auction;
+                if (dutchAuction.getCurrentPrice() <= dutchAuction.getMinimumPrice() && !dutchAuction.isAuctionEnded()) {
+                    Date minPriceReachedTime = dutchAuction.getMinimumPriceReachedTime();
+                    if (minPriceReachedTime != null) {
+                        long timeElapsed = currentTime.getTime() - minPriceReachedTime.getTime();
+                        if (timeElapsed >= 1800000) { // 1800000 milliseconds = 30 minutes
+                            dutchAuctionUpdate.closeAuction(dutchAuction.getAuctionId());
+                        }
+                    }
+                }
+            }
+        }
     }
 }

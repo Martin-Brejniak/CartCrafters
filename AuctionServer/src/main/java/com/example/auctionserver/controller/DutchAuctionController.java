@@ -56,14 +56,6 @@ public class DutchAuctionController {
         return dutchAuctionSearch.isUserWinner(auctionId, userId);
     }
 
-	/*
-	 * @PostMapping("/search/items") public List<Auction>
-	 * searchDutchAuctionsByItems(@RequestBody List<String> itemIds) throws
-	 * Exception { try { return
-	 * dutchAuctionSearch.searchDutchAuctionsByItems(itemIds); } catch
-	 * (NoSuchElementException e) { throw new Exception(e.getMessage()); } }
-	 */
-
     @PostMapping("/decrement")
     public ResponseEntity<?> decrementPrice(@RequestParam("auctionId") int auctionId) {
         try {

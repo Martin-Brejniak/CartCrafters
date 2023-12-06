@@ -40,37 +40,31 @@ public class DutchAuctionUpdate {
 
     public DutchAuction decrementPrice(int auctionId) {
         DutchAuction auction = dutchAuctionDAO.getAuctionById(auctionId);
-        System.out.println("Before update");
-
-        if (auction == null) {
+        if (auction == null || !(auction instanceof DutchAuction)) {
             throw new AuctionNotFoundException("Auction not found with ID: " + auctionId);
-        }
-
-        if (!(auction instanceof DutchAuction)) {
-            throw new InvalidAuctionTypeException("Invalid auction type.");
         }
 
         DutchAuction dutchAuction = (DutchAuction) auction;
 
-        double newPrice = dutchAuction.getCurrentPrice() - dutchAuction.getDecrement();
-        if (newPrice < dutchAuction.getMinimumPrice()) {
-            newPrice = dutchAuction.getMinimumPrice();
-        }
-
-        if (auction.isAuctionEnded()) {
+        if (dutchAuction.isAuctionEnded()) {
             throw new AuctionEndedException("Auction has already ended.");
         }
 
-       // System.out.println("Before update: " + dutchAuction);
+        double newPrice = dutchAuction.getCurrentPrice() - dutchAuction.getDecrement();
+
+        // Check if the new price falls below the minimum price
+        if (newPrice <= dutchAuction.getMinimumPrice()) {
+            newPrice = dutchAuction.getMinimumPrice();
+
+            // Set the minimumPriceReachedTime if it's not already set
+            if (dutchAuction.getMinimumPriceReachedTime() == null) {
+                dutchAuction.setMinimumPriceReachedTime(new Date());
+            }
+        }
+
         dutchAuction.setCurrentPrice(newPrice);
+        dutchAuctionDAO.updateAuction(dutchAuction); // Persist changes to the database
 
-        // Uncomment the lines if you want to update minimumPrice and decrement as well
-        // dutchAuction.setMinimumPrice(dutchAuction.getMinimumPrice());
-        // dutchAuction.setDecrement(dutchAuction.getDecrement());
-
-        //System.out.println("After update: " + dutchAuction);
-
-        dutchAuctionDAO.updateAuction(dutchAuction);
         return dutchAuction;
     }
 
