@@ -62,4 +62,24 @@ public class DutchAuctionWatch {
             System.out.println("Unable to end auction");
         }
     }
+    
+    @Scheduled(fixedRate = 10000) // Adjust the rate as needed
+    public void monitorAuctions() {
+        List<Auction> allAuctions = dutchAuctionSearch.getAllOpenDutchAuctions();
+        for (Auction auction : allAuctions) {
+            // Decrement price logic
+            dutchAuctionUpdate.decrementPrice(auction.getAuctionId());
+            
+            // Check and remove item logic
+            if (shouldRemoveAuction(auction)) {
+                dutchAuctionUpdate.closeAuction(auction.getAuctionId());
+            }
+        }
+    }
+    
+    private boolean shouldRemoveAuction(Auction auction) {
+        // Implement logic to check if the auction should be removed
+        // based on time elapsed since the price reached the minimum price
+        // Return true if the auction should be removed, false otherwise
+    }
 }
