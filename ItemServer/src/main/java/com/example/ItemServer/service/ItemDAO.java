@@ -19,16 +19,17 @@ public class ItemDAO {
 		this.jdbcTemplate = jdbcTemplate;
 	}
 	
-	private RowMapper<Item> itemRowMapper = (rs, rowNum) -> {
-		Item item = new Item();
-		item.setName(rs.getString("name"));
-		item.setPrice(rs.getDouble("price"));
-		item.setType(rs.getString("type"));
-		item.setEndTime(rs.getString("endTime"));
-		item.setWinner(rs.getString("winner"));
-		item.setItemID(rs.getInt("itemID"));
-		return item;
-	};
+	
+		private RowMapper<Item> itemRowMapper = (rs, rowNum) -> {
+		    Item item = new Item();
+		    item.setName(rs.getString("name"));
+		    item.setPrice(rs.getDouble("price"));
+		    item.setAuctionType(rs.getString("auctionType"));
+		    item.setEndTime(rs.getString("endTime"));
+		    item.setWinner(rs.getString("winner"));
+		    item.setItemID(rs.getInt("itemID"));
+		    return item;
+		};
 	
 	/**
 	* Gets all items from the items database.
@@ -68,10 +69,9 @@ public class ItemDAO {
 	* @param  item   an item.
 	*/
 	public void createItem(Item item) {
-		String sql = "INSERT INTO items(name,price,type,endTime) VALUES('"+ item.getName() +"',"+ item.getPrice() +",'"+ item.getType() +"','"+ item.getEndTime() +"')";
-		jdbcTemplate.update(sql);
+	    String sql = "INSERT INTO items (name, price, type, endTime, auctionType) VALUES (?, ?, ?, ?, ?)";
+	    jdbcTemplate.update(sql, item.getName(), item.getPrice(), item.getAuctionType(), item.getEndTime());
 	}
-		
 	/**
 	* Updates item in item database.
 	*
@@ -79,8 +79,8 @@ public class ItemDAO {
 	* @param  item  an item.
 	*/
 	public void updateItem(int id, Item item) {
-		String sql = "UPDATE items SET name = '"+ item.getName() +"', price = "+ item.getPrice() +", type = '"+ item.getType() +"', endTime = '"+ item.getEndTime() +"' WHERE itemID = "+ id;
-		jdbcTemplate.update(sql);
+	    String sql = "UPDATE items SET name = ?, price = ?, type = ?, endTime = ?, auctionType = ? WHERE itemID = ?";
+	    jdbcTemplate.update(sql, item.getName(), item.getPrice(), item.getAuctionType(), item.getEndTime(), id);
 	}
 	
 	/**

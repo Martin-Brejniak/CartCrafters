@@ -63,4 +63,9 @@ public class ItemController {
 		itemDAO.deleteItem(itemID);
     }
 	
+	@GetMapping("/get-all-with-auction-type")
+	public List<Item> getAllItemsWithAuctionType() {
+	    return itemDAO.getAllItems();
+	}
+	
 }

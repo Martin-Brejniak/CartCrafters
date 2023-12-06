@@ -79,5 +79,26 @@ public class DutchAuctionDAO extends AuctionDAO {
 
         return dutchAuction;
     }
+    
+ // DECREMENT
+    public DutchAuction decrementPrice(int auctionId) {
+        DutchAuction auction = getAuctionById(auctionId);
+
+        if (auction == null || auction.isAuctionEnded()) {
+            return null;
+        }
+
+        double newPrice = auction.getCurrentPrice() - auction.getDecrement();
+        if (newPrice <= auction.getMinimumPrice()) {
+            newPrice = auction.getMinimumPrice();
+            // End the auction if no buyer
+            auction.setAuctionEnded(true);
+        }
+
+        auction.setCurrentPrice(newPrice);
+        updateAuction(auction);
+        return auction;
+    }
+
 
 }
