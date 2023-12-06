@@ -83,7 +83,7 @@ public class ForwardAuctionSearch {
     }
 
     public List<Auction> getAllOpenForwardAuctions() {
-        return auctionDAO.getAllAuctions().stream()
+        return auctionDAO.getAllForwardAuctions().stream()
                 .filter(auction -> "forward".equalsIgnoreCase(auction.getAuctionType()) && !auction.isAuctionEnded())
                 .collect(Collectors.toList());
     }

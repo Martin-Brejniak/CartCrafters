@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import AccountService from '../Services/accountservice'; // Adjust the import path as necessary
+import Cookies from 'js-cookie';
 
 function Login() {
   const [credentials, setCredentials] = useState({
