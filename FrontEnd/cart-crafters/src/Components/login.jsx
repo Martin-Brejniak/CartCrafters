@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import AccountService from '../Services/accountservice'; // Adjust the import path as necessary
+import AccountService from '../Services/accountservice';
 import Cookies from 'js-cookie';
 
 function Login() {
@@ -19,10 +19,10 @@ function Login() {
     e.preventDefault();
     try {
       const response = await AccountService.authenticateUser(credentials.username, credentials.password);
-      const sessionToken = response.data.sessionToken; // Assuming the token is returned in this format
+      const sessionToken = response.data.sessionToken;
       if (sessionToken) {
-        Cookies.set('sessionToken', sessionToken, { expires: 1 }); // Set cookie with expiry of 1 day
-        navigate('/items'); // Redirect to the items page
+        Cookies.set('sessionToken', sessionToken, { expires: 1 });
+        navigate('/items');
       } else {
         alert('Invalid credentials');
       }
@@ -32,21 +32,22 @@ function Login() {
   };
 
   return (
-    <form onSubmit={handleSubmit}>
+    <form onSubmit={handleSubmit} style={{ display: 'inline-block', margin: 'auto' }}>
+      <h2>Login</h2>
       <input
         type="text"
         name="username"
         value={credentials.username}
         onChange={handleChange}
         placeholder="Username"
-      />
+      /><br/>
       <input
         type="password"
         name="password"
         value={credentials.password}
         onChange={handleChange}
         placeholder="Password"
-      />
+      /><br/>
       <button type="submit">Log In</button>
     </form>
   );

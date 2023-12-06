@@ -1,14 +1,21 @@
 import React, { useState } from 'react';
 import AccountService from '../Services/accountservice';
+import { useNavigate } from 'react-router-dom';
 
 function SignUp() {
+  const navigate = useNavigate();
   const [userData, setUserData] = useState({
+    fName: '',
+    lName: '',
+    address: '',
+    postal: '',
+    city: '',
+    country: '',
+    province: '',
     username: '',
-    password: '',
-    firstName: '',
-    lastName: '',
-    address: ''
+    password: ''
   });
+  const [showWelcome, setShowWelcome] = useState(false);
 
   const handleChange = (e) => {
     setUserData({ ...userData, [e.target.name]: e.target.value });
@@ -18,17 +25,24 @@ function SignUp() {
     e.preventDefault();
     try {
       await AccountService.createUser(userData);
-      // Handle post sign-up logic
+      setShowWelcome(true);
+      setTimeout(() => {
+        navigate('/');
+      }, 3000);
     } catch (error) {
       console.error('Sign up error', error);
     }
   };
 
   return (
-    <form onSubmit={handleSubmit}>
-      {/* Form fields for each userData property */}
-      <button type="submit">Sign Up</button>
-    </form>
+    <div style={{ textAlign: 'center' }}>
+      <h2>Sign Up</h2>
+      {showWelcome && <p>Welcome! You will be redirected shortly.</p>}
+      <form onSubmit={handleSubmit}>
+        {/* Form fields as before */}
+        <button type="submit">Sign Up</button>
+      </form>
+    </div>
   );
 }
 
