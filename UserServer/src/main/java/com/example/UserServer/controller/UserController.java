@@ -44,7 +44,7 @@ private final UserDAO userDAO;
     }
 	
 	@GetMapping("/authenticate")
-    public boolean authenticateUser(@RequestParam("username") String username, @RequestParam("password") String password) {
+    public String authenticateUser(@RequestParam("username") String username, @RequestParam("password") String password) {
 		return userDAO.authenticateUser(username, password);
     }
 	

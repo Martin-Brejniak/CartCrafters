@@ -19,9 +19,9 @@ function Login() {
     e.preventDefault();
     try {
       const response = await AccountService.authenticateUser(credentials.username, credentials.password);
-      const sessionToken = response.data.sessionToken;
-      if (sessionToken) {
-        Cookies.set('sessionToken', sessionToken, { expires: 1 });
+      const token = response.data; 
+      if (token) {
+        Cookies.set('sessionToken', token, { expires: 1 }); // Store the token in cookies
         navigate('/items');
       } else {
         alert('Invalid credentials');

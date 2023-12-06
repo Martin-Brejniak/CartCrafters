@@ -83,24 +83,23 @@ public class UserDAO {
 	* @param  password   a password.
 	* @return         true if username and password are correct. False if not.
 	*/
-	public boolean authenticateUser(String username, String password) {
+	public String authenticateUser(String username, String password) {
 	    String sql = "SELECT password FROM users WHERE LOWER(username) = LOWER(?)";
 	    
 	    try {
 	        String passwordDB = jdbcTemplate.queryForObject(sql, String.class, username);
 	        
 	        if (passwordDB != null && passwordDB.trim().equals(password.trim())) {
-	            return true;
+	            return TokenService.generateToken(username); // Generate token for valid user
 	        }
 
 	    } catch (EmptyResultDataAccessException e) {
 	        // No user with the given username found
-	        // Handle this case as needed (e.g., log or return false)
 	    } catch (DataAccessException e) {
-	        // Handle other database-related exceptions (e.g., log or rethrow)
+	        // Handle other database-related exceptions
 	    }
 	    
-	    return false; // Authentication failed
+	    return null; // Return null or appropriate response for invalid authentication
 	}
 
     /**
