@@ -1,11 +1,12 @@
 import React, { useState, useEffect } from 'react';
-import { placeBid } from '../Services/forwardauctionservice';
+import { placeBid, closeAuction } from '../Services/forwardauctionservice';
 
 const ForwardComponent = ({ auctionInfo }) => {
     const [bidAmount, setBidAmount] = useState('');
     const [error, setError] = useState('');
 
     const [timeRemaining, setTimeRemaining] = useState('');
+    const [auctionClosed, setAuctionClosed] = useState(auctionInfo.auctionEnded);
 
     useEffect(() => {
         const calculateTimeRemaining = () => {
@@ -20,6 +21,19 @@ const ForwardComponent = ({ auctionInfo }) => {
                 setTimeRemaining(`${hours.toString().padStart(2, '0')}:${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`);
             } else {
                 setTimeRemaining("00:00:00");
+                if (!auctionClosed) {
+                    handleAuctionClosure();
+                }
+            }
+        };
+
+        const handleAuctionClosure = async () => {
+            try {
+                await closeAuction(auctionInfo.auctionId);
+                setAuctionClosed(true);
+            } catch (error) {
+                console.error('Error closing auction:', error);
+                setError('Error occurred while closing the auction');
             }
         };
 
@@ -27,7 +41,7 @@ const ForwardComponent = ({ auctionInfo }) => {
         const intervalId = setInterval(calculateTimeRemaining, 1000);
 
         return () => clearInterval(intervalId);
-    }, [auctionInfo.endTimeOfAuction]);
+    }, [auctionInfo.endTimeOfAuction, auctionInfo.auctionId, auctionClosed]);
 
     const handleBid = async () => {
         if (parseInt(bidAmount) <= auctionInfo.highestBid) {
