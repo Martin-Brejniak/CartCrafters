@@ -23,7 +23,7 @@ public class DutchAuctionSearch {
         if (auctionDAO == null) {
             throw new IllegalStateException("AuctionDAO has not been set");
         }
-        return auctionDAO.getAuctionsByType("dutch");
+        return auctionDAO.getAuctionsByType("Dutch");
     }
 
     public List<Auction> getAllOpenDutchAuctions() {

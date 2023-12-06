@@ -27,7 +27,7 @@ public class ForwardAuctionWatch {
 	        this.forwardAuctionUpdate = forwardAuctionUpdate;
 	        this.forwardAuctionSearch = forwardAuctionSearch;
 	    }
-    @Scheduled(cron = "0 * * * * *")
+    
     public void monitorAuctions() {
         try {
             List<Auction> allAuctions = forwardAuctionSearch.getAllForwardAuctions(); 

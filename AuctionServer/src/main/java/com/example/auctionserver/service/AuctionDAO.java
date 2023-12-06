@@ -1,6 +1,8 @@
 package com.example.auctionserver.service;
 
 import com.example.auctionserver.entity.Auction;
+import com.example.auctionserver.entity.DutchAuction;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.jdbc.core.JdbcTemplate;
@@ -72,7 +74,27 @@ public class AuctionDAO {
 	}
 
 	public List<Auction> getAuctionsByType(String auctionType) {
-		String sql = "SELECT * FROM auctions WHERE auctionType = ?";
-		return jdbcTemplate.query(sql, new Object[] { auctionType }, auctionRowMapper);
+	    String sql = "SELECT * FROM auctions WHERE auctionType = ?";
+	    return jdbcTemplate.query(
+	        sql,
+	        new Object[]{auctionType},
+	        (rs, rowNum) -> {
+	            Auction auction = new Auction();
+	            auction.setAuctionId(rs.getInt("auctionId"));
+	            auction.setItemId(rs.getInt("itemId"));
+	            auction.setAuctionType(rs.getString("auctionType"));
+	            auction.setInitialPrice(rs.getDouble("initialPrice"));
+	            auction.setCurrentPrice(rs.getDouble("currentPrice"));
+	            auction.setStartTimeOfAuction(rs.getTimestamp("startTimeOfAuction"));
+	            auction.setEndTimeOfAuction(rs.getTimestamp("endTimeOfAuction"));
+	            auction.setAuctionEnded(rs.getBoolean("auctionEnded"));
+	            auction.setSoldToUserId(rs.getInt("soldToUserId"));
+	            // Set other fields as necessary
+	            return auction;
+	        }
+	    );
 	}
+
+
+
 }
