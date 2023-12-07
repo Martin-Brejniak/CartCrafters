@@ -19,5 +19,16 @@ public class UserViewController {
     public String checkOutPage() {
     	return "checkout";
     }
+
+    @GetMapping("/landing-user")
+    public String landingPage() {
+    	return "landing";
+    }
+	
+    @GetMapping("/receipt-user")
+    public String receiptPage() {
+    	return "receipt";
+    }
+	
 }
 
