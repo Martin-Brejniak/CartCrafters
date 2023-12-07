@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import AccountService from '../Services/accountservice';
 import Cookies from 'js-cookie';
+import jwt_decode from "jwt-decode"; // Ensure jwt-decode is installed
 
 function Login() {
   const [credentials, setCredentials] = useState({
@@ -19,9 +20,10 @@ function Login() {
     e.preventDefault();
     try {
       const response = await AccountService.authenticateUser(credentials.username, credentials.password);
-      const token = response.data; 
+      const token = response.data;
       if (token) {
-        Cookies.set('sessionToken', token, { expires: 1 }); // Store the token in cookies
+        Cookies.set('sessionToken', token, { expires: 1 });
+        localStorage.setItem('sessionToken', token);
         navigate('/items');
       } else {
         alert('Invalid credentials');

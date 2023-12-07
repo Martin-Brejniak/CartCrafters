@@ -1,24 +1,39 @@
 import axios from 'axios';
 
-const BASE_URL = 'http://localhost:9090/item'; // Adjust if necessary
+const BASE_URL = 'http://localhost:7070/auction'; // Adjust if necessary
 
-const getAllItems = () => axios.get(`${BASE_URL}/get-all`);
-const getItemByID = (itemID) => axios.get(`${BASE_URL}/get-id`, { params: { itemID } });
-const searchItem = (term) => axios.get(`${BASE_URL}/search`, { params: { term } });
-const createItem = (item) => axios.post(BASE_URL, item);
-const updateItem = (itemID, item) => axios.put(`${BASE_URL}/update-all`, item, { params: { itemID } });
-const updateItemWinner = (itemID, winner) => axios.put(`${BASE_URL}/update-winner`, null, { params: { itemID, winner } });
-const deleteItem = (itemID) => axios.delete(BASE_URL, { params: { itemID } });
+// Function to get all open forward auctions
+export const getAllOpenForwardAuctions = async () => {
+    try {
+        const response = await axios.get(`${BASE_URL}/forward/get-all-open`);
+        // Extracting the required fields from each auction
+        return response.data.map(auction => ({
+            auctionType: auction.auctionType,
+            auctionId: auction.auctionId,
+            itemId: auction.itemId,
+            currentPrice: auction.currentPrice,
+            endTimeOfAuction: auction.endTimeOfAuction
+        }));
+    } catch (error) {
+        console.error('Error fetching open forward auctions:', error);
+        throw error;
+    }
+};
 
-const getAllItemsWithAuctionType = () => axios.get(`${BASE_URL}/get-all-with-auction-type`);
-
-export default {
-  getAllItems,
-  getItemByID,
-  searchItem,
-  createItem,
-  updateItem,
-  updateItemWinner,
-  deleteItem,
-  getAllItemsWithAuctionType,
+// Function to get all open Dutch auctions
+export const getAllOpenDutchAuctions = async () => {
+    try {
+        const response = await axios.get(`${BASE_URL}/dutch/get-all-open`);
+        // Extracting the required fields from each auction
+        return response.data.map(auction => ({
+            auctionType: auction.auctionType,
+            auctionId: auction.auctionId,
+            itemId: auction.itemId,
+            currentPrice: auction.currentPrice,
+            endTimeOfAuction: auction.endTimeOfAuction
+        }));
+    } catch (error) {
+        console.error('Error fetching open Dutch auctions:', error);
+        throw error;
+    }
 };

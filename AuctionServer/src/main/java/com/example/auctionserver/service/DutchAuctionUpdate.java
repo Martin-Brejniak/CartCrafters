@@ -39,6 +39,9 @@ public class DutchAuctionUpdate {
     
 
     public DutchAuction decrementPrice(int auctionId) {
+    	
+    	System.out.println("checking in update");
+    	
         DutchAuction auction = dutchAuctionDAO.getAuctionById(auctionId);
         if (auction == null || !(auction instanceof DutchAuction)) {
             throw new AuctionNotFoundException("Auction not found with ID: " + auctionId);
@@ -104,4 +107,3 @@ public class DutchAuctionUpdate {
     }
 
 }
-    

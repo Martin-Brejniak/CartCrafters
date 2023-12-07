@@ -1,60 +1,100 @@
-import React, { useState, useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import ItemService from '../Services/itemservice';
+import { getAllOpenForwardAuctions, getAllOpenDutchAuctions } from '../Services/itemservice';
 
-function ItemDisplay() {
-  const [items, setItems] = useState([]);
-  const [selectedItemId, setSelectedItemId] = useState(null);
-  const navigate = useNavigate();  // Updated to use useNavigate
+const POLL_INTERVAL = 1000;
+
+function ItemDisplay({ searchTerm }) {
+  const [auctions, setAuctions] = useState([]);
+  const [selectedAuctionId, setSelectedAuctionId] = useState(null);
+  const navigate = useNavigate();
 
   useEffect(() => {
-    ItemService.getAllItemsWithAuctionType()
-      .then(response => setItems(response.data))
-      .catch(error => console.error('Fetching items failed', error));
-  }, []);
+    const fetchAuctions = async () => {
+      try {
+        let fetchedAuctions = [];
+        if (!searchTerm) {
+          const forwardAuctions = await getAllOpenForwardAuctions();
+          const dutchAuctions = await getAllOpenDutchAuctions();
+          fetchedAuctions = [...forwardAuctions, ...dutchAuctions];
+        } else {
+          // Add search logic here
+        }
+        setAuctions(fetchedAuctions);
+      } catch (error) {
+        console.error('Fetching auctions failed', error);
+      }
+    };
 
-  const handleItemSelect = (itemId) => {
-    setSelectedItemId(itemId);
+    fetchAuctions();
+    // Set up the polling interval
+    const intervalId = setInterval(fetchAuctions, POLL_INTERVAL);
+
+    // Cleanup function to clear the interval when the component unmounts
+    return () => clearInterval(intervalId);
+  }, [searchTerm]);
+
+  const calculateTimeRemaining = (endTime) => {
+    const end = new Date(endTime);
+    const now = new Date();
+    const difference = end - now;
+
+    let timeRemaining = '';
+    if (difference > 0) {
+      const days = Math.floor(difference / (1000 * 60 * 60 * 24));
+      const hours = Math.floor((difference / (1000 * 60 * 60)) % 24);
+      const minutes = Math.floor((difference / 1000 / 60) % 60);
+      const seconds = Math.floor((difference / 1000) % 60);
+
+      timeRemaining = `${days}d, ${hours}h, ${minutes}m, ${seconds}s`;
+    } else {
+      timeRemaining = "Auction ended";
+    }
+    return timeRemaining;
   };
 
-  const navigateToAuction = (itemId) => {
-    const selectedItem = items.find(item => item.itemID === itemId);
-    if (!selectedItem) {
-      console.error('Selected item not found');
+  const handleAuctionSelect = (auctionId) => {
+    setSelectedAuctionId(auctionId);
+  };
+
+  const navigateToAuction = (auctionId) => {
+    const selectedAuction = auctions.find(auction => auction.auctionId === auctionId);
+    if (!selectedAuction) {
+      console.error('Selected auction not found');
       return;
     }
 
-    const path = selectedItem.auctionType === 'dutch' 
-      ? `/dutch-auction/${itemId}` 
-      : `/forward-auction/${itemId}`;
+    const path = selectedAuction.auctionType.toLowerCase() === 'dutch'
+      ? `/dutch-auctions/${auctionId}`
+      : `/forward-auctions/${auctionId}`;
 
-    navigate(path);  // Updated to use navigate
+    navigate(path);
   };
 
   const handleBidClick = () => {
-    if (selectedItemId !== null) {
-      navigateToAuction(selectedItemId);
+    if (selectedAuctionId !== null) {
+      navigateToAuction(selectedAuctionId);
     } else {
-      console.error('No item selected');
+      console.error('No auction selected');
     }
   };
 
   return (
     <div>
-      <h2>Items for Auction</h2>
-      {items.map(item => (
-        <div key={item.itemID}>
+      <h2>Open Auctions</h2>
+      {auctions.map(auction => (
+        <div key={auction.auctionId}>
           <input
             type="radio"
-            name="itemSelect"
-            value={item.itemID}
-            onChange={() => handleItemSelect(item.itemID)}
-            checked={selectedItemId === item.itemID}
+            name="auctionSelect"
+            value={auction.auctionId}
+            onChange={() => handleAuctionSelect(auction.auctionId)}
+            checked={selectedAuctionId === auction.auctionId}
           />
-          <span>{item.name} - {item.auctionType} Auction</span>
+          <span>{auction.itemId} - {auction.auctionType} Auction - Current Price: ${auction.currentPrice} - Time Remaining: {calculateTimeRemaining(auction.endTimeOfAuction)}</span>
         </div>
       ))}
-      <button onClick={handleBidClick} disabled={selectedItemId === null}>Bid</button>
+      <button onClick={handleBidClick} disabled={selectedAuctionId === null}>Go to Auction</button>
     </div>
   );
 }

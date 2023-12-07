@@ -1,5 +1,21 @@
 import React, { useState, useEffect } from 'react';
-import { placeBid, closeAuction } from '../Services/forwardauctionservice';
+import { placeBid, closeAuction, getForwardAuctionDetails } from '../Services/forwardauctionservice';
+import { jwtDecode } from 'jwt-decode';
+
+const getUserIdFromToken = () => {
+  const token = localStorage.getItem('sessionToken');
+  if (!token) return null;
+
+  try {
+      console.log("got some token")
+      const decodedToken = jwtDecode(token);
+      console.log(decodedToken)
+      return decodedToken.userId;
+    } catch (error) {
+      console.error("Error decoding token:", error);
+      return null;
+    }
+};
 
 const ForwardComponent = ({ auctionInfo }) => {
     const [bidAmount, setBidAmount] = useState('');
@@ -9,23 +25,24 @@ const ForwardComponent = ({ auctionInfo }) => {
     const [auctionClosed, setAuctionClosed] = useState(auctionInfo.auctionEnded);
 
     useEffect(() => {
-        const calculateTimeRemaining = () => {
-            const endTime = new Date(auctionInfo.endTimeOfAuction);
-            const currentTime = new Date();
-            const difference = endTime - currentTime;
+      const calculateTimeRemaining = () => {
+  const endTime = new Date(auctionInfo.endTimeOfAuction);
+  const currentTime = new Date();
+  const difference = endTime - currentTime;
 
-            if (difference > 0) {
-                const hours = Math.floor((difference / (1000 * 60 * 60)) % 24);
-                const minutes = Math.floor((difference / 1000 / 60) % 60);
-                const seconds = Math.floor((difference / 1000) % 60);
-                setTimeRemaining(`${hours.toString().padStart(2, '0')}:${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`);
-            } else {
-                setTimeRemaining("00:00:00");
-                if (!auctionClosed) {
-                    handleAuctionClosure();
-                }
-            }
-        };
+  if (difference > 0) {
+      const hours = Math.floor((difference / (1000 * 60 * 60)) % 24);
+      const minutes = Math.floor((difference / 1000 / 60) % 60);
+      const seconds = Math.floor((difference / 1000) % 60);
+      setTimeRemaining(`${hours.toString().padStart(2, '0')}:${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`);
+  } else {
+      setTimeRemaining("00:00:00");
+      if (!auctionClosed) {
+          handleAuctionClosure();
+      }
+  }
+};
+
 
         const handleAuctionClosure = async () => {
             try {
@@ -44,16 +61,25 @@ const ForwardComponent = ({ auctionInfo }) => {
     }, [auctionInfo.endTimeOfAuction, auctionInfo.auctionId, auctionClosed]);
 
     const handleBid = async () => {
+      const userId = getUserIdFromToken();
+          if (!userId) {
+            setError("User not authenticated.");
+            return;
+          }
+
         if (parseInt(bidAmount) <= auctionInfo.highestBid) {
             setError('Bid must be higher than the current highest bid.');
             return;
         }
 
         try {
-            await placeBid(auctionInfo.auctionId, 1, parseInt(bidAmount)); // Replace '1' with the actual user ID
+            await placeBid(auctionInfo.auctionId, userId, parseInt(bidAmount)); // Replace '1' with the actual user ID
             setBidAmount('');
-            // After bidding, you might want to fetch the latest auction details
-            // to update the highest bid and bidder user ID
+            // Fetch the latest auction details
+          const updatedAuctionInfo = await getForwardAuctionDetails(auctionInfo.auctionId);
+          // Update highest bid and bidder user ID
+          auctionInfo.highestBid = updatedAuctionInfo.currentPrice;
+          auctionInfo.highestBidderUserId = updatedAuctionInfo.highestBidderUserId;
             setError('');
         } catch (e) {
             setError(e.message);

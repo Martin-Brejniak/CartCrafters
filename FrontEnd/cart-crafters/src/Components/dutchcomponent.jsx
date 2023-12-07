@@ -17,7 +17,7 @@ const DutchComponent = ({ auctionInfo }) => {
         try {
             const buy = {
                 auctionId: auctionInfo.auctionId,
-                userId: 1, // replace with actual user ID
+                userId: 1, // actual user ID
             };
             await buyAuction(buy);
         } catch (e) {

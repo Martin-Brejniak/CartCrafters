@@ -10,6 +10,7 @@ import ItemSearch from './Components/itemsearch';
 import ProtectedRoute from './Components/ProtectedRoute';
 import LandingPage from './Pages/landingpage';
 import Login from './Components/login';
+import ItemPage from './Pages/ItemPage';
 
 function App() {
   return (
@@ -21,16 +22,13 @@ function App() {
           <Route path="/signup" element={<SignUp />} />
           <Route path="/items" element={
             <ProtectedRoute>
-              <div>
-                <ItemDisplay />
-                <ItemSearch />
-              </div>
+              <ItemPage /> {}
             </ProtectedRoute>
           } />
           <Route path="/forward-auctions" element={<ForwardPage />} />
-          <Route path="/auction/:id" element={<ForwardComponent />} />
+          <Route path="/forward-auctions/:auctionId" element={<ForwardPage />} />
           <Route path="/dutch-auctions" element={<DutchPage />} />
-          <Route path="/dutch-auction/:id" element={<DutchComponent />} />
+          <Route path="/dutch-auctions/:auctionId" element={<DutchPage />} />
         </Routes>
       </div>
     </Router>

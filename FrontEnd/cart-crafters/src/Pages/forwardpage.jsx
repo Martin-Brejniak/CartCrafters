@@ -1,39 +1,52 @@
 import React, { useEffect, useState } from 'react';
-import { getAllOpenForwardAuctions } from '../Services/forwardauctionservice';
+import { useParams } from 'react-router-dom';
+import { getAllOpenForwardAuctions, getForwardAuctionDetails } from '../Services/forwardauctionservice';
 import ForwardComponent from '../Components/forwardcomponent';
 
-const POLL_INTERVAL = 1000; // Time in milliseconds (e.g., 2000 for 2 seconds)
+const POLL_INTERVAL = 1000; // Time in milliseconds
 
 const ForwardPage = () => {
-    const [auctions, setAuctions] = useState([]);
+    const { auctionId } = useParams(); // Get auctionId from URL params
+    const [auctionInfo, setAuctionInfo] = useState(null);
 
     useEffect(() => {
-        const fetchAuctions = async () => {
+        const fetchAuction = async () => {
             try {
-                const openAuctions = await getAllOpenForwardAuctions();
-                setAuctions(openAuctions);
+                let auctionData;
+                if (auctionId) {
+                    // Fetch details for a single auction if auctionId is present
+                    auctionData = await getForwardAuctionDetails(auctionId);
+                } else {
+                    // Fetch all open auctions otherwise
+                    auctionData = await getAllOpenForwardAuctions();
+                }
+                setAuctionInfo(auctionData);
             } catch (error) {
-                console.error('Error fetching auctions:', error);
+                console.error('Error fetching auction:', error);
             }
         };
 
-        fetchAuctions();
+        fetchAuction();
+        const intervalId = setInterval(fetchAuction, POLL_INTERVAL);
+        return () => clearInterval(intervalId);
+    }, [auctionId]);
 
-        const intervalId = setInterval(fetchAuctions, POLL_INTERVAL);
-
-        return () => clearInterval(intervalId); // Cleanup on unmount
-    }, []);
+    const renderAuction = () => {
+        if (Array.isArray(auctionInfo)) {
+            return auctionInfo.map((auction) => (
+                <ForwardComponent key={auction.auctionId} auctionInfo={auction} />
+            ));
+        } else if (auctionInfo) {
+            return <ForwardComponent auctionInfo={auctionInfo} />;
+        } else {
+            return <p>No auction data available.</p>;
+        }
+    };
 
     return (
         <div>
-            <h1>Forward Auctions</h1>
-            {auctions.length === 0 ? (
-                <p>No open forward auctions at the moment.</p>
-            ) : (
-                auctions.map((auction) => (
-                    <ForwardComponent key={auction.auctionId} auctionInfo={auction} />
-                ))
-            )}
+            <h1>{auctionId ? `Auction Details` : `Forward Auctions`}</h1>
+            {renderAuction()}
         </div>
     );
 };

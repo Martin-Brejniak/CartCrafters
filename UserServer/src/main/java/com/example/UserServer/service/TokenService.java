@@ -2,19 +2,20 @@ package com.example.UserServer.service;
 
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
-import java.util.Date;
+import io.jsonwebtoken.security.Keys;
+import javax.crypto.SecretKey;
+import java.nio.charset.StandardCharsets;
 
 public class TokenService {
 
-    private static final String KEY = "secretKey"; // Simple key for proof of concept
+    private static final String KEY = "MySuperLongKeyForTokenGenerationJustForProofOfConcept";
 
-    public static String generateToken(String username) {
-        long currentTime = System.currentTimeMillis();
+    public static String generateToken(int userId) {
+        SecretKey key = Keys.hmacShaKeyFor(KEY.getBytes(StandardCharsets.UTF_8));
+
         return Jwts.builder()
-                .setSubject(username)
-                .setIssuedAt(new Date(currentTime))
-                .setExpiration(new Date(currentTime + 3600000)) // 1 hour expiry
-                .signWith(SignatureAlgorithm.HS256, KEY)
+                .claim("userId", userId)
+                .signWith(key, SignatureAlgorithm.HS256)
                 .compact();
     }
 }

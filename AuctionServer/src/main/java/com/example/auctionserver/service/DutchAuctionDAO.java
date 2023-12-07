@@ -7,6 +7,8 @@ import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
 
 import java.sql.Timestamp;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
@@ -77,7 +79,33 @@ public class DutchAuctionDAO extends AuctionDAO {
                 dutchAuction.setDecrement((Integer) row.get("decrement"));
 
                 if (row.get("minimumPriceReachedTime") != null) {
-                    dutchAuction.setMinimumPriceReachedTime(new Date(((Timestamp) row.get("minimumPriceReachedTime")).getTime()));
+                    Object timeValue = row.get("minimumPriceReachedTime");
+                    
+                    Date minimumPriceReachedTime = null;
+
+                    // Check if timeValue is an instance of Timestamp
+                    if (timeValue instanceof Timestamp) {
+                        minimumPriceReachedTime = new Date(((Timestamp) timeValue).getTime());
+                    }
+                    // Check if timeValue is a Long (epoch milliseconds)
+                    else if (timeValue instanceof Long) {
+                        minimumPriceReachedTime = new Date((Long) timeValue);
+                    }
+                    // Check if timeValue is a String
+                    else if (timeValue instanceof String) {
+                        // Parse the String value - adjust the format as per your database's format
+                        try {
+                            SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+                            minimumPriceReachedTime = dateFormat.parse((String) timeValue);
+                        } catch (ParseException e) {
+                            System.err.println("Error parsing date string: " + e.getMessage());
+                        }
+                    }
+
+                    // Set the parsed Date to the auction object
+                    if (minimumPriceReachedTime != null) {
+                        dutchAuction.setMinimumPriceReachedTime(minimumPriceReachedTime);
+                    }
                 }
             }
         }

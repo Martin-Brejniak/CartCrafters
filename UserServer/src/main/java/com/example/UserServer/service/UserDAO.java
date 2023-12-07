@@ -5,6 +5,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
@@ -84,23 +85,28 @@ public class UserDAO {
 	* @return         true if username and password are correct. False if not.
 	*/
 	public String authenticateUser(String username, String password) {
-	    String sql = "SELECT password FROM users WHERE LOWER(username) = LOWER(?)";
+	    String sql = "SELECT password, userID FROM users WHERE LOWER(username) = LOWER(?)";
+	    System.out.println(username);
 	    
 	    try {
-	        String passwordDB = jdbcTemplate.queryForObject(sql, String.class, username);
-	        
-	        if (passwordDB != null && passwordDB.trim().equals(password.trim())) {
-	            return TokenService.generateToken(username); // Generate token for valid user
-	        }
+	        Map<String, Object> result = jdbcTemplate.queryForMap(sql, username);
+	        String passwordDB = (String) result.get("password");
+	        Integer userId = (Integer) result.get("userID");
+	        System.out.println(userId);
 
+	        if (passwordDB != null && passwordDB.equals(password)) {
+	            return TokenService.generateToken(userId);
+	        }
 	    } catch (EmptyResultDataAccessException e) {
-	        // No user with the given username found
+	        System.out.println("No user found with username: " + username);
 	    } catch (DataAccessException e) {
-	        // Handle other database-related exceptions
+	        System.out.println("Database access error: " + e.getMessage());
 	    }
 	    
-	    return null; // Return null or appropriate response for invalid authentication
+
+	    return null;
 	}
+
 
     /**
     * Add user to user database.
