@@ -1,38 +1,58 @@
 import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { getAllOpenForwardAuctions, getAllOpenDutchAuctions } from '../Services/itemservice';
+import { getAllOpenForwardAuctions, getAllOpenDutchAuctions, getItemById } from '../Services/itemservice';
 
 const POLL_INTERVAL = 1000;
 
 function ItemDisplay({ searchTerm }) {
   const [auctions, setAuctions] = useState([]);
+  const [itemDetails, setItemDetails] = useState({});
   const [selectedAuctionId, setSelectedAuctionId] = useState(null);
   const navigate = useNavigate();
 
   useEffect(() => {
     const fetchAuctions = async () => {
       try {
-        let fetchedAuctions = [];
-        if (!searchTerm) {
-          const forwardAuctions = await getAllOpenForwardAuctions();
-          const dutchAuctions = await getAllOpenDutchAuctions();
-          fetchedAuctions = [...forwardAuctions, ...dutchAuctions];
-        } else {
-          // Add search logic here
+        let fetchedAuctions = await Promise.all([
+          getAllOpenForwardAuctions(),
+          getAllOpenDutchAuctions()
+        ]).then(results => [...results[0], ...results[1]]);
+
+        await fetchItemDetails(fetchedAuctions);
+
+        if (searchTerm) {
+          fetchedAuctions = fetchedAuctions.filter(auction =>
+            itemDetails[auction.itemId] &&
+            itemDetails[auction.itemId].toLowerCase().startsWith(searchTerm.toLowerCase())
+          );
         }
+
         setAuctions(fetchedAuctions);
       } catch (error) {
         console.error('Fetching auctions failed', error);
       }
     };
 
-    fetchAuctions();
-    // Set up the polling interval
-    const intervalId = setInterval(fetchAuctions, POLL_INTERVAL);
+    const fetchItemDetails = async (auctions) => {
+      const details = {};
+      for (const auction of auctions) {
+        try {
+          const item = await getItemById(auction.itemId);
+          if (item && item.length > 0) {
+            details[auction.itemId] = item[0].name;
+          }
+        } catch (error) {
+          console.error(`Error fetching item details for itemID ${auction.itemId}:`, error);
+        }
+      }
+      setItemDetails(details);
+    };
 
-    // Cleanup function to clear the interval when the component unmounts
+    fetchAuctions();
+    const intervalId = setInterval(fetchAuctions, POLL_INTERVAL);
     return () => clearInterval(intervalId);
   }, [searchTerm]);
+
 
   const calculateTimeRemaining = (endTime) => {
     const end = new Date(endTime);
@@ -80,23 +100,27 @@ function ItemDisplay({ searchTerm }) {
   };
 
   return (
-    <div>
-      <h2>Open Auctions</h2>
-      {auctions.map(auction => (
-        <div key={auction.auctionId}>
-          <input
-            type="radio"
-            name="auctionSelect"
-            value={auction.auctionId}
-            onChange={() => handleAuctionSelect(auction.auctionId)}
-            checked={selectedAuctionId === auction.auctionId}
-          />
-          <span>{auction.itemId} - {auction.auctionType} Auction - Current Price: ${auction.currentPrice} - Time Remaining: {calculateTimeRemaining(auction.endTimeOfAuction)}</span>
-        </div>
-      ))}
-      <button onClick={handleBidClick} disabled={selectedAuctionId === null}>Go to Auction</button>
-    </div>
-  );
-}
+      <div>
+        <h2>Open Auctions</h2>
+        {auctions.map(auction => (
+          <div key={auction.auctionId}>
+            <input
+              type="radio"
+              name="auctionSelect"
+              value={auction.auctionId}
+              onChange={() => handleAuctionSelect(auction.auctionId)}
+              checked={selectedAuctionId === auction.auctionId}
+            />
+            <span>
+              {itemDetails[auction.itemId]} - {auction.auctionType} Auction -
+              Current Price: ${auction.currentPrice} -
+              Time Remaining: {calculateTimeRemaining(auction.endTimeOfAuction)}
+            </span>
+          </div>
+        ))}
+        <button onClick={handleBidClick} disabled={selectedAuctionId === null}>Go to Auction</button>
+      </div>
+    );
+  }
 
-export default ItemDisplay;
+  export default ItemDisplay;

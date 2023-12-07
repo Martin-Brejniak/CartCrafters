@@ -28,6 +28,9 @@ public class ItemDAO {
 		    item.setEndTime(rs.getString("endTime"));
 		    item.setWinner(rs.getString("winner"));
 		    item.setItemID(rs.getInt("itemID"));
+		    item.setDescription(rs.getString("description"));
+            item.setShipcost(rs.getDouble("shipcost"));
+            item.setExpShipCost(rs.getDouble("expShipCost"));
 		    return item;
 		};
 	
@@ -63,25 +66,15 @@ public class ItemDAO {
 		return jdbcTemplate.query(sql, itemRowMapper);
 	}
 	
-	/**
-	* Add item to item database.
-	*
-	* @param  item   an item.
-	*/
 	public void createItem(Item item) {
-	    String sql = "INSERT INTO items (name, price, type, endTime, auctionType) VALUES (?, ?, ?, ?, ?)";
-	    jdbcTemplate.update(sql, item.getName(), item.getPrice(), item.getAuctionType(), item.getEndTime());
-	}
-	/**
-	* Updates item in item database.
-	*
-    * @param  id   a number.
-	* @param  item  an item.
-	*/
-	public void updateItem(int id, Item item) {
-	    String sql = "UPDATE items SET name = ?, price = ?, type = ?, endTime = ?, auctionType = ? WHERE itemID = ?";
-	    jdbcTemplate.update(sql, item.getName(), item.getPrice(), item.getAuctionType(), item.getEndTime(), id);
-	}
+        String sql = "INSERT INTO items (name, price, auctionType, endTime, winner, description, shipcost, expShipCost) VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
+        jdbcTemplate.update(sql, item.getName(), item.getPrice(), item.getAuctionType(), item.getEndTime(), item.getWinner(), item.getDescription(), item.getShipcost(), item.getExpShipCost());
+    }
+
+    public void updateItem(int id, Item item) {
+        String sql = "UPDATE items SET name = ?, price = ?, auctionType = ?, endTime = ?, winner = ?, description = ?, shipcost = ?, expShipCost = ? WHERE itemID = ?";
+        jdbcTemplate.update(sql, item.getName(), item.getPrice(), item.getAuctionType(), item.getEndTime(), item.getWinner(), item.getDescription(), item.getShipcost(), item.getExpShipCost(), id);
+    }
 	
 	/**
 	* Updates the winner of an item in item database.
@@ -103,5 +96,17 @@ public class ItemDAO {
 		String sql = "DELETE FROM items WHERE itemID = "+ id;
 		jdbcTemplate.update(sql);
 	}
+	
+	/**
+     * Updates the price of an item in the items database.
+     *
+     * @param itemID the ID of the item to be updated.
+     * @param newPrice the new price to be set for the item.
+     */
+    public void updateItemPrice(int itemID, double newPrice) {
+        String sql = "UPDATE items SET price = ? WHERE itemID = ?";
+        jdbcTemplate.update(sql, newPrice, itemID);
+    }
+
 	
 }

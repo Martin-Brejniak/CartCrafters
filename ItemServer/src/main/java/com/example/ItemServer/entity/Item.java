@@ -8,6 +8,9 @@ public class Item {
 	private int itemID;
 	private String winner;
 	private String auctionType;
+	private String description;
+    private double shipcost;
+    private double expShipCost;
 	
 	/**
 	* Get the name of item.
@@ -121,5 +124,59 @@ public class Item {
 	public void setWinner(String winner) {
 		this.winner = winner;
 	}
+	
+	 /**
+	    * Get the description of item.
+	    *
+	    * @return the item's description.
+	    */
+	    public String getDescription() {
+	        return description;
+	    }
+
+	    /**
+	    * Set the description of item.
+	    *
+	    * @param description the item's description.
+	    */
+	    public void setDescription(String description) {
+	        this.description = description;
+	    }
+
+	    /**
+	    * Get the shipping cost of item.
+	    *
+	    * @return the item's shipping cost.
+	    */
+	    public double getShipcost() {
+	        return shipcost;
+	    }
+
+	    /**
+	    * Set the shipping cost of item.
+	    *
+	    * @param shipcost the item's shipping cost.
+	    */
+	    public void setShipcost(double shipcost) {
+	        this.shipcost = shipcost;
+	    }
+
+	    /**
+	    * Get the expediated shipping cost of item.
+	    *
+	    * @return the item's expediated shipping cost.
+	    */
+	    public double getExpShipCost() {
+	        return expShipCost;
+	    }
+
+	    /**
+	    * Set the expediated shipping cost of item.
+	    *
+	    * @param expShipCost the item's expediated shipping cost.
+	    */
+	    public void setExpShipCost(double expShipCost) {
+	        this.expShipCost = expShipCost;
+	    }
 	
 }

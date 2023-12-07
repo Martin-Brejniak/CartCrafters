@@ -56,8 +56,19 @@ public class ForwardAuctionDAO extends AuctionDAO {
 
         if (auction instanceof ForwardAuction) {
             ForwardAuction forwardAuction = (ForwardAuction) auction;
-            String sql = "UPDATE auctions SET highestBidderUserId = ?, highestBid = ? WHERE auctionId = ?";
-            jdbcTemplate.update(sql, forwardAuction.getHighestBidderUserId(), forwardAuction.getHighestBid(), auction.getAuctionId());
+            String sql = "UPDATE auctions SET highestBidderUserId = ?, highestBid = ?, soldToUserId = ? WHERE auctionId = ?";
+            jdbcTemplate.update(sql, forwardAuction.getHighestBidderUserId(), forwardAuction.getHighestBid(), forwardAuction.getWinnerUserId(), auction.getAuctionId());
+        }
+    }
+    
+    
+    public void updateWinner(Auction auction) {
+        super.updateAuction(auction);
+
+        if (auction instanceof ForwardAuction) {
+            ForwardAuction forwardAuction = (ForwardAuction) auction;
+            String sql = "UPDATE auctions SET highestBidderUserId = ? WHERE auctionId = ?";
+            jdbcTemplate.update(sql, forwardAuction.getHighestBidderUserId(), auction.getAuctionId());
         }
     }
 

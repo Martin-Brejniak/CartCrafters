@@ -1,6 +1,7 @@
 import axios from 'axios';
 
 const BASE_URL = 'http://localhost:7070/auction/forward';
+const USER_BASE_URL = 'http://localhost:8080/user'; 
 
 const config = {
     headers: {
@@ -72,6 +73,24 @@ export const closeAuction = async (auctionId) => {
         throw error;
     }
 };
+
+
+// Function to get user details by userID
+export const getUserDetails = async (userId) => {
+    try {
+        const response = await axios.get(`${USER_BASE_URL}/get-id`, {
+            params: { userID: userId },
+            headers: {
+                'Content-Type': 'application/json'
+            }
+        });
+        return response.data;
+    } catch (error) {
+        console.error('Error fetching user details:', error);
+        throw error;
+    }
+};
+
 
 export const highestBid = async (auctionId) => {
     try {

@@ -48,6 +48,7 @@ public class ForwardAuctionUpdate {
 				forwardAuction.setCurrentPrice(bidAmount);
 				forwardAuction.setHighestBidderUserId(userId);
 				forwardAuction.setHighestBid(bidAmount);
+				forwardAuction.setWinner(userId);				
 				forwardAuctionDAO.updateAuction(forwardAuction);
 			}
 
@@ -68,6 +69,7 @@ public class ForwardAuctionUpdate {
 	        }
 
 	        forwardAuction.setAuctionEnded(true);
+	        
 	        forwardAuction.setEndTimeOfAuction(new Date());
 
 	        forwardAuctionDAO.updateAuction(forwardAuction);
@@ -79,25 +81,20 @@ public class ForwardAuctionUpdate {
 	}
 
 
-	public ForwardAuction updateAuctionBid(Bid bid) {
-		try {
-			ForwardAuction auction = (ForwardAuction) forwardAuctionDAO.getAuctionById(bid.getAuctionId());
-			if (auction.getHighestBid() >= bid.getBidAmount() || auction.isAuctionEnded()) {
-				throw new IllegalArgumentException("Error with auction");
-			}
+	public void updateForwardAuctionWinner(int auctionId, int winnerUserId) {
+	    try {
+	        ForwardAuction auction = (ForwardAuction) forwardAuctionDAO.getAuctionById(auctionId);
+	        if (auction == null || auction.isAuctionEnded()) {
+	            throw new IllegalArgumentException("Invalid auction or auction has already ended.");
+	        }
 
-			auction.setHighestBid(bid.getBidAmount());
-			auction.setCurrentPrice(bid.getBidAmount());
-			auction.setHighestBidderUserId(bid.getUserId());
-			auction.setEndTimeOfAuction(new Date());
-
-			forwardAuctionDAO.updateAuction(auction);
-
-			return auction;
-		} catch (Exception e) {
-			throw new IllegalArgumentException("Invalid auction");
-		}
+	        auction.setHighestBidderUserId(winnerUserId);
+	        forwardAuctionDAO.updateWinner(auction);
+	    } catch (Exception e) {
+	        throw new RuntimeException("Error updating auction winner", e);
+	    }
 	}
+
 
 	public void resetAuction(int time) {
 		List<Auction> auctionList = forwardAuctionDAO.getAllAuctions();

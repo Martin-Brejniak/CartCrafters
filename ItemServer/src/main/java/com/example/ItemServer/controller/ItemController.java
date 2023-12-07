@@ -58,6 +58,11 @@ public class ItemController {
 		itemDAO.updateItemWinner(itemID, winner);
     }
 	
+    @PutMapping("/update-price")
+    public void updateItemPrice(@RequestParam("itemID") int itemID, @RequestParam("newPrice") double newPrice) {
+        itemDAO.updateItemPrice(itemID, newPrice);
+    }
+	
 	@DeleteMapping
     public void deleteItem(@RequestParam("itemID") int itemID) {
 		itemDAO.deleteItem(itemID);

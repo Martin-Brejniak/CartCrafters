@@ -34,5 +34,13 @@ public class ForwardAuction extends Auction{
 	public void setHighestBid(double highestBid) {
 		this.highestBid = highestBid;
 	}
+	
+	public void setWinner(int soldToUserId) {
+		this.soldToUserId = soldToUserId;
+	}
+	
+	public int getWinnerUserId() {
+		return soldToUserId;
+	}
 
 }
