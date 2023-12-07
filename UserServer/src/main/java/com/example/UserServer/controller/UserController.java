@@ -22,6 +22,8 @@ import com.example.UserServer.service.UserDAO;
 public class UserController {
 	
 private final UserDAO userDAO;
+public String session_username = "blank";
+public String session_password = "also blank";
 	
 	@Autowired
 	public UserController(UserDAO userDAO) {
@@ -40,7 +42,21 @@ private final UserDAO userDAO;
 	
 	@GetMapping("/get-username")
     public List<User> getUserByID(@RequestParam("username") String username) {
+		System.out.println(userDAO.getUserByUsername(username));
 		return userDAO.getUserByUsername(username);
+    }
+	
+	@GetMapping("/get-sessionuser")
+    public void getSessionUsername(@RequestParam("username") String username, @RequestParam("password") String password) {
+		System.out.println("this line of code is reached!");
+		System.out.println(username);
+		session_username = username;
+    }
+	
+	@GetMapping("/checkout-get-username")
+    public String getUsernameCheckout() {
+		System.out.println("checkout-get-username accessed: retunring " + session_username);
+		return session_username;
     }
 	
 	@GetMapping("/authenticate")

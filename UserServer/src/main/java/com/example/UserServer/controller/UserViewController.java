@@ -14,5 +14,10 @@ public class UserViewController {
     public String signUpPage() {
         return "signup";
     }
+    
+    @GetMapping("/checkout-user")
+    public String checkOutPage() {
+    	return "checkout";
+    }
 }
 

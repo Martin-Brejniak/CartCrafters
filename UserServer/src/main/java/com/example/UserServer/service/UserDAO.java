@@ -4,6 +4,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -124,7 +125,7 @@ public class UserDAO {
 		//use prepared statements
 		String sql = "UPDATE users SET fname = '"+user.getfName()+"', lname = '"+user.getlName()+"', address = '"+user.getAddress()+"', postal = '"+user.getPostal()+"', city = '"+user.getCity()+"', country = '"+user.getCountry()+"', province = '"+user.getProvince()+"', username = '"+user.getUsername()+"', password = '"+user.getPassword()+"' WHERE userID = "+id;
 		jdbcTemplate.update(sql);
-	}
+	}	
 	
 	public void updateUserToken(String username, String token) {
 		//use prepared statements
