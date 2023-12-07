@@ -16,7 +16,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\"fName\": \"John\", \"lName\": \"Brejniak\", \"address\": \"123 Novaview Cr\", \"postal\": \"L5L9E8\", \"city\": \"Woodbridge\", \"country\": \"Canada\", \"province\": \"Ontario\",\r\n\"username\": \"Superepicderp\", \"password\": \"1234\"}",
+							"raw": "{\"fName\": \"Joe\", \"lName\": \"Brejniak\", \"address\": \"123 Novaview Cr\", \"postal\": \"L5L9E8\", \"city\": \"Woodbridge\", \"country\": \"Canada\", \"province\": \"Ontario\",\r\n\"username\": \"Superepicherp\", \"password\": \"1234\"}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -24,13 +24,14 @@
 							}
 						},
 						"url": {
-							"raw": "http://localhost:8080/user",
+							"raw": "http://localhost:5050/user-module/user",
 							"protocol": "http",
 							"host": [
 								"localhost"
 							],
-							"port": "8080",
+							"port": "5050",
 							"path": [
+								"user-module",
 								"user"
 							]
 						}
@@ -52,13 +53,14 @@
 							}
 						},
 						"url": {
-							"raw": "http://localhost:8080/user",
+							"raw": "http://localhost:5050/user-module/user",
 							"protocol": "http",
 							"host": [
 								"localhost"
 							],
-							"port": "8080",
+							"port": "5050",
 							"path": [
+								"user-module",
 								"user"
 							]
 						}
@@ -80,13 +82,14 @@
 							}
 						},
 						"url": {
-							"raw": "http://localhost:8080/user",
+							"raw": "http://localhost:5050/user-module/user",
 							"protocol": "http",
 							"host": [
 								"localhost"
 							],
-							"port": "8080",
+							"port": "5050",
 							"path": [
+								"user-module",
 								"user"
 							]
 						}
@@ -99,13 +102,14 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "http://localhost:8080/user/get-all",
+							"raw": "http://localhost:5050/user-module/user/get-all",
 							"protocol": "http",
 							"host": [
 								"localhost"
 							],
-							"port": "8080",
+							"port": "5050",
 							"path": [
+								"user-module",
 								"user",
 								"get-all"
 							]
@@ -131,13 +135,14 @@
 							}
 						},
 						"url": {
-							"raw": "http://localhost:8080/user/get-username?username=MartanisIV",
+							"raw": "http://localhost:5050/user-module/user/get-username?username=MartanisIV",
 							"protocol": "http",
 							"host": [
 								"localhost"
 							],
-							"port": "8080",
+							"port": "5050",
 							"path": [
+								"user-module",
 								"user",
 								"get-username"
 							],
@@ -169,13 +174,14 @@
 							}
 						},
 						"url": {
-							"raw": "http://localhost:8080/user/get-username?username=Chad",
+							"raw": "http://localhost:5050/user-module/user/get-username?username=Chad",
 							"protocol": "http",
 							"host": [
 								"localhost"
 							],
-							"port": "8080",
+							"port": "5050",
 							"path": [
+								"user-module",
 								"user",
 								"get-username"
 							],
@@ -207,13 +213,14 @@
 							}
 						},
 						"url": {
-							"raw": "http://localhost:8080/user/get-id?userID=4",
+							"raw": "http://localhost:5050/user-module/user/get-id?userID=4",
 							"protocol": "http",
 							"host": [
 								"localhost"
 							],
-							"port": "8080",
+							"port": "5050",
 							"path": [
+								"user-module",
 								"user",
 								"get-id"
 							],
@@ -245,13 +252,14 @@
 							}
 						},
 						"url": {
-							"raw": "http://localhost:8080/user/get-id?userID=5",
+							"raw": "http://localhost:5050/user-module/user/get-id?userID=5",
 							"protocol": "http",
 							"host": [
 								"localhost"
 							],
-							"port": "8080",
+							"port": "5050",
 							"path": [
+								"user-module",
 								"user",
 								"get-id"
 							],
@@ -267,29 +275,18 @@
 				},
 				{
 					"name": "Authenticate",
-					"protocolProfileBehavior": {
-						"disableBodyPruning": true
-					},
 					"request": {
 						"method": "GET",
 						"header": [],
-						"body": {
-							"mode": "raw",
-							"raw": "",
-							"options": {
-								"raw": {
-									"language": "json"
-								}
-							}
-						},
 						"url": {
-							"raw": "http://localhost:8080/user/authenticate?username=MartanisIV&password=1234",
+							"raw": "http://localhost:5050/user-module/user/authenticate?username=MartanisIV&password=one",
 							"protocol": "http",
 							"host": [
 								"localhost"
 							],
-							"port": "8080",
+							"port": "5050",
 							"path": [
+								"user-module",
 								"user",
 								"authenticate"
 							],
@@ -300,7 +297,7 @@
 								},
 								{
 									"key": "password",
-									"value": "1234"
+									"value": "one"
 								}
 							]
 						}
@@ -325,13 +322,14 @@
 							}
 						},
 						"url": {
-							"raw": "http://localhost:8080/user/authenticate?username=MartanisIV&password=4321",
+							"raw": "http://localhost:5050/user-module/user/authenticate?username=MartanisIV&password=4321",
 							"protocol": "http",
 							"host": [
 								"localhost"
 							],
-							"port": "8080",
+							"port": "5050",
 							"path": [
+								"user-module",
 								"user",
 								"authenticate"
 							],
@@ -343,32 +341,6 @@
 								{
 									"key": "password",
 									"value": "4321"
-								}
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "Get User Token",
-					"request": {
-						"method": "GET",
-						"header": [],
-						"url": {
-							"raw": "http://localhost:8080/user/token-check?username=MartanisIV",
-							"protocol": "http",
-							"host": [
-								"localhost"
-							],
-							"port": "8080",
-							"path": [
-								"user",
-								"token-check"
-							],
-							"query": [
-								{
-									"key": "username",
-									"value": "MartanisIV"
 								}
 							]
 						}
@@ -390,13 +362,14 @@
 							}
 						},
 						"url": {
-							"raw": "http://localhost:8080/user?userID=4",
+							"raw": "http://localhost:5050/user-module/user?userID=4",
 							"protocol": "http",
 							"host": [
 								"localhost"
 							],
-							"port": "8080",
+							"port": "5050",
 							"path": [
+								"user-module",
 								"user"
 							],
 							"query": [
@@ -410,54 +383,25 @@
 					"response": []
 				},
 				{
-					"name": "Update User Token",
-					"request": {
-						"method": "PUT",
-						"header": [],
-						"url": {
-							"raw": "http://localhost:8080/user/token-update?username=MartanisIV&token=false",
-							"protocol": "http",
-							"host": [
-								"localhost"
-							],
-							"port": "8080",
-							"path": [
-								"user",
-								"token-update"
-							],
-							"query": [
-								{
-									"key": "username",
-									"value": "MartanisIV"
-								},
-								{
-									"key": "token",
-									"value": "false"
-								}
-							]
-						}
-					},
-					"response": []
-				},
-				{
 					"name": "Delete User",
 					"request": {
 						"method": "DELETE",
 						"header": [],
 						"url": {
-							"raw": "http://localhost:8080/user?userID=6",
+							"raw": "http://localhost:5050/user-module/user?userID=10",
 							"protocol": "http",
 							"host": [
 								"localhost"
 							],
-							"port": "8080",
+							"port": "5050",
 							"path": [
+								"user-module",
 								"user"
 							],
 							"query": [
 								{
 									"key": "userID",
-									"value": "6"
+									"value": "10"
 								}
 							]
 						}
@@ -476,7 +420,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\"name\": \"Mario Kart 8\", \"price\": 60.50, \"type\": \"dutch\", \"endTime\": \"2023-29-11 23:50:00\"}",
+							"raw": "{\"name\": \"Mario Kart 8\", \"price\": 60.50, \"auctionType\": \"dutch\", \"endTime\": \"2023-29-11 23:50:00\"}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -484,13 +428,14 @@
 							}
 						},
 						"url": {
-							"raw": "http://localhost:8080/item",
+							"raw": "http://localhost:5050/item-module/item",
 							"protocol": "http",
 							"host": [
 								"localhost"
 							],
-							"port": "8080",
+							"port": "5050",
 							"path": [
+								"item-module",
 								"item"
 							]
 						}
@@ -504,7 +449,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\"name\": \"Thumb Tack\", \"price\": 0.50, \"type\": \"forward\", \"endTime\": \"2023-19-11 23:50:55\"}",
+							"raw": "{\"name\": \"Thumb Tack\", \"price\": 0.50, \"auctionType\": \"forward\", \"endTime\": \"2023-19-11 23:50:55\"}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -512,13 +457,14 @@
 							}
 						},
 						"url": {
-							"raw": "http://localhost:8080/item",
+							"raw": "http://localhost:5050/item-module/item",
 							"protocol": "http",
 							"host": [
 								"localhost"
 							],
-							"port": "8080",
+							"port": "5050",
 							"path": [
+								"item-module",
 								"item"
 							]
 						}
@@ -540,13 +486,14 @@
 							}
 						},
 						"url": {
-							"raw": "http://localhost:8080/item",
+							"raw": "http://localhost:5050/item-module/item",
 							"protocol": "http",
 							"host": [
 								"localhost"
 							],
-							"port": "8080",
+							"port": "5050",
 							"path": [
+								"item-module",
 								"item"
 							]
 						}
@@ -559,13 +506,14 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "http://localhost:8080/item/get-all",
+							"raw": "http://localhost:5050/item-module/item/get-all",
 							"protocol": "http",
 							"host": [
 								"localhost"
 							],
-							"port": "8080",
+							"port": "5050",
 							"path": [
+								"item-module",
 								"item",
 								"get-all"
 							]
@@ -579,20 +527,21 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "http://localhost:8080/item/get-id?itemID=12",
+							"raw": "http://localhost:5050/item-module/item/get-id?itemID=13",
 							"protocol": "http",
 							"host": [
 								"localhost"
 							],
-							"port": "8080",
+							"port": "5050",
 							"path": [
+								"item-module",
 								"item",
 								"get-id"
 							],
 							"query": [
 								{
 									"key": "itemID",
-									"value": "12"
+									"value": "13"
 								}
 							]
 						}
@@ -605,13 +554,14 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "http://localhost:8080/item/search?term=Mario",
+							"raw": "http://localhost:5050/item-module/item/search?term=Mario",
 							"protocol": "http",
 							"host": [
 								"localhost"
 							],
-							"port": "8080",
+							"port": "5050",
 							"path": [
+								"item-module",
 								"item",
 								"search"
 							],
@@ -631,20 +581,21 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "http://localhost:8080/item/search?term=Tack",
+							"raw": "http://localhost:5050/item-module/item/search?term=Nothing",
 							"protocol": "http",
 							"host": [
 								"localhost"
 							],
-							"port": "8080",
+							"port": "5050",
 							"path": [
+								"item-module",
 								"item",
 								"search"
 							],
 							"query": [
 								{
 									"key": "term",
-									"value": "Tack"
+									"value": "Nothing"
 								}
 							]
 						}
@@ -658,7 +609,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\"name\": \"Mario Kart DS\", \"price\": 80.50, \"type\": \"dutch\", \"endTime\": \"2023-29-11 23:50:55\"}",
+							"raw": "{\"name\": \"Mario Kart 8\", \"price\": 80.50, \"type\": \"dutch\", \"endTime\": \"2023-29-11 23:50:55\"}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -666,13 +617,14 @@
 							}
 						},
 						"url": {
-							"raw": "http://localhost:8080/item/update-all?itemID=13",
+							"raw": "http://localhost:5050/item-module/item/update-all?itemID=13",
 							"protocol": "http",
 							"host": [
 								"localhost"
 							],
-							"port": "8080",
+							"port": "5050",
 							"path": [
+								"item-module",
 								"item",
 								"update-all"
 							],
@@ -692,13 +644,14 @@
 						"method": "PUT",
 						"header": [],
 						"url": {
-							"raw": "http://localhost:8080/item/update-winner?winner=Hamston&itemID=13",
+							"raw": "http://localhost:5050/item-module/item/update-winner?winner=Hamston&itemID=13",
 							"protocol": "http",
 							"host": [
 								"localhost"
 							],
-							"port": "8080",
+							"port": "5050",
 							"path": [
+								"item-module",
 								"item",
 								"update-winner"
 							],
@@ -722,19 +675,601 @@
 						"method": "DELETE",
 						"header": [],
 						"url": {
-							"raw": "http://localhost:8080/item?itemID=12",
+							"raw": "http://localhost:5050/item-module/item?itemID=14",
 							"protocol": "http",
 							"host": [
 								"localhost"
 							],
-							"port": "8080",
+							"port": "5050",
 							"path": [
+								"item-module",
 								"item"
 							],
 							"query": [
 								{
 									"key": "itemID",
+									"value": "14"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Auction Module",
+			"item": [
+				{
+					"name": "Get All Dutch",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:5050/auction-module/auction/dutch/get-all",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5050",
+							"path": [
+								"auction-module",
+								"auction",
+								"dutch",
+								"get-all"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get All Open Dutch",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:5050/auction-module/auction/dutch/get-all-open",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5050",
+							"path": [
+								"auction-module",
+								"auction",
+								"dutch",
+								"get-all-open"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get Dutch By ID",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:5050/auction-module/auction/dutch/details?auctionId=1",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5050",
+							"path": [
+								"auction-module",
+								"auction",
+								"dutch",
+								"details"
+							],
+							"query": [
+								{
+									"key": "auctionId",
+									"value": "1"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Dutch Winner Check 1",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:5050/auction-module/auction/dutch/user/winner?auctionId=1&userId=456",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5050",
+							"path": [
+								"auction-module",
+								"auction",
+								"dutch",
+								"user",
+								"winner"
+							],
+							"query": [
+								{
+									"key": "auctionId",
+									"value": "1"
+								},
+								{
+									"key": "userId",
+									"value": "456"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Dutch Winner Check 2",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:5050/auction-module/auction/dutch/user/winner?auctionId=1&userId=456",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5050",
+							"path": [
+								"auction-module",
+								"auction",
+								"dutch",
+								"user",
+								"winner"
+							],
+							"query": [
+								{
+									"key": "auctionId",
+									"value": "1"
+								},
+								{
+									"key": "userId",
+									"value": "456"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Dutch Winner Check 3",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:5050/auction-module/auction/dutch/user/winner?auctionId=198&userId=456",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5050",
+							"path": [
+								"auction-module",
+								"auction",
+								"dutch",
+								"user",
+								"winner"
+							],
+							"query": [
+								{
+									"key": "auctionId",
+									"value": "198"
+								},
+								{
+									"key": "userId",
+									"value": "456"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Dutch Winner Check 4",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:5050/auction-module/auction/dutch/user/winner?auctionId=3&userId=123",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5050",
+							"path": [
+								"auction-module",
+								"auction",
+								"dutch",
+								"user",
+								"winner"
+							],
+							"query": [
+								{
+									"key": "auctionId",
+									"value": "3"
+								},
+								{
+									"key": "userId",
+									"value": "123"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Dutch Winner Check 5",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:5050/auction-module/auction/dutch/user/winner?auctionId=3&userId=12",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5050",
+							"path": [
+								"auction-module",
+								"auction",
+								"dutch",
+								"user",
+								"winner"
+							],
+							"query": [
+								{
+									"key": "auctionId",
+									"value": "3"
+								},
+								{
+									"key": "userId",
 									"value": "12"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Dutch Decrement",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:5050/auction-module/auction/dutch/decrement?auctionId=3",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5050",
+							"path": [
+								"auction-module",
+								"auction",
+								"dutch",
+								"decrement"
+							],
+							"query": [
+								{
+									"key": "auctionId",
+									"value": "3"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Dutch Buy 1",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\"auctionId\": 3, \"userId\": 123}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:5050/auction-module/auction/dutch/buy",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5050",
+							"path": [
+								"auction-module",
+								"auction",
+								"dutch",
+								"buy"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Dutch Buy 2",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\"auctionId\": 39, \"userId\": 123}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:5050/auction-module/auction/dutch/buy",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5050",
+							"path": [
+								"auction-module",
+								"auction",
+								"dutch",
+								"buy"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Dutch Buy 3",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\"auctionId\": 3, \"userId\": 123}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:5050/auction-module/auction/dutch/buy",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5050",
+							"path": [
+								"auction-module",
+								"auction",
+								"dutch",
+								"buy"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get All Forward",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:5050/auction-module/auction/forward/get-all",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5050",
+							"path": [
+								"auction-module",
+								"auction",
+								"forward",
+								"get-all"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get All Open Forward",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:5050/auction-module/auction/forward/get-all-open",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5050",
+							"path": [
+								"auction-module",
+								"auction",
+								"forward",
+								"get-all-open"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get Forward By ID 1",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:5050/auction-module/auction/forward/details?auctionId=9",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5050",
+							"path": [
+								"auction-module",
+								"auction",
+								"forward",
+								"details"
+							],
+							"query": [
+								{
+									"key": "auctionId",
+									"value": "9"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get Forward By ID 2",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:5050/auction-module/auction/forward/details?auctionId=99",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5050",
+							"path": [
+								"auction-module",
+								"auction",
+								"forward",
+								"details"
+							],
+							"query": [
+								{
+									"key": "auctionId",
+									"value": "99"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Forward Bid 1",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\"auctionId\": 8, \"userId\": 123, \"bidAmount\": 0.0}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:5050/auction-module/auction/forward/bid",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5050",
+							"path": [
+								"auction-module",
+								"auction",
+								"forward",
+								"bid"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Forward Bid 2",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\"auctionId\": 8, \"userId\": 123, \"bidAmount\": 0.0}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:5050/auction-module/auction/forward/bid",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5050",
+							"path": [
+								"auction-module",
+								"auction",
+								"forward",
+								"bid"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Close Forward 1",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:5050/auction-module/auction/forward/close?auctionId=1",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5050",
+							"path": [
+								"auction-module",
+								"auction",
+								"forward",
+								"close"
+							],
+							"query": [
+								{
+									"key": "auctionId",
+									"value": "1"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Close Forward 2",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:5050/auction-module/auction/forward/close?auctionId=4",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5050",
+							"path": [
+								"auction-module",
+								"auction",
+								"forward",
+								"close"
+							],
+							"query": [
+								{
+									"key": "auctionId",
+									"value": "4"
 								}
 							]
 						}
