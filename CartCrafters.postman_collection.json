@@ -68,7 +68,7 @@
 					"response": []
 				},
 				{
-					"name": "Create User 2 (Faliure)",
+					"name": "Create User 2 (Failure)",
 					"request": {
 						"method": "POST",
 						"header": [],
@@ -174,7 +174,7 @@
 							}
 						},
 						"url": {
-							"raw": "http://localhost:5050/user-module/user/get-username?username=Chad",
+							"raw": "http://localhost:5050/user-module/user/get-username?username=Nothing",
 							"protocol": "http",
 							"host": [
 								"localhost"
@@ -188,8 +188,41 @@
 							"query": [
 								{
 									"key": "username",
-									"value": "Chad"
+									"value": "Nothing"
 								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get User By Username 2 (Failure)",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:5050/user-module/user/get-username",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5050",
+							"path": [
+								"user-module",
+								"user",
+								"get-username"
 							]
 						}
 					},
@@ -305,7 +338,7 @@
 					"response": []
 				},
 				{
-					"name": "Authenticate (Faliure)",
+					"name": "Authenticate (Failure 1)",
 					"protocolProfileBehavior": {
 						"disableBodyPruning": true
 					},
@@ -348,6 +381,45 @@
 					"response": []
 				},
 				{
+					"name": "Authenticate (Failure 2)",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:5050/user-module/user/authenticate?username=MartanisIV",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5050",
+							"path": [
+								"user-module",
+								"user",
+								"authenticate"
+							],
+							"query": [
+								{
+									"key": "username",
+									"value": "MartanisIV"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
 					"name": "Update User",
 					"request": {
 						"method": "PUT",
@@ -376,6 +448,41 @@
 								{
 									"key": "userID",
 									"value": "4"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update User (Failure)",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\"fName\": \"Martin\", \"lName\": \"Brejniak\", \"address\": \"175 Covaview Lane\", \"postal\": \"F4F9F8\", \"city\": \"Woodbridge\", \"country\": \"Canada\", \"province\": \"Ontario\",\r\n\"username\": \"MartanisIV\", \"password\": \"1234\"}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:5050/user-module/user?userID=99999",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5050",
+							"path": [
+								"user-module",
+								"user"
+							],
+							"query": [
+								{
+									"key": "userID",
+									"value": "99999"
 								}
 							]
 						}
@@ -420,7 +527,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\"name\": \"Mario Kart 8\", \"price\": 60.50, \"auctionType\": \"dutch\", \"endTime\": \"2023-29-11 23:50:00\"}",
+							"raw": "{\"name\": \"Mario Kart 8\", \"price\": 60.50, \"auctionType\": \"dutch\", \"endTime\": \"2023-29-11 23:50:00\", \"winner\": \"\", \"description\": \"Mario Kart game!\", \"shipcost\": \"0.50\", \"expShipCost\": \"1.50\"}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -449,7 +556,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\"name\": \"Thumb Tack\", \"price\": 0.50, \"auctionType\": \"forward\", \"endTime\": \"2023-19-11 23:50:55\"}",
+							"raw": "{\"name\": \"Thumb Tack\", \"price\": 0.50, \"auctionType\": \"forward\", \"endTime\": \"2023-19-11 23:50:55\", \"winner\": \"\", \"description\": \"A thumb tack!\", \"shipcost\": \"0.50\", \"expShipCost\": \"1.50\"}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -478,7 +585,36 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\"name\": \"Mario Kart 7\", \"price\": 80.50, \"type\": \"forward\", \"endTime\": \"2023-27-11 23:50:55\"}",
+							"raw": "{\"name\": \"Mario Kart 7\", \"price\": 80.50, \"auctionType\": \"forward\", \"endTime\": \"2023-27-11 23:50:55\", \"winner\": \"\", \"description\": \"Mario Kart game!\", \"shipcost\": \"0.50\", \"expShipCost\": \"1.50\"}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:5050/item-module/item",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5050",
+							"path": [
+								"item-module",
+								"item"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Create Item 3 (Failure)",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\"price\": 80.50, \"auctionType\": \"forward\", \"endTime\": \"2023-27-11 23:50:55\", \"winner\": \"\", \"description\": \"Mario Kart game!\", \"shipcost\": \"0.50\", \"expShipCost\": \"1.50\"}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -603,13 +739,61 @@
 					"response": []
 				},
 				{
+					"name": "Get All Items With Auction",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:5050/item-module/item/get-all-with-auction-type",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5050",
+							"path": [
+								"item-module",
+								"item",
+								"get-all-with-auction-type"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get Item By Name",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:5050/item-module/item/get-name?name=Mario-Kart-8",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5050",
+							"path": [
+								"item-module",
+								"item",
+								"get-name"
+							],
+							"query": [
+								{
+									"key": "name",
+									"value": "Mario-Kart-8"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
 					"name": "Update Item",
 					"request": {
 						"method": "PUT",
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\"name\": \"Mario Kart 8\", \"price\": 80.50, \"type\": \"dutch\", \"endTime\": \"2023-29-11 23:50:55\"}",
+							"raw": "{\"name\": \"Mario Kart 8\", \"price\": 80.50, \"auctionType\": \"dutch\", \"endTime\": \"2023-29-11 23:50:55\", \"winner\": \"\", \"description\": \"A not fun Mario Kart game!\", \"shipcost\": \"0.50\", \"expShipCost\": \"1.50\"}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -617,7 +801,7 @@
 							}
 						},
 						"url": {
-							"raw": "http://localhost:5050/item-module/item/update-all?itemID=13",
+							"raw": "http://localhost:5050/item-module/item/update-all?itemID=105",
 							"protocol": "http",
 							"host": [
 								"localhost"
@@ -631,7 +815,79 @@
 							"query": [
 								{
 									"key": "itemID",
-									"value": "13"
+									"value": "105"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update Item (Failure 1)",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\"name\": \"Mario Kart 8\", \"price\": 80.50, \"typeAuction\": \"dutch\", \"endTime\": \"2023-29-11 23:50:55\", \"winner\": \"\", \"description\": \"N/A\", \"shipcost\": \"0.50\", \"expShipCost\": \"1.50\"}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:5050/item-module/item/update-all?itemID=10249",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5050",
+							"path": [
+								"item-module",
+								"item",
+								"update-all"
+							],
+							"query": [
+								{
+									"key": "itemID",
+									"value": "10249"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update Item (Failure 2)",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\"price\": 80.50, \"typeAuction\": \"dutch\", \"endTime\": \"2023-29-11 23:50:55\", \"winner\": \"\", \"description\": \"N/A\", \"shipcost\": \"0.50\", \"expShipCost\": \"1.50\"}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:5050/item-module/item/update-all?itemID=105",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5050",
+							"path": [
+								"item-module",
+								"item",
+								"update-all"
+							],
+							"query": [
+								{
+									"key": "itemID",
+									"value": "105"
 								}
 							]
 						}
@@ -663,6 +919,68 @@
 								{
 									"key": "itemID",
 									"value": "13"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update Item Price",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:5050/item-module/item/update-price?itemID=1&newPrice=1.50",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5050",
+							"path": [
+								"item-module",
+								"item",
+								"update-price"
+							],
+							"query": [
+								{
+									"key": "itemID",
+									"value": "1"
+								},
+								{
+									"key": "newPrice",
+									"value": "1.50"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update Item Price (Failure)",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:5050/item-module/item/update-price?itemID=1&newPrice=1.50",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5050",
+							"path": [
+								"item-module",
+								"item",
+								"update-price"
+							],
+							"query": [
+								{
+									"key": "itemID",
+									"value": "1"
+								},
+								{
+									"key": "newPrice",
+									"value": "1.50"
 								}
 							]
 						}
@@ -767,6 +1085,28 @@
 									"key": "auctionId",
 									"value": "1"
 								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get Dutch By ID (Failure)",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:5050/auction-module/auction/dutch/details",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5050",
+							"path": [
+								"auction-module",
+								"auction",
+								"dutch",
+								"details"
 							]
 						}
 					},
