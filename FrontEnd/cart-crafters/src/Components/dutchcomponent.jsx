@@ -48,7 +48,7 @@ const DutchComponent = ({ auctionInfo }) => {
         }
 
         if (auctionInfo.auctionEnded) {
-            navigate(`/auction-ended/${auctionInfo.auctionId}`);
+            navigate(`/auction-ended-dutch/${auctionInfo.auctionId}`);
             return;
         }
 
@@ -57,7 +57,7 @@ const DutchComponent = ({ auctionInfo }) => {
             await updateItemWinner(auctionInfo.itemId, userId); // Update item with buyer's user ID
             setError('');
             alert('Auction purchased successfully!');
-            navigate(`/auction-ended/${auctionInfo.auctionId}`);
+            navigate(`/auction-ended-dutch/${auctionInfo.auctionId}`);
         } catch (e) {
             setError(e.response?.data || 'An error occurred while attempting to buy the auction.');
         }

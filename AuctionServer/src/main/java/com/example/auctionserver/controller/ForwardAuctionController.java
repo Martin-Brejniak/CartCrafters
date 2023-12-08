@@ -8,6 +8,7 @@ import com.example.auctionserver.exceptions.InvalidAuctionTypeException;
 import com.example.auctionserver.exceptions.InvalidBidException;
 import com.example.auctionserver.service.ForwardAuctionUpdate;
 import com.example.auctionserver.service.ResultMessage;
+import com.example.auctionserver.service.ForwardAuctionDAO;
 import com.example.auctionserver.service.ForwardAuctionSearch;
 import com.example.auctionserver.entity.Bid;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,15 +23,17 @@ import java.util.List;
 @RequestMapping("/auction/forward")
 public class ForwardAuctionController {
 
-    private final ForwardAuctionSearch forwardAuctionSearch;
-    private final ForwardAuctionUpdate forwardAuctionUpdate;
+	private final ForwardAuctionSearch forwardAuctionSearch;
+	private final ForwardAuctionUpdate forwardAuctionUpdate;
+	private final ForwardAuctionDAO forwardAuctionDAO;
 
-    @Autowired
-    public ForwardAuctionController(ForwardAuctionSearch forwardAuctionSearch, ForwardAuctionUpdate forwardAuctionUpdate) {
-        this.forwardAuctionSearch = forwardAuctionSearch;
-        this.forwardAuctionUpdate = forwardAuctionUpdate;
-    }
-
+	@Autowired
+	public ForwardAuctionController(ForwardAuctionSearch forwardAuctionSearch,
+			ForwardAuctionUpdate forwardAuctionUpdate, ForwardAuctionDAO forwardAuctionDAO) {
+		this.forwardAuctionSearch = forwardAuctionSearch;
+		this.forwardAuctionUpdate = forwardAuctionUpdate;
+		this.forwardAuctionDAO = forwardAuctionDAO;
+	}
     @GetMapping("/get-all")
     public List<Auction> getAllForwardAuctions() {
         return forwardAuctionSearch.getAllForwardAuctions();
@@ -91,5 +94,9 @@ public class ForwardAuctionController {
             // Handle other exceptions
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("An error occurred.");
         }
+    }
+    @PostMapping("/create")
+    public void createForwardAuction(@RequestBody ForwardAuction auction) {
+        forwardAuctionDAO.createForwardAuction(auction);
     }
 }

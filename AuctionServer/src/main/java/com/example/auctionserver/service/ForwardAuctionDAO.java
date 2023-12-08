@@ -14,6 +14,8 @@ import java.util.Date;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
+import java.text.SimpleDateFormat;
+
 
 @Repository
 public class ForwardAuctionDAO extends AuctionDAO {
@@ -118,4 +120,17 @@ public class ForwardAuctionDAO extends AuctionDAO {
 		return jdbcTemplate.query(sql, forwardauctionRowMapper);
     
     	}
+    
+    public void createForwardAuction(ForwardAuction auction) {
+        String sql = "INSERT INTO auctions (itemId, auctionType, initialPrice, currentPrice, startTime, endTime, auctionEnded) VALUES (?, ?, ?, ?, ?, ?, ?)";
+        
+        // Set default values
+        Date startTimeOfAuction = new Date(); // Current time as start time
+        boolean auctionEnded = false; // Default value for auctionEnded
+
+        jdbcTemplate.update(sql, auction.getItemId(), "forward", auction.getInitialPrice(), auction.getInitialPrice(), 
+                            new Timestamp(startTimeOfAuction.getTime()), new Timestamp(auction.getEndTimeOfAuction().getTime()), auctionEnded);
+
+}
+    
 }

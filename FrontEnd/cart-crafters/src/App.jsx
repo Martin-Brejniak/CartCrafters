@@ -13,6 +13,7 @@ import Login from './Components/login';
 import ItemPage from './Pages/ItemPage';
 import AuctionEndedComponent from  './Pages/paynow';
 import SellerPage from './Pages/sellerpage';
+import PayNowDutch from './Pages/paynowdutch';
 
 function App() {
   return (
@@ -33,6 +34,7 @@ function App() {
           <Route path="/dutch-auctions/:auctionId" element={<DutchPage />} />
           <Route path="/auction-ended/:auctionId" element={<AuctionEndedComponent />} />
           <Route path="/sell-item" element={<SellerPage />} />
+          <Route path="/auction-ended-dutch/:auctionId" element={<PayNowDutch />} />
         </Routes>
       </div>
     </Router>

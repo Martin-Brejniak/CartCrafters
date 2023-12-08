@@ -43,7 +43,7 @@ public class ItemController {
 		return itemDAO.searchItem(term);
     }
 	
-	@PostMapping
+	@PostMapping("/create")
     public void createItem(@RequestBody Item item) {
 		itemDAO.createItem(item);
     }
@@ -73,9 +73,11 @@ public class ItemController {
 	    return itemDAO.getAllItems();
 	}
 	
-	@GetMapping("/get-name")
+	@GetMapping("/get-by-name")
     public List<Item> getItemsByName(@RequestParam("name") String name) {
         return itemDAO.getItemsByName(name);
     }
+	
+	
 	
 }

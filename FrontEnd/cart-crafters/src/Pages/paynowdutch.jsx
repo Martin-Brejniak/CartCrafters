@@ -1,9 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
-import { getForwardAuctionDetails } from '../Services/forwardauctionservice';
+import { getDutchAuctionDetails } from '../Services/dutchauctionservice'; // Import Dutch auction service
 import { getItemById } from '../Services/itemservice';
 
-const AuctionEndedComponent = () => {
+const PayNowDutch = () => {
   const { auctionId } = useParams();
   const [item, setItem] = useState(null);
   const [auction, setAuction] = useState(null);
@@ -17,18 +17,11 @@ const AuctionEndedComponent = () => {
   useEffect(() => {
     const fetchAuctionAndItemDetails = async () => {
       try {
-
-
-
-        // Fetch auction details to get the item ID
-        const auctionDetails = await getForwardAuctionDetails(auctionId);
-        console.log('Auction Details:', auctionDetails);
+        const auctionDetails = await getDutchAuctionDetails(auctionId);
         setAuction(auctionDetails);
 
-        // Now fetch item details
         const itemDetails = await getItemById(auctionDetails.itemId);
-        console.log('Item Details:', itemDetails[0]);
-        setItem(itemDetails[0]);
+        setItem(itemDetails[0]); // Assuming the response is an array with one object
       } catch (error) {
         console.error('Error fetching details:', error);
       } finally {
@@ -45,7 +38,7 @@ const AuctionEndedComponent = () => {
 
   const calculateTotal = () => {
     if (!auction || !item) return 0;
-    return auction.highestBid + item.shipcost + (expeditedShipping ? item.expShipCost : 0);
+    return item.price + item.shipcost + (expeditedShipping ? item.expShipCost : 0);
   };
 
   if (loading) {
@@ -61,7 +54,7 @@ const AuctionEndedComponent = () => {
           <p>Item Name: {item.name}</p>
           <p>Item Description: {item.description}</p>
           <p>Shipping Price: ${item.shipcost}</p>
-          <p>Expediated shipping Price: ${item.expShipCost}</p>
+          <p>Expedited Shipping Price: ${item.expShipCost}</p>
           <div>
             <input
               type="checkbox"
@@ -72,9 +65,9 @@ const AuctionEndedComponent = () => {
             />
             <label htmlFor="expeditedShipping">Expedited Shipping</label>
           </div>
-          <p>Winning Price: ${auction.highestBid}</p>
+          <p>Item Price: ${item.price}</p>
           <p>Total Price: ${calculateTotal()}</p>
-          <p>Highest Bidder USER ID (Name hidden for Privacy): {auction.highestBidderUserId}</p>
+          <p>User ID (Name hidden for Privacy): {item.winner}</p>
           <button onClick={handlePayNowClick}>Pay Now</button>
         </>
       )}
@@ -82,4 +75,4 @@ const AuctionEndedComponent = () => {
   );
 };
 
-export default AuctionEndedComponent;
+export default PayNowDutch;
