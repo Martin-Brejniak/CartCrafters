@@ -1,0 +1,24 @@
+server:
+  port: 5050
+spring:
+  cloud:
+   gateway:
+    routes:
+    - id: user-module
+      uri: ${USER_URL:http://localhost:8080}
+      predicates:
+      - Path=/user-module/**
+      filters:
+      - RewritePath=/user-module/(?<path>.*), /$\{path}
+    - id: item-module
+      uri: ${ITEM_URL:http://localhost:9090}
+      predicates:
+      - Path=/item-module/**
+      filters:
+      - RewritePath=/item-module/(?<path>.*), /$\{path}
+    - id: auction-module
+      uri: ${AUCTION_URL:http://localhost:7070}
+      predicates:
+      - Path=/auction-module/**
+      filters:
+      - RewritePath=/auction-module/(?<path>.*), /$\{path}
