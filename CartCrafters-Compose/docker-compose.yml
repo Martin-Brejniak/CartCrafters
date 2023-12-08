@@ -1,0 +1,39 @@
+services:
+    user-module:
+        image: martanisiv/user-module:latest
+        container_name: user-module
+        networks:
+            - cart-crafters
+        ports:
+            - 8080:8080
+            
+    item-module:
+        image: martanisiv/item-module:latest
+        container_name: item-module
+        networks:
+            - cart-crafters
+        ports:
+            - 9090:9090
+            
+    auction-module:
+        image: martanisiv/auction-module:latest
+        container_name: auction-module
+        networks:
+            - cart-crafters
+        ports:
+            - 7070:7070  
+    cloud-gateway:
+        image: martanisiv/cartcrafter-gateway:latest
+        container_name: cartcrafter-gateway
+        networks:
+             - cart-crafters 
+        ports:
+            - 5050:5050
+        environment:
+            - USER_URL=http://user-module:8080
+            - ITEM_URL=http://item-module:9090
+            - AUCTION_URL=http://auction-module:7070
+
+networks:
+  cart-crafters:
+    name: cart-crafters
