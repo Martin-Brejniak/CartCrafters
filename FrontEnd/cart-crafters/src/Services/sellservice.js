@@ -11,8 +11,9 @@ export const createItem = async (itemData) => {
             name: itemData.name,
             description: itemData.description,
             price: itemData.price,
-            type: itemData.type,
-            // Add other necessary fields
+            auctionType: itemData.auctionType, // Changed from 'type' to 'auctionType'
+            endTime: itemData.endTime, // Add the 'endTime' field
+            // Add other necessary fields if needed
         });
         return response.data; // Return the created item
     } catch (error) {
@@ -26,9 +27,11 @@ export const createItem = async (itemData) => {
 // Function to get an item ID by name
 export const getItemIdByName = async (itemName) => {
     try {
-        const response = await axios.get(`${ITEM_API_URL}/get-by-name`, { params: { name: itemName } });
+        // Enclose the itemName in double quotes
+        const formattedItemName = `"${itemName}"`;
+        const response = await axios.get(`${ITEM_API_URL}/get-by-name`, { params: { name: formattedItemName } });
         if (response.data && response.data.length > 0) {
-            return response.data[0].itemID; // Assuming the first item is the one we want
+            return response.data[0].itemID;
         }
         throw new Error('Item not found');
     } catch (error) {
@@ -37,20 +40,28 @@ export const getItemIdByName = async (itemName) => {
     }
 };
 
+
+//Function to create an auction
 // Function to create an auction
 export const createAuction = async (auctionData, itemId) => {
-//   try {
-//     // Determine URL based on auction type
-//     const auctionURL = ${AUCTION_API_URL}/${auctionData.auctionType.toLowerCase()}/create;
-//     const response = await axios.post(auctionURL, {
-//       itemId,
-//       initialPrice: auctionData.initialPrice,
-//       endTimeOfAuction: auctionData.endTimeOfAuction, // Ensure you calculate and format this correctly based on your application's requirements
-//       // Add other auction-specific fields if necessary
-//     });
-//     return response.data; // Return the created auction
-//   } catch (error) {
-//     console.error('Error creating the auction:', error);
-//     throw error;
-//   }
+    try {
+        // Determine URL based on auction type
+        const auctionURL = `${AUCTION_API_URL}/${auctionData.auctionType.toLowerCase()}/create`;
+
+        // Preparing the data to send
+        const dataToSend = {
+            itemId: itemId,
+            initialPrice: auctionData.price,
+            endTimeOfAuction: auctionData.endTime,
+            // Add other fields that your backend expects
+        };
+
+        // Making the POST request
+        const response = await axios.post(auctionURL, dataToSend);
+        return response.data; // Return the created auction
+    } catch (error) {
+        console.error('Error creating the auction:', error);
+        throw error;
+    }
 };
+
