@@ -12,6 +12,7 @@ import LandingPage from './Pages/landingpage';
 import Login from './Components/login';
 import ItemPage from './Pages/ItemPage';
 import AuctionEndedComponent from  './Pages/paynow';
+import SellerPage from './Pages/sellerpage';
 
 function App() {
   return (
@@ -19,7 +20,7 @@ function App() {
       <div className="App">
         <Routes>
           <Route path="/" element={<LandingPage />} />
-          <Route path="/login" element={<Login />} />
+          <Route path="/login" element={<LandingPage />} />
           <Route path="/signup" element={<SignUp />} />
           <Route path="/items" element={
             <ProtectedRoute>
@@ -31,6 +32,7 @@ function App() {
           <Route path="/dutch-auctions" element={<DutchPage />} />
           <Route path="/dutch-auctions/:auctionId" element={<DutchPage />} />
           <Route path="/auction-ended/:auctionId" element={<AuctionEndedComponent />} />
+          <Route path="/sell-item" element={<SellerPage />} />
         </Routes>
       </div>
     </Router>
