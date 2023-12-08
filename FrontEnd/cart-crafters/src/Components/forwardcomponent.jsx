@@ -46,7 +46,12 @@ const ForwardComponent = ({ auctionInfo }) => {
   } else {
       setTimeRemaining("00:00:00");
       if (!auctionClosed) {
-          handleAuctionClosure();
+        alert('You won! You are great!');
+        navigate(`/auction-ended/${auctionInfo.auctionId}`);
+        handleAuctionClosure();
+
+
+
       }
   }
 };
@@ -63,14 +68,19 @@ const ForwardComponent = ({ auctionInfo }) => {
             // Fetch the user details of the highest bidder
             const userDetails = await getUserDetails(auctionInfo.highestBidderUserId);
 
-            if (userDetails) {
+            if (userDetails != null) {
+
+
                 // Assuming you want to use the username of the highest bidder
-                const winnerUsername = userDetails.username;
+                const winnerUsername = auctionInfo.highestBidderUserId;
+
 
                 // Update the item's winner with the username
                 await updateItemWinner(auctionInfo.itemId, winnerUsername);
 
                 await closeAuction(auctionInfo.auctionId);
+
+
 
                 // Additional logic if required
             } else {
@@ -80,6 +90,7 @@ const ForwardComponent = ({ auctionInfo }) => {
 
 
                 setAuctionClosed(true);
+
             } catch (error) {
                 console.error('Error closing auction:', error);
                 setError('Error occurred while closing the auction');
@@ -113,6 +124,8 @@ const ForwardComponent = ({ auctionInfo }) => {
             setError("User not authenticated.");
             return;
           }
+
+
 
         if (parseInt(bidAmount) <= auctionInfo.highestBid) {
             setError('Bid must be higher than the current highest bid.');

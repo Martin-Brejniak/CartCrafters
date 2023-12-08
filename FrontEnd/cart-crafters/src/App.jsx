@@ -11,6 +11,7 @@ import ProtectedRoute from './Components/ProtectedRoute';
 import LandingPage from './Pages/landingpage';
 import Login from './Components/login';
 import ItemPage from './Pages/ItemPage';
+import AuctionEndedComponent from  './Pages/paynow';
 
 function App() {
   return (
@@ -29,6 +30,7 @@ function App() {
           <Route path="/forward-auctions/:auctionId" element={<ForwardPage />} />
           <Route path="/dutch-auctions" element={<DutchPage />} />
           <Route path="/dutch-auctions/:auctionId" element={<DutchPage />} />
+          <Route path="/auction-ended/:auctionId" element={<AuctionEndedComponent />} />
         </Routes>
       </div>
     </Router>

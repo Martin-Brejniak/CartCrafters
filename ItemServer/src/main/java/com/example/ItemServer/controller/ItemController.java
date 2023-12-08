@@ -73,4 +73,9 @@ public class ItemController {
 	    return itemDAO.getAllItems();
 	}
 	
+	@GetMapping("/get-name")
+    public List<Item> getItemsByName(@RequestParam("name") String name) {
+        return itemDAO.getItemsByName(name);
+    }
+	
 }

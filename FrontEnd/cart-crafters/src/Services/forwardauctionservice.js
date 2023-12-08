@@ -1,7 +1,7 @@
 import axios from 'axios';
 
 const BASE_URL = 'http://localhost:7070/auction/forward';
-const USER_BASE_URL = 'http://localhost:8080/user'; 
+const USER_BASE_URL = 'http://localhost:8080/user';
 
 const config = {
     headers: {

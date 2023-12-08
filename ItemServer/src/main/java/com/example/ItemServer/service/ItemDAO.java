@@ -107,6 +107,11 @@ public class ItemDAO {
         String sql = "UPDATE items SET price = ? WHERE itemID = ?";
         jdbcTemplate.update(sql, newPrice, itemID);
     }
+    
+    public List<Item> getItemsByName(String name) {
+		String sql = "SELECT * FROM items WHERE name = " + name;
+		return jdbcTemplate.query(sql, itemRowMapper);
+    }
 
 	
 }
