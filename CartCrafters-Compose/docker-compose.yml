@@ -22,6 +22,13 @@ services:
             - cart-crafters
         ports:
             - 7070:7070  
+    system-frontend:
+        image: martanisiv/cartcrafter-frontend:latest
+        container_name: cartcrafter-frontend
+        networks:
+            - cart-crafters
+        ports:
+            - 3000:3000
     cloud-gateway:
         image: martanisiv/cartcrafter-gateway:latest
         container_name: cartcrafter-gateway
