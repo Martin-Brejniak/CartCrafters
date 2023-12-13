@@ -1,17 +1,23 @@
 import React, { useState, useEffect } from 'react';
-import { useParams } from 'react-router-dom';
+import { useParams, useNavigate } from 'react-router-dom';
 import { getDutchAuctionDetails } from '../Services/dutchauctionservice'; // Import Dutch auction service
 import { getItemById } from '../Services/itemservice';
 
 const PayNowDutch = () => {
   const { auctionId } = useParams();
+  const navigate = useNavigate();
   const [item, setItem] = useState(null);
   const [auction, setAuction] = useState(null);
   const [loading, setLoading] = useState(true);
   const [expeditedShipping, setExpeditedShipping] = useState(false);
 
   const handlePayNowClick = () => {
-    window.location.href = 'https://www.google.com';
+    const totalPrice = calculateTotal();
+    if (item && item.itemID) {
+      navigate(`/checkout/${item.itemID}/${totalPrice}`);
+    } else {
+      console.error("Item ID not found");
+    }
   };
 
   useEffect(() => {

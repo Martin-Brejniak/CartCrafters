@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { useParams } from 'react-router-dom';
+import { useParams, useNavigate } from 'react-router-dom';
 import { getForwardAuctionDetails } from '../Services/forwardauctionservice';
 import { getItemById } from '../Services/itemservice';
 
@@ -9,10 +9,9 @@ const AuctionEndedComponent = () => {
   const [auction, setAuction] = useState(null);
   const [loading, setLoading] = useState(true);
   const [expeditedShipping, setExpeditedShipping] = useState(false);
+  const navigate = useNavigate();
 
-  const handlePayNowClick = () => {
-    window.location.href = 'https://www.google.com';
-  };
+
 
   useEffect(() => {
     const fetchAuctionAndItemDetails = async () => {
@@ -51,6 +50,17 @@ const AuctionEndedComponent = () => {
   if (loading) {
     return <div>Loading...</div>;
   }
+
+  const totalPrice = calculateTotal(); // Calculate total price
+
+
+    const handlePayNowClick = () => {
+    if (item && item.itemID) { // Ensure item and item.id are available
+      navigate(`/checkout/${item.itemID}/${totalPrice}`);
+    } else {
+      console.error("Item ID not found");
+    }
+  };
 
   return (
     <div>

@@ -1,11 +1,12 @@
 import React, { useEffect, useState } from 'react';
-import { useParams } from 'react-router-dom';
+import { useParams, useNavigate } from 'react-router-dom';
 import { getAllOpenForwardAuctions, getForwardAuctionDetails } from '../Services/forwardauctionservice';
 import ForwardComponent from '../Components/forwardcomponent';
 
 const POLL_INTERVAL = 1000; // Time in milliseconds
 
 const ForwardPage = () => {
+    const navigate = useNavigate();
     const { auctionId } = useParams(); // Get auctionId from URL params
     const [auctionInfo, setAuctionInfo] = useState(null);
 
@@ -31,6 +32,14 @@ const ForwardPage = () => {
         return () => clearInterval(intervalId);
     }, [auctionId]);
 
+    const handleLogout = () => {
+       // Clear any stored authentication data
+       localStorage.removeItem('userToken'); // or your specific method of storing authentication data
+
+       // Navigate to the homepage
+       navigate('/');
+   };
+
     const renderAuction = () => {
         if (Array.isArray(auctionInfo)) {
             return auctionInfo.map((auction) => (
@@ -47,6 +56,7 @@ const ForwardPage = () => {
         <div>
             <h1>{auctionId ? `Auction Details` : `Forward Auctions`}</h1>
             {renderAuction()}
+            <button onClick={handleLogout} style={{ margin: '20px 0' }}>Logout</button>
         </div>
     );
 };
