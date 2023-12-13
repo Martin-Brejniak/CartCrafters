@@ -58,6 +58,7 @@ function ItemDisplay({ searchTerm }) {
     const end = new Date(endTime);
     const now = new Date();
     const difference = end - now;
+    console.log(end);
 
     let timeRemaining = '';
     if (difference > 0) {

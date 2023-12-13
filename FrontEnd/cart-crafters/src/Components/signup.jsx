@@ -28,7 +28,7 @@ function SignUp() {
       setShowWelcome(true);
       setTimeout(() => {
         navigate('/');
-      }, 3000);
+      }, 1000);
     } catch (error) {
       console.error('Sign up error', error);
     }

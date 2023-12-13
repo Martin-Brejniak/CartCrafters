@@ -8,7 +8,7 @@ class DutchBuyComponent extends React.Component {
     // Replace 'auctionId' and 'userId' with the actual data
     const buyData = { auctionId: 1, userId: 123 };
 
-    axios.post('http://localhost:8080/auction/dutch/buy', buyData)
+    axios.post('http://localhost:7070/auction/dutch/buy', buyData)
       .then(response => {
         // Handle the response, you might want to redirect or show a success message
         console.log(response.data);
