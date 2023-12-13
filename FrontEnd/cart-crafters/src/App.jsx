@@ -14,6 +14,8 @@ import ItemPage from './Pages/ItemPage';
 import AuctionEndedComponent from  './Pages/paynow';
 import SellerPage from './Pages/sellerpage';
 import PayNowDutch from './Pages/paynowdutch';
+import Checkout from './Pages/checkout';
+import Receipt from './Pages/receipt';
 
 function App() {
   return (
@@ -28,14 +30,24 @@ function App() {
               <ItemPage /> {}
             </ProtectedRoute>
           } />
-          <Route path="/forward-auctions" element={<ForwardPage />} />
-          <Route path="/forward-auctions/:auctionId" element={<ForwardPage />} />
-          <Route path="/dutch-auctions" element={<DutchPage />} />
-          <Route path="/dutch-auctions/:auctionId" element={<DutchPage />} />
-          <Route path="/auction-ended/:auctionId" element={<AuctionEndedComponent />} />
-          <Route path="/sell-item" element={<SellerPage />} />
-          <Route path="/auction-ended-dutch/:auctionId" element={<PayNowDutch />} />
-        </Routes>
+          <Route path="/forward-auctions" element={<ProtectedRoute> <ForwardPage /> {}
+        </ProtectedRoute>} />
+          <Route path="/forward-auctions/:auctionId" element={<ProtectedRoute> <ForwardPage /> {}
+        </ProtectedRoute>} />
+          <Route path="/dutch-auctions" element={<ProtectedRoute> <DutchPage /> {}
+        </ProtectedRoute>} />
+          <Route path="/dutch-auctions/:auctionId" element={<ProtectedRoute> <DutchPage /> {}
+        </ProtectedRoute>} />
+          <Route path="/auction-ended/:auctionId" element={<ProtectedRoute> <AuctionEndedComponent /> {}
+        </ProtectedRoute>} />
+          <Route path="/sell-item" element={<ProtectedRoute> <SellerPage /> {}
+        </ProtectedRoute>} />
+          <Route path="/auction-ended-dutch/:auctionId" element={<ProtectedRoute> <PayNowDutch /> {}
+        </ProtectedRoute>} />
+        <Route path="/checkout/:itemId/:totalPrice" element={<ProtectedRoute> <Checkout /> {}
+      </ProtectedRoute>} />
+      <Route path="/receipt/:itemId/:expediteFlag" element={<Receipt />} />
+      </Routes>
       </div>
     </Router>
   );
