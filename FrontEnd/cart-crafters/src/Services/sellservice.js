@@ -1,8 +1,8 @@
 //auctionService.js
 import axios from 'axios';
 
-const ITEM_API_URL = 'http://localhost:9090/item'; // Replace with your actual ItemServer URL
-const AUCTION_API_URL = 'http://localhost:7070/auction'; // Replace with your actual AuctionServer URL
+const ITEM_API_URL = 'http://localhost:9090/item';
+const AUCTION_API_URL = 'http://localhost:7070/auction';
 
 // Function to create an item
 export const createItem = async (itemData) => {
@@ -13,7 +13,8 @@ export const createItem = async (itemData) => {
             price: itemData.price,
             auctionType: itemData.auctionType, // Changed from 'type' to 'auctionType'
             endTime: itemData.endTime, // Add the 'endTime' field
-            // Add other necessary fields if needed
+            shipcost: itemData.shipcost,
+            expShipCost: itemData.expShipCost
         });
         return response.data; // Return the created item
     } catch (error) {
@@ -47,14 +48,26 @@ export const createAuction = async (auctionData, itemId) => {
     try {
         // Determine URL based on auction type
         const auctionURL = `${AUCTION_API_URL}/${auctionData.auctionType.toLowerCase()}/create`;
+        console.log(itemId)
 
         // Preparing the data to send
-        const dataToSend = {
+        let dataToSend = {
             itemId: itemId,
             initialPrice: auctionData.price,
             endTimeOfAuction: auctionData.endTime,
+            auctionEnded: 0 // Set auctionEnded to 0 by default
             // Add other fields that your backend expects
         };
+        console.log(auctionData.endTime)
+
+        // If it's a Dutch auction, add minimumPrice and decrement
+        if (auctionData.auctionType.toLowerCase() === 'dutch') {
+            dataToSend = {
+                ...dataToSend,
+                minimumPrice: auctionData.minimumPrice,
+                decrement: auctionData.decrement,
+            };
+        }
 
         // Making the POST request
         const response = await axios.post(auctionURL, dataToSend);
@@ -64,4 +77,3 @@ export const createAuction = async (auctionData, itemId) => {
         throw error;
     }
 };
-
