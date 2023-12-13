@@ -13,11 +13,14 @@ import org.springframework.web.bind.annotation.*;
 import com.example.auctionserver.entity.Auction;
 import com.example.auctionserver.entity.DutchAuction;
 import com.example.auctionserver.entity.DutchBuy;
+import com.example.auctionserver.entity.ForwardAuction;
 import com.example.auctionserver.exceptions.AuctionEndedException;
 import com.example.auctionserver.exceptions.AuctionNotFoundException;
 import com.example.auctionserver.exceptions.InvalidAuctionTypeException;
+import com.example.auctionserver.service.DutchAuctionDAO;
 import com.example.auctionserver.service.DutchAuctionSearch;
 import com.example.auctionserver.service.DutchAuctionUpdate;
+import com.example.auctionserver.service.ForwardAuctionDAO;
 import com.example.auctionserver.service.ResultMessage;
 
 
@@ -28,11 +31,15 @@ public class DutchAuctionController {
 
     private final DutchAuctionSearch dutchAuctionSearch;
     private final DutchAuctionUpdate dutchAuctionUpdate;
+	private final DutchAuctionDAO dutchAuctionDAO;
+
 
     @Autowired
-    public DutchAuctionController(DutchAuctionSearch dutchAuctionSearch, DutchAuctionUpdate dutchAuctionUpdate) {
+    public DutchAuctionController(DutchAuctionSearch dutchAuctionSearch, DutchAuctionUpdate dutchAuctionUpdate, 
+    		DutchAuctionDAO dutchAuctionDAO) {
         this.dutchAuctionSearch = dutchAuctionSearch;
         this.dutchAuctionUpdate = dutchAuctionUpdate;
+		this.dutchAuctionDAO = dutchAuctionDAO;
     }
 
     @GetMapping("/get-all")
@@ -90,5 +97,9 @@ public class DutchAuctionController {
             return ResponseEntity.status(HttpStatus.FORBIDDEN).body("Could not buy the auction.");
         }
     }
-
+    
+    @PostMapping("/create")
+    public void createDutchAuction(@RequestBody DutchAuction auction) {
+        dutchAuctionDAO.createDutchAuction(auction);
+    }
 }
