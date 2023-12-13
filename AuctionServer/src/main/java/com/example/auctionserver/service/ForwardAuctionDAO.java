@@ -122,7 +122,8 @@ public class ForwardAuctionDAO extends AuctionDAO {
     	}
     
     public void createForwardAuction(ForwardAuction auction) {
-        String sql = "INSERT INTO auctions (itemId, auctionType, initialPrice, currentPrice, startTime, endTime, auctionEnded) VALUES (?, ?, ?, ?, ?, ?, ?)";
+        // Corrected SQL query with proper column names
+        String sql = "INSERT INTO auctions (itemId, auctionType, initialPrice, currentPrice, startTimeOfAuction, endTimeOfAuction, auctionEnded) VALUES (?, ?, ?, ?, ?, ?, ?)";
         
         // Set default values
         Date startTimeOfAuction = new Date(); // Current time as start time
@@ -130,7 +131,7 @@ public class ForwardAuctionDAO extends AuctionDAO {
 
         jdbcTemplate.update(sql, auction.getItemId(), "forward", auction.getInitialPrice(), auction.getInitialPrice(), 
                             new Timestamp(startTimeOfAuction.getTime()), new Timestamp(auction.getEndTimeOfAuction().getTime()), auctionEnded);
+    }
 
-}
     
 }

@@ -135,4 +135,25 @@ public class DutchAuctionDAO extends AuctionDAO {
         updateAuction(auction);
         return auction;
     }
+    
+    public void createDutchAuction(DutchAuction auction) {
+        // SQL INSERT statement with appropriate column names for Dutch Auction
+        String sql = "INSERT INTO auctions (itemId, auctionType, initialPrice, decrement, minimumPrice, currentPrice, startTimeOfAuction, endTimeOfAuction, auctionEnded) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)";
+        
+        // Setting default values
+        Date startTimeOfAuction = new Date(); // Current time as start time
+        boolean auctionEnded = false; // Default value for auctionEnded
+
+        jdbcTemplate.update(sql, 
+                            auction.getItemId(), 
+                            "Dutch", 
+                            auction.getInitialPrice(), 
+                            auction.getDecrement(), 
+                            auction.getMinimumPrice(),
+                            auction.getInitialPrice(),
+                            new Timestamp(startTimeOfAuction.getTime()), 
+                            new Timestamp(auction.getEndTimeOfAuction().getTime()), 
+                            auctionEnded);
+   
+    }
 }
