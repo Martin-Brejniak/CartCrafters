@@ -19,7 +19,7 @@ docker compose up -d
 ```
 5. Open a web browser, and input the following URL:
 ```
-[https://localhost:3000](https://localhost:3000)
+https://localhost:3000
 ```
 
 # Requirements Document
